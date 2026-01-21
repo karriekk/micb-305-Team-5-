@@ -9,3 +9,10 @@
 
 
 ## 2. Download the metadata and open it in Excel. What groups would you need to define for your project idea? How many samples would be in each group, and is that a feasible number for an analysis? (bare minimum = 3/group)
+
+### Research question 1: Are specific co-abundance groups (CAGs) more strongly associated with central adiposity (waist circumference) than with BMI? (Columbia dataset)
+- Independent variable:
+  - Co-abundance groups
+- Dependent variables:
+  - BMI
+  - Central adiposity 
