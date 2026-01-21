@@ -8,3 +8,4 @@
     - Central adiposity: broad term for fat around the abdomen, encompassing both the fat just under the skin (subcutaneous) and the deeper, more harmful fat surrounding organs (visceral fat)
 
 
+## 2. Download the metadata and open it in Excel. What groups would you need to define for your project idea? How many samples would be in each group, and is that a feasible number for an analysis? (bare minimum = 3/group)
