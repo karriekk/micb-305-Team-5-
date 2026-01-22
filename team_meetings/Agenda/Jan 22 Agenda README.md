@@ -42,3 +42,16 @@
   - Central adiposity/waist circumference (numeric value)
     - Can group individuals based on central adoposity to study co-abundance difference between different groups of individuals (need to define the standards that will be used to group individuals)
 
+### Research Question 3:  Are microbiome differences in Hispanic populations more strongly associated with obesity-related measures than with type 2 diabetes diagnosis itself? (Hispanic Dataset #14)
+Variable Investigating (Y variable )
+Obesity related measure:
+Weight (64 numerical values)
+BMI (64 numerical values)
+Cholesterol (64 numerical values)
+Triglycerides (64 numerical values)
+Hdl_chol (64 numerical values)
+Ldl_chol (62 numerical values, 2 NAs)
+Type II Diamete related measure 
+Mmol_glucose (Fasting Plasma glucose) (64 numerical values)
+Homa_ir (Insulin resistence)  (64 numerical values)
+Homa_beta (insulin deficiency→ measure the B cell activity)  (64 numerical values)
