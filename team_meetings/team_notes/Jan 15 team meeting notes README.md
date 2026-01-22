@@ -15,7 +15,7 @@ Obesity idea is easier to work with
 Needs more literature search, Keywords for searches 
 Keep it broad at first and narrow down results as we go
 
-Parkinson datasets #3 Question:
+### Parkinson datasets #3 Question:
 Feedback on ideas:
 Parkinson's dataset:
 Antioxidants Nutriens
@@ -27,13 +27,13 @@ Parkinsons vs other neurodegenerative disorders - most complicated, need to find
 Need to find specific niche
 Might lack novelty
 
-Hispanic datasets #14 Question:
-Are microbiome differences in Hispanic populations more strongly associated with obesity-related measures than with type 2 diabetes diagnosis itself?  
+### Hispanic datasets #14 Question:
+### Are microbiome differences in Hispanic populations more strongly associated with obesity-related measures than with type 2 diabetes diagnosis itself?  
 need to think about whether link them together or separately  
 Feedback on ideas:
 Look at both cohort comparisons - which differences correlate more with obesity
 
-What to do for next step:
+### What to do for next step:
 Set up a GitHub repository and cc everyone (including the instructor and TA) 
 Meeting agenda should be posted before each meeting (Wednesday evening latest)
 Google scholar data for each question (to determine novelty)
