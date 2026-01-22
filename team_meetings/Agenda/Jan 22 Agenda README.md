@@ -10,8 +10,8 @@
     - This study is closely related to our research question, but differs in two key aspects:
       1. We focus on central adiposity (broad term for fat around the abdomen, encompassing both the fat just under the skin (subcutaneous) and the deeper, more harmful fat surrounding organs (visceral fat)) instead of visceral fat.
       2. The above study analyzes a Chinese cohort, whereas our dataset is based on a Colombia cohort.
-      -  Some thoughts: maybe consider about doing a cross-comparison between these two cohorts and link the differences (if any) to other factors such as genetics, geographical factors, and diets? Not sure how feasible this would be though.
-      -  Question: Is waist circumference the same as waist (which is what is measured as one of the obese parameters in a previous study)? 
+        -  Some thoughts: maybe consider about doing a cross-comparison between these two cohorts and link the differences (if any) to other factors such as genetics, geographical factors, and diets? Not sure how feasible this would be though.
+        -  Question: Is waist circumference the same as waist (which is what is measured as one of the obese parameters in a previous study)? 
 
 ### Research question 2: To what extent does the predicted functional capacity of the gut microbiota (via 16S rRNA sequencing) to metabolize dietary antioxidants act as a critical moderator for cognitive performance (MoCA) in Parkinson’s Disease patients? (PD dataset)
 - Overall trying to investigate if the effect of diet on MoCA is dependent on the microbes where considering role of oxidative stress is relatively new idea in comparison to just looking at motor symptoms
