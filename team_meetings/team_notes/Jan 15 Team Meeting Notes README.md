@@ -1,4 +1,4 @@
-# Jan 15 First meeting note
+# Jan 15 First Meeting Note
 ## Highlight: What the profs think are feasible
 
 
