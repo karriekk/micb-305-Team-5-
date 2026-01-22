@@ -30,6 +30,27 @@
     - Categorical conversion could be applied by treating the scores as a binary state
     - Without applying data transformations we could use non-parametric modelling like random forest regressors where the distribution doesn’t affect the results
 
+### Research question 3: Are microbiome differences in Hispanic populations more strongly associated with obesity-related measures than with type 2 diabetes diagnosis itself? (Hispanic Datasets #14)
+Gut Microbiome and Its Impact on Obesity and Obesity-Related Disorders
+- DOI: https://doi.org/10.1007/s11894-022-00859-0
+- A great review articles contains many research articles related to the research question. 
+
+Gut Microbiota in Human Adults with Type 2 Diabetes Differs from Non-Diabetic Adults
+- DOI: https://doi.org/10.1371/journal.pone.0009085
+- One of the research article mention in the review article
+- Conducted using 36 male adults (gender not as diverse as #14 datasets) with UNKNOWN religion (not the same as our hispanic group and comparison with the human microbiome genome)
+- Found out that “Bacteroidetes to Firmicutes ratio as well as the Bacteroides-Prevotella/Clostridium coccoides-Eubacterium ratio were positively correlated with serum glucose levels”
+- Compare to #14 datasets : “ a significantly higher Firmicutes:Bacteroidetes ratio compared to the HMP . Higher fecal concentrations of short-chain fatty acids (SCFA) in obese compared with lean individuals have been attributed to a higher Firmicutes:Bacteroidetes ratio”--> Somehow similar result is happening
+
+A core gut microbiome in obese and lean twins
+- DOI: 10.1038/nature07540
+- Phylum Level changes will cause obesity and metabollic pathway.
+- Compare to #14 datasets: the datasets are showing the difference in microbiome in hispanic group that cause the differences in obesity related measures (such as cholestrol pathway)
+
+Overall:
+- Novelty: Think it is novel enough that no one has really tested on this specific population
+- Issue: How do we actually define “more strongly related”---> is it by statistical inferences? But they are measuring in different degree, how do we measure the comparison 
+
 
 ## 2. Download the metadata and open it in Excel. What groups would you need to define for your project idea? How many samples would be in each group, and is that a feasible number for an analysis? (bare minimum = 3/group)
 
