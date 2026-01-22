@@ -15,4 +15,6 @@
   - Co-abundance groups
   - BMI
   - Central adiposity
-(can group 
+    - Can group individuals based on BMI and central adoposity to study co-abundance difference between different groups of individuals (need to define the standards that will be used to group individuals)
+      - In the metadata, it classifies individuals as "overweight", "obese", and "leane" based on BMI, each group has more than 3 samples. 
+
