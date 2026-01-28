@@ -11,6 +11,6 @@
 - Vitamin E
   - "Clinical studies with PD patients show that higher consumption of dietary vitamin E is inversely related to PD occurrence. However, contrary reports have also been published on PD in human subjects."
 
-### Question: 
+### Questions 
 1. How many antioxidants do you think we should start focusing on?
 2. Based on other paper and know the metabolism (any sugggestions on how to find the specific metabolism?)
