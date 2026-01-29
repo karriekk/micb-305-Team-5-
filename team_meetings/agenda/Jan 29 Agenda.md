@@ -6,7 +6,7 @@
 
 ### Questions 
 1. How many antioxidants do you think we should start focusing on?
-2. Based on other paper and know the metabolism (any sugggestions on how to find the specific metabolism?)
+2. Based on other paper and known metabolic pathways (any sugggestions on how to find the specific metabolism?)
 
 ### Potential limitations/issues of the project
 1. What if the antioxidants (those in the metadata) can exert their biological effects and functions without requiring metabolism by the gut microbiome?
