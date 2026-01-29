@@ -19,7 +19,8 @@
    - Talks about the cellular and genetic factors that result in the increase of oxidative stress in PD patients.
    - Also talks about the neuroprotective roles of dietary antioxidants such as vitamin C, vitamin E, carotenoids, selenium, and polyphenols along with their potential mechanisms to alleiviate PD pathology.
    - The authors claimed that the efficacy of nutritional intervention and dietary prevention of PD remains controversial. 
-
+6. https://pmc.ncbi.nlm.nih.gov/articles/PMC8533511/#sec8-antioxidants-10-01563
+   - Mainly focus on how to synthesize the antioxidants (contain the catabolic pathway genome) 
 
 ### Questions 
 1. How many antioxidants do you think we should start focusing on?
