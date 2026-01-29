@@ -9,5 +9,5 @@
 2. Based on other paper and know the metabolism (any sugggestions on how to find the specific metabolism?)
 
 ### Potential limitations/issues of the project
-1. What if the antioxidants can exert their biological effects and functions without requiring metabolism by the gut microbiome?
+1. What if the antioxidants (those in the metadata) can exert their biological effects and functions without requiring metabolism by the gut microbiome?
    - This is a potential issue associated with our project because we want to explore if the effect of dietary antioxidants on cognition in PD depend on whether a patient's gut microbiome is fully capable of metabolizing those antioxidants.
