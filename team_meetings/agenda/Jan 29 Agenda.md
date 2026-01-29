@@ -7,7 +7,7 @@
 4. Brainstorm potential limitations/issues of the project
 
 ### Literature Review Notes
-1. Antioxidant Metabolism Pathways in Vitamins, Polyphenols, and Selenium: Parallels and Divergences (doi: 10.3390/ijms25052600)
+1. Antioxidant Metabolism Pathways in Vitamins, Polyphenols, and Selenium: Parallels and Divergences (link: https://doi.org/10.3390/ijms25052600)
 - Explores the different metabolism pathways utilized by different antioxidants and factor sthat limit their bioavailability.
 2. Role of Antioxidants in Modulating the Microbiota–Gut–Brain Axis and Their Impact on Neurodegenerative Diseases (link: https://doi.org/10.3390/ijms26083658)
 - The review explores the row of antioxidants in modulating the gut microbiota and their therapeutic potential in the context of gut-brain axis.
