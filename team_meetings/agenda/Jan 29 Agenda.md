@@ -4,6 +4,9 @@
 3. Determine the exact analytical groups and overall comparisons (group X vs Y)
 4. Brainstorm potential limitations/issues of the project
 
+### Literature Review Notes
+
+
 ### Questions 
 1. How many antioxidants do you think we should start focusing on?
 2. Based on other paper and known metabolic pathways (any sugggestions on how to find the specific metabolism?)
