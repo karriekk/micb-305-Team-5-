@@ -17,19 +17,19 @@
    - E.g., high or low - do we split around the median value, or instead remove the "middle"?
 
 ### Suggestions from Avril:
-##### Overall Goal:
+#### Overall Goal:
 To understand how dietart antioxidant intake shapes the gut microbiome and whether microbiome-mediated antioxidant metabolism is associated with cognitive outcomes.
 
-##### Aim 1:
+#### Aim 1:
 Determine how antioxidant intake is associated with gut microbiome composition and diversity. Specifically, we will assess how varing levels of antioxidant intake select for specific microbial taxa and examine corresponding changes in alpha and beta diversity.
 
-##### Aim 2 (taxa analysis):
+#### Aim 2 (taxa analysis):
 Identify gut microbial taxa that are differentially abundant across different levels of antioxidant intake.
 
-##### Aim 3 (function analysis):
+#### Aim 3 (function analysis):
 Characterize the functional capacity of the gut microbiome related to antioxidant metabolism.
 
-##### Aim 4 (our original research question):
+#### Aim 4 (our original research question):
 Evaluate whether the presence of microbial genes involved in antioxidant metabolism modifies the relationship between antioxidant intake and cognitive performance (e.g., if individuals lacking genes involved in antioxidant metabolism actually have a lower cognitive score than the ones who have the genes) to study gut microbiome are actually involved in alleviating the cognition decline associated with PD.
 
 
