@@ -8,6 +8,12 @@
 - Trying to make connections and conclusions between the dietary intake and the consumption score.
   - For example, if the PD group has high metabolic group but low consumption --> can make conclusion that the PD group needs to consume more
 
-
+### Suggestion from Imogen
+1. Choose the antiocidant(s) and normalize consumption against body weight or total food intake (kcal?)
+   - Can transform this into some form of scoring
+2. Choose the key antioxidant metabolism pathways based on the literature, focusing on the antioxidants we chose in (1).
+   - For whole pathways, better sucess with MetaCyc than Kegg
+3. Based on the PICRUSt analysis outcomes, categorize the pathway abundances.
+   - E.g., high or low - do we split around the median value, or instead remove the "middle"?
 
 
