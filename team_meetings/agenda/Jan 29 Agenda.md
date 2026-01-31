@@ -10,7 +10,7 @@
 1. Antioxidant Metabolism Pathways in Vitamins, Polyphenols, and Selenium: Parallels and Divergences (link: https://doi.org/10.3390/ijms25052600)
    - Explores the different metabolism pathways utilized by different antioxidants and factor sthat limit their bioavailability.
 3. Role of Antioxidants in Modulating the Microbiota–Gut–Brain Axis and Their Impact on Neurodegenerative Diseases (link: https://doi.org/10.3390/ijms26083658)
-   - The review explores the row of antioxidants in modulating the gut microbiota and their therapeutic potential in the context of gut-brain axis.
+   - The review explores the role of antioxidants in modulating the gut microbiota and their therapeutic potential in the context of gut-brain axis.
      - Highlight the impact of antioxidants on the gut microbial composition, reduction in oxidative stress, and modulation of key molecular pathways associated with neurodegeneration.
    - The review argues that antioxidants can modulate gut microbiome compositon to reduce oxidative stress by promoting the growth of beneficial gut bacteria that are capable of fermenting dietary fibers and produce beneficial metabolites such as SCFAs, which are critical in reducing oxidative stress and inflammation in the gut.
 3. Regulation of gut microbiota by vitamin C, vitamin E and β-carotene (link: https://doi.org/10.1016/j.foodres.2023.112749)
