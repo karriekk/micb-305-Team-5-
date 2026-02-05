@@ -1,4 +1,4 @@
-## 1.30 Office Hour Notes
+## Office Hour Notes (2026.1.30)
 ### Aims
 #### Overall Goal:
 - To understand how dietary antioxidant intake shapes the gut microbiome and whether microbiome-mediated antioxidant metabolism is associated with cognitive outcomes.
