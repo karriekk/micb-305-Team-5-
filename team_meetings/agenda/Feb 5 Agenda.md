@@ -1,2 +1,17 @@
 ### Literature Review Notes (what is already known in the field)
 
+### Aims
+Overall Goal:
+- To understand how dietary antioxidant intake shapes the gut microbiome and whether microbiome-mediated antioxidant metabolism is associated with cognitive outcomes.
+
+Aim 1:
+- Determine how antioxidant intake is associated with gut microbiome composition and diversity. Specifically, we will assess how varying levels of antioxidant intake select for specific microbial taxa and examine corresponding changes in alpha and beta diversity.
+
+Aim 2 (taxa):
+- Identify gut microbial taxa that are differentially abundant across levels of antioxidant intake.
+
+Aim 3 (function):
+- Characterize the functional capacity of the gut microbiome related to antioxidant metabolism.
+
+Aim 4 (Research Question):
+- Evaluate whether the presence of microbial genes involved in antioxidant metabolism modifies the relationship between antioxidant intake and cognitive performance (e.g., if individuals lacking genes involved in antioxidant metabolism actually have a lower cognitive score than the ones have the genes).
