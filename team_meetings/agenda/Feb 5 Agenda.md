@@ -12,7 +12,7 @@
 #### Aim 3 (function):
 - Characterize the functional capacity of the gut microbiome related to antioxidant metabolism.
 
-#### Aim 4 (Research Question):
+#### Aim 4 (research question):
 - Evaluate whether the presence of microbial genes involved in antioxidant metabolism modifies the relationship between antioxidant intake and cognitive performance (e.g., if individuals lacking genes involved in antioxidant metabolism actually have a lower cognitive score than the ones have the genes).
 
 ### Questions
@@ -20,9 +20,9 @@
 - What specific modules we need to look at
 - What kind of analysis is needed
 - Current plan for analysis:
-  - Find one antioxidant to start with → alpha and beta diversity analysis for antioxidant intake between PD and healthy to see if there is difference
-  - Transform the data from highest intake to lowest intake: → as need to normalize the columns —> most intake
-  - Take Top 1% for antioxidant → most of the all antioxidant and Top 1% for antioxidant but another is median → median
+  - Find one antioxidant to start with -> alpha and beta diversity analysis for antioxidant intake between PD and healthy to see if there is difference
+  - Transform the data from highest intake to lowest intake: -> as need to normalize the columns -> most intake 
+  - Take top 1% for antioxidant -> most of the all antioxidant and top 1% for antioxidant but another is median -> median
 - Not exactly sure how to start processing data
     - Which files do we need to work on right now
     - What needs to be run in R - which modules would be useful for us right now since we are doing our project in a different order than other groups
@@ -43,5 +43,3 @@
 (https://doi.org/10.3390/antiox9070570)
 
 - Vitamin C, vitamin E, and polyphenols directly interact with ROS and terminate oxidative chain reactions.
-
-
