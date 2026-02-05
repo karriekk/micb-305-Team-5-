@@ -37,6 +37,11 @@
 - VC, VE, and betaC intake provide health benefits by regulating the metabolic activity of the host gut microbiota (e.g., increase the abundance of butyrate-producing microbiomes).
 - The authors noted that alteration in gut microbiota composition my also be caused by some other food intake.
   - ###### Question: should we control for other food/dietary nutrients intake when doing the analysis?
-- Need to further explore the role of antioxidant activity of vitamins in regulating the gut microbiota and the corresponding molecular mechanisms in further studies. 
+- Need to further explore the role of antioxidant activity of vitamins in regulating the gut microbiota and the corresponding molecular mechanisms in further studies.
+
+### 2. Dietary Antioxidants and Parkinson's Disease
+(https://doi.org/10.3390/antiox9070570)
+
+- Vitamin C, vitamin E, and polyphenols directly interact with ROS and terminate oxidative chain reactions.
 
 
