@@ -20,7 +20,7 @@
 - What specific modules we need to look at
 - What kind of analysis is needed
 - Current plan for analysis:
-  - Find One antioxidant → beta diversity → beta diversity of each antioxidant
+  - Find one antioxidant to start with → alpha and beta diversity analysis for antioxidant intake between PD and healthy to see if there is difference
   - Transform the data from highest intake to lowest intake: → as need to normalize the columns —> most intake
   - Take Top 1% for antioxidant → most of the all antioxidant and Top 1% for antioxidant but another is median → median
 - Not exactly sure how to start processing data
