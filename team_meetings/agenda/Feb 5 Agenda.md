@@ -15,3 +15,8 @@ Aim 3 (function):
 
 Aim 4 (Research Question):
 - Evaluate whether the presence of microbial genes involved in antioxidant metabolism modifies the relationship between antioxidant intake and cognitive performance (e.g., if individuals lacking genes involved in antioxidant metabolism actually have a lower cognitive score than the ones have the genes).
+
+### Questions
+- How can we start apporach those questions
+- What specific modules we need to look at
+- What kind of analysis is needed
