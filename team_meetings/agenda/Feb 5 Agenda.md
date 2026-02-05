@@ -20,3 +20,11 @@ Aim 4 (Research Question):
 - How can we start apporach those questions
 - What specific modules we need to look at
 - What kind of analysis is needed
+- current plan for analysis:
+  - find One antioxidant→ beta diversity→ beta diversity of each antioxidant
+  - Transform the data to highest intake to lowest intake: → as need to normalize the columns—> most intake
+  - take Top 1% for antioxidant→ most of the all antioxidant and Top 1% for antioxidant but another is median→ median
+- not exactly sure how to start processing data
+    - which files do we need to work on right now
+    - what needs to be run in R - which modules would be useful for us right now since we are doing our project in a different order than other groups
+    - finding a solid workflow for the coming weeks
