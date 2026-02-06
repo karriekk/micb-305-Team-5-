@@ -16,11 +16,9 @@
 - Make a linear correlation graph
 - Depend on what we see from the results from other aims (later work)
 
-
 Look at the Canadian dietary intake guide or literature to see what the recommended dose is for each antioxidant - use this to rank the patients in terms  of dosage intake (consider it as aim 1 or aim 0)
 - Categorize intake for aim 1
 - Maybe don't need to consider about individual's weight (but it depends)
-
 
 Aim 1 for each antioxidant to see which ones stand out to have an impact
 - Pick the ones that potentially have an impact and do analysis based on these
