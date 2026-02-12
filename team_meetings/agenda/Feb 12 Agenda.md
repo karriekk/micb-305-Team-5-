@@ -2,7 +2,7 @@ Server has been down all week :(((( ;-;
 
 ### Update 2/11 7.40pm--> Server back again
 
-###Rest of the week Plan: 
+### Rest of the week Plan: 
 - To walk through module 13 and 14 to investigate our Aim # 1
 
 ### Meanwhile: writing introduction/background of the proposal section:
