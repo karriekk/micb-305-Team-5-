@@ -1,1 +1,1 @@
-# MICB 305 Project on Parkinsons Dataset
+# MICB 305 Weekly Agenda and Meeting Notes Recording
