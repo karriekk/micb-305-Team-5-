@@ -33,11 +33,7 @@ counts = read.delim('Datasets/feature-table.txt', skip = 1, row.names = 1)  # fr
 
 # PART 1: Make a Phyloseq object
 
-Using the data we loaded above and code from Module 12, create a phyloseq object called ps.
-
-### Marks = 1 pt
-
-```{r}
+```{r Create a Phyloseq object}
 # Write your code here
 taxonomy_formatted = taxonomy %>% 
   separate(col = Taxon,
@@ -56,23 +52,7 @@ ps = phyloseq(sample_data(parkinsons_metadata),
 
 # PART 2: Diversity
 
-### Marks = 2.5
-
-**Using code from Module 13, do ONE of the following.**
-
--   **Option 1: Calculate the difference in Shannon alpha diversity between your groups of interest**
-
-    -   Notes:
-
-        -   Use rarecurve() to justify a reasonable sampling depth (print plot and write a short comment to justify)
-
-            -   Don't worry about maximizing \# features in this case, just base your answer on the curve. A range will be accepted
-
-        -   Calculate the metric as seen in the module
-
-        -   Generate an appropriate publication-ready plot
-
-        -   Add a Wilcoxon test directly to the plot using stat_compare_means(). Adjust the text size so that it is reasonably easy to read.
+-   **Calculate the difference in Shannon alpha diversity between our groups of interest**
 
 ```{r To Prepare for Alpha Diversity Analysis}
 # Convert to data frame
@@ -216,7 +196,7 @@ p_formatted +
 
 ```
 
-```{r Combine All Dietary Antioxidants Together for Analysis}
+```{r Combine All Dietary Antioxidants Together for Alpha Diversity Analysis}
 
 # Combines all the dietary antioxidant intake together and use the Dietary Antioxidant Index (DAI) for analysis, which is another method mentioned in the paper.
 
@@ -303,21 +283,9 @@ p_formatted +
 
 ```
 
--   **Option 2: Calculate the difference in Bray-Curtis beta diversity between wild type and susceptible mice**
+-   **Calculate the differences in Bray–Curtis beta diversity between groups with different levels of dietary antioxidant intake (DAI)**
 
-    -   Notes:
-
-        -   Use rarecurve() to justify a reasonable sampling depth (print plot and write a short comment to justify)
-
-            -   Don't worry about maximizing \# features in this case, just base your answer on the curve. A range will be accepted
-
-        -   Calculate the metric as seen in the module
-
-        -   Generate an appropriate publication-ready plot. Don't forget to include ellipses.
-
-        -   Run a PERMANOVA. You don't need to add it to the plot - just write your code so that the statistical output is printed below your code chunk.
-
-```{r Combine All Dietary Antioxidants Together for Analysis}
+```{r Combine All Dietary Antioxidants Together for Beta Diversity Analysis}
 # Rarefy the data based on the rarefaction depth chosen
 psrare = ps %>% rarefy_even_depth(sample.size = 4000, rngseed = 421)
 
@@ -417,10 +385,6 @@ stats_univar_three #p-value is 0.251
 
 # PART 3: Taxonomic Analysis
 
-### Marks = 1.5
-
-**Run ONE of the following analyses:**
-
 1.  **What indicator taxa are associated with each of your groups of interest?**
 
     1.  Notes:
@@ -512,7 +476,7 @@ dim(filtered_table_combined) # prints NULL
 
 ```
 
-2.  **What taxa are differentially abundant in each of your groups of interest?**
+2.  **What taxa are differentially abundant in each of our groups of interest?**
 
     1.  Notes:
 
