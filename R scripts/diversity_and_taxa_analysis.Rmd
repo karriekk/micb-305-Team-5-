@@ -1,23 +1,9 @@
 ---
-title: "Assignment_5"
+title: "Diversity (alpha and beta) and Taxa Analysis"
 output: html_document
 ---
 
-In this assignment, you will conduct several microbiome analyses on your final project dataset.
-
-We already worked with your metadata table in Assignment 4. In order to create a phyloseq object, we will also need to generate an otu_table object and a tax_table object. Please convert and transfer the appropriate QIIME2 files from the server to your computer, then do the following:
-
--   Initialize a new R project
-
--   Within the R project folder, add this script and all the relevant data
-
-After finishing your assignment, please knit the file, zip the [entire]{.underline} R project folder including the knitted HTML document, and submit it on Canvas.
-
-Points for each component are denoted before each code chunk. **This assignment is graded out of 5.**
-
-**Tip: you are not limited to Module 10 commands; however, please ensure that you adhere to the instructions in each section. This is what the marking key focuses on.**
-
-```{r libraries, include=FALSE}
+```{r libraries, include = FALSE}
 if (!require("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
