@@ -10,7 +10,7 @@
   - Problem = no significant results found in any of the groups we looked at
       - Might be because of the way we are indexing our intake groups causing there to be very uneven distributions therefore making it harder to find significance within the limited sample size -> should we try another way of indexing? How can another way of indexing be justified? Would this count as us manipulating data to get our desired result? :((
 
-### Reran Code
+## Reran Code
 - Note: This result still needs to be verified since it was written at 1AM and the writer might have missed something somewhere :((
 - Reran beta-carotene analysis with standardized DAI method instead of RDI threshold and still didn't find significant difference between groups in terms of alpha and beta diversity but found 8/25 significant genera through differential abundance analysis
   - Note from another person: I also reran the analysis and if we look at "diff" then there are some significant results, but if we look at "diff_robust" column all the results are still FALSE. (I haven't updated the R script yet because it is very messy right now and I still need to double-check my work:,))
