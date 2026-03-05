@@ -18,4 +18,3 @@
 - Also weird results with p-values where many pathways have the same p value
   - How to understand this new plot?
 - <img width="5400" height="3000" alt="peb Error Bar Fixed" src="https://github.com/user-attachments/assets/736b3ec1-4fcc-48c6-895c-538ae485227a" />
-
