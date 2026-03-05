@@ -2,9 +2,6 @@
 title: "Data Filtering and Wrangling Preparation for Diversity and Taxa Analysis"
 output: html_document
 date: "2026-03-05"
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 ## Library loading
@@ -21,13 +18,7 @@ parkinsons_metadata = read.delim('../Datasets/parkinsons_metadata.txt')
 
 ## Data Filtering
 
-Because we want to explore the impact of varying levels of dietary
-antioxidant (excluding irons) intake on the gut microbiome composition
-and structure of PD patients, we choose to only look at patients that
-have the full set of dietary information. Therefore, individuals with
-missing information on dietary antioxidant intake will be excluded from
-the metadata prior to downstream analyses. And control groups will also
-be excluded so that we are only doing analyses using PD patients.
+Because we want to explore the impact of varying levels of dietary antioxidant (excluding irons) intake on the gut microbiome composition and structure of PD patients, we choose to only look at patients that have the full set of dietary information. Therefore, individuals with missing information on dietary antioxidant intake will be excluded from the metadata prior to downstream analyses. And control groups will also be excluded so that we are only doing analyses using PD patients.
 
 ```{r data_filtering}
 parkinsons_metadata_PD_cohort_NA_removed = parkinsons_metadata %>% 
@@ -37,18 +28,11 @@ parkinsons_metadata_PD_cohort_NA_removed = parkinsons_metadata %>%
 
 ## Dietary Antioxidant Related Calculations
 
-To analyze how varying levels of various vitamin intake changes the
-alpha diversity of the gut microbiome in PD patients, we will be
-categorizing PD patients into groups based on their daily dietary
-antioxidant intake values using two different classification approaches.
+To analyze how varying levels of various vitamin intake changes the alpha diversity of the gut microbiome in PD patients, we will be categorizing PD patients into groups based on their daily dietary antioxidant intake values using two different classification approaches.
 
 ### Method 1:
 
-Compare each of the five dietary antioxidant intake to their respective
-recommended dietary allowance (RDA) for Canadians established by Health
-Canada. Based on the paper, the PD cohort was categorized into two
-groups: individuals with vitamin intakes less than 2/3 of the RDA and
-those with intakes greater than or equal to 2/3 of the RDA.
+Compare each of the five dietary antioxidant intake to their respective recommended dietary allowance (RDA) for Canadians established by Health Canada. Based on the paper, the PD cohort was categorized into two groups: individuals with vitamin intakes less than 2/3 of the RDA and those with intakes greater than or equal to 2/3 of the RDA.
 
 -   RDA values for vitamins reference:
     <https://www.canada.ca/en/health-canada/services/food-nutrition/healthy-eating/dietary-reference-intakes/tables/reference-values-vitamins.html#tbl1>)
@@ -107,10 +91,7 @@ parkinsons_metadata_filt_cat %>%
 
 ### Method 2:
 
-Use the Dietary Antioxidant Index (DAI) for analysis, which removes the
-need to use the RDA as a reference value. Therefore, when using this
-categorization method, we are able to combine all the dietary
-antioxidant intake together for analysis.
+Use the Dietary Antioxidant Index (DAI) for analysis, which removes the need to use the RDA as a reference value. Therefore, when using this categorization method, we are able to combine all the dietary antioxidant intake together for analysis.
 
 #### Vitamin A
 
@@ -281,7 +262,9 @@ parkinsons_metadata_filt_cat$Tert_combine = with(parkinsons_metadata_filt_cat,
 # Print the Tert_combine column to better visualize it
 parkinsons_metadata_filt_cat %>% select(last_col())
 ```
+
 ## Export the modified dataset for downstream analyses
+
 ```{r dataset export}
 write.csv(parkinsons_metadata_filt_cat, file = "../Datasets/parkinsons_metadata_filt_cat.csv", row.names = FALSE)
 ```
