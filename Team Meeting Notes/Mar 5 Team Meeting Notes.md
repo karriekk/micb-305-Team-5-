@@ -10,4 +10,6 @@
   - that project is understood.
   - If vague, not make assumption, will lose mark (ensure make things specific and clarify things well)
   - Note: feel free to email for feedback
+  - Using DAI to divide people evenly--> for the proposal can say that
+  - Complete all the alpha and beta diversity metrics (do a panel) ---> make story more complete 
   
