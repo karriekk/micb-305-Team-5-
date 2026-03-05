@@ -22,6 +22,8 @@ library(microbiome)
 library(indicspecies)
 library(writexl)
 library(ANCOMBC)
+library(ggpicrust2)
+library(Maaslin2)
 ```
 
 different DAI analysis method
@@ -204,6 +206,34 @@ genera_filtered = statistical_table %>%
 dim(genera_filtered)
 
 ```
+Picrust
+```{r}
+meta = readRDS('../Datasets/phyloseq_taxonomy.rds') %>% .@sam_data %>% data.frame() %>% 
+  rownames_to_column('sample_name')
+
+pathway_abundance = read.delim('../Datasets/path_abun_unstrat.tsv',row.names = 1)
+
+# Filter
+path_filt = pathway_abundance %>% select(all_of(rownames(metadata_pd_no_NA)))
+
+
+diff_abun = pathway_daa(abundance = path_filt,
+                   metadata = metadata_pd_no_NA,
+                   group = "DAI_Tertile",
+                   daa_method = "Maaslin2",
+                   select = NULL,
+                   reference = "High")
+
+daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
+                                              daa_results_df = diff_abun,
+                                              ko_to_kegg = FALSE)
+ 
+# save
+saveRDS(daa_annotated_results_df,'daa_annotated_results_df.rds')
+
+readRDS('daa_annotated_results_df.rds')
+```
+
 
 
 
