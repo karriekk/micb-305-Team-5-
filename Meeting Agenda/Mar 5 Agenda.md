@@ -11,7 +11,8 @@
   - problem = no significant results found in any of the groups we looked at
       - might be because of the way we are indexing our intake groups causing there to be very uneven distributions therefore making it harder to find significance within the limited sample size -> should we try another way of indexing? how can another way of indexing be justified? would this count as us manipulating data to get our desired result? :((
 ### Reran Code
-- reran beta-carotene analysis with standardized DAI method instead of RDI threshold and still didn't find significant difference between groups but found 8/25 significant genera
+- note: This result still needs to be verified since it was written at 1AM and the writer might have missed something somewhere :((
+- reran beta-carotene analysis with standardized DAI method instead of RDI threshold and still didn't find significant difference between groups but found 8/25 significant genera through differential abundance
 - reran the picrust anaylsis as well and actually did find some significant pathways with p<0.05 but all the log2foldchange values were way below 1 -> what does this mean
 - also weird results with p-values where many pathways have the same p value
   - how to understand this new plot
