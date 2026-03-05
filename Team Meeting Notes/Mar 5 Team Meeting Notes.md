@@ -20,5 +20,7 @@
 Try to reduce being vague 
 -- Ignore the recommended daily intake and use DAI 
 --Alpha and beta diversity were extended for the project 
---Removed medium levels and Figure out a way to normalise the data and make it a continuous variable 
+--Removed medium levels and Figure out a way to normalise the data and make it a continuous variable
+
+- leave out random forest
 
