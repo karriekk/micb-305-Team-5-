@@ -3,6 +3,7 @@
 -  Everyone gets a specific part of the proposal to work on during our own time.
 -  Try to finish everything and have a complete proposal draft by the end of this week. 
 -  Compile everything together; improve and optimize if needed.
+-  git hub has been updated with some work in the R scripts folder for everyone to view and edit
 
 
 ## Questions 
