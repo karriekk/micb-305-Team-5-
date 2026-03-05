@@ -1,1 +1,1 @@
-# MICB 305 Group Project on Parkinsons Dataset
+# MICB 305 Group Project on Parkinson's Dataset
