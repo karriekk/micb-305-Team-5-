@@ -213,16 +213,23 @@ meta = readRDS('../Datasets/phyloseq_taxonomy.rds') %>% .@sam_data %>% data.fram
 
 pathway_abundance = read.delim('../Datasets/path_abun_unstrat.tsv',row.names = 1)
 
+# Filter metadata to just High and Low
+meta_sub = metadata_pd_no_NA %>% 
+  filter(DAI_Tertile %in% c("High Intake", "Low Intake")) %>%
+  mutate(DAI_Tertile = factor(DAI_Tertile, levels = c("High Intake", "Low Intake")))
+
+# Ensure the abundance matrix matches the filtered metadata samples
+path_sub = path_filt[, rownames(meta_sub)]
 # Filter
 path_filt = pathway_abundance %>% select(all_of(rownames(metadata_pd_no_NA)))
 
 
 diff_abun = pathway_daa(abundance = path_filt,
-                   metadata = metadata_pd_no_NA,
+                   metadata = meta_sub,
                    group = "DAI_Tertile",
                    daa_method = "Maaslin2",
                    select = NULL,
-                   reference = "High")
+                   reference = "High Intake")
 
 daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
                                               daa_results_df = diff_abun,
@@ -232,6 +239,43 @@ daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
 saveRDS(daa_annotated_results_df,'daa_annotated_results_df.rds')
 
 readRDS('daa_annotated_results_df.rds')
+```
+Plotting
+```{r}
+source('ggpicrust2_errorbar_function_fixed.R')
+
+# Filter out NA in p-values and log2 fold change columns
+daa_annotated_results_df_filt = daa_annotated_results_df %>%
+  filter(!is.na(p_adjust), !is.na(log2_fold_change))
+
+daa_annotated_results_df_filt = daa_annotated_results_df%>%
+  filter(!is.na(description))
+
+# Adjusted P-value = 32 hits
+daa_annotated_results_df_filt %>% 
+  filter(p_adjust < 0.04) %>% 
+  nrow()
+
+# Log2 Fold Change values = 8 hits (sufficient for plot)
+daa_annotated_results_df_filt %>% 
+  filter(abs(log2_fold_change) >= 5e-3) %>% 
+  nrow()
+
+daa_annotated_results_df_filt %>% filter(p_adjust< 0.05, abs(log2_fold_change) > 5e-3) %>% nrow()
+
+peb = pathway_errorbar_fixed(abundance = path_filt, 
+                     daa_results_df = daa_annotated_results_df_filt, 
+                     Group = metadata_pd_no_NA$DAI_Tertile, 
+                     wrap_label = T, wraplength=60,
+                     fc_cutoff = 5e-3, order_by_log = F,
+                     p_values_threshold = 0.04, 
+                     order = "name", 
+                     ko_to_kegg = FALSE, 
+                     p_value_bar = TRUE, 
+                     x_lab = "description")
+
+ggsave("peb Error Bar Fixed.png",
+       plot = peb, width = 18, height = 10)
 ```
 
 
