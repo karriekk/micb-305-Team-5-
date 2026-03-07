@@ -8,7 +8,7 @@
 
 * Some notes about finding no significant results: it's okay if the results are not significant, just tell the reader what do they mean biologically (e.g., PD patients can eat their favorite food without worrying about further altering their gut microbiome composition)
 
-## Current step clarification and feedback
+## Current Step Clarification and Feedback
 - RDA value: sort the cohort based on recommended daily intake (but this categorization method would result in uneven grouping and for alpha and beta carotene, technically there is no RDA)
   - Reanalyze using DAI now because it gives even split of the PD cohort and neglects the need to reference RDA (can mention it in the proposal)
  
