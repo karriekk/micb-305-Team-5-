@@ -3,7 +3,7 @@
 - An issue with the aim and question
   - A bit cyclic for the aims
   - For the research question, need to mention only focus on PD patients when it comes to MoCA score (and state how many control is filtered out)
-- Aim 2: differential abundance might be a better analysis that indicator species
+- Aim 2: differential abundance might be a better analysis than indicator species
 - Aim 3 (functional analysis): broad and should narrow it down
 - Aim 4
   - Need to clarify more in the proposal to make the aim itself and its connection with other aims more clearer (i.e., make it clearer how aim 4 is connected with other aims and outcomes associated with the aims)
