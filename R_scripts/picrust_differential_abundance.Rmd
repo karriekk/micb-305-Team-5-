@@ -113,6 +113,19 @@ color_palette <- colorRampPalette(c("blue", "white", "red"))(40)
 # Define breaks for the color scale
 breaks <- seq(-1, 1, length.out = 41)  # 40 colors + 1 for the endpoint
 
+# Lookup Names
+name_lookup <- daa_annotated_results_df %>%
+  filter(feature %in% sig_features) %>%
+  select(feature, description) %>% # Adjust 'description' to your actual column name
+  distinct()
+
+readable_names <- name_lookup$description[match(rownames(stats), name_lookup$feature)]
+readable_names[3] <- "peptidoglycan recycling II"
+rownames(stats) <- readable_names
+colnames(stats) <- readable_names
+
+view(readable_names)
+
 # Create the clustered heatmap with centered color at zero
 # install.packages("pheatmap")
 library('pheatmap')
@@ -122,11 +135,37 @@ pheatmap(stats,
          clustering_method = "complete",          
          color = color_palette, 
          breaks = breaks,
+         border_color = "white",       # Clean white borders between cells
+         display_numbers = TRUE,       # Optional: shows the actual R values
+         number_color = "black",
+         fontsize_row = 12,            # Slightly larger for readability
+         fontsize_col = 12,
+         angle_col = 45,               # Tilt labels so they don't overlap
          main = '',
-         fontsize_row = 10, 
+         filename = "../Results/Figures/MetaCyc-BC_Heatmap_Final.png",
+         height = 8, width = 10)       # Wider to accommodate long names
+
+# to try to minimize white space
+pheatmap(stats, 
+         clustering_distance_rows = "euclidean",  
+         clustering_distance_cols = "euclidean", 
+         clustering_method = "complete",          
+         color = color_palette, 
+         breaks = breaks,
+         border_color = "white",
+         display_numbers = TRUE,
+         number_format = "%.2f",      
+         fontsize_row = 10,
          fontsize_col = 10,
-         filename = "../Results/Figures/MetaCyc-BC Heatmap.png",
-         height= 9, width = 9)
+         angle_col = 315,              # rotated to minimize white space
+         treeheight_row = 25,         
+         treeheight_col = 25, 
+         legend = TRUE,               
+         main = NA,                   # Use NA to properly suppress the title space
+         filename = "../Results/Figures/MetaCyc-BC_Heatmap_Final-new.png",
+         width = 8,                   # Increased slightly for your long pathway names
+         height = 6)
+
 ```
 See how similar your sample groups are
 
