@@ -60,10 +60,6 @@ source('ggpicrust2_errorbar_function_fixed.R')
 daa_annotated_results_df_filt = daa_annotated_results_df %>%
   filter(!is.na(p_adjust), !is.na(log2_fold_change))
 
-# Filtering out results with NA descriptions or else it causes plotting to crash
-daa_annotated_results_df_filt = daa_annotated_results_df%>%
-  filter(!is.na(description))
-
 # Adjusted P-value = 17 hits
 daa_annotated_results_df_filt %>% 
   filter(p_adjust < 0.04) %>% 
@@ -80,6 +76,9 @@ daa_annotated_results_df_filt %>% filter(p_adjust< 0.04, abs(log2_fold_change) >
 daa_strict <- daa_annotated_results_df_filt %>% 
   filter(p_adjust < 0.04, abs(log2_fold_change) > 5e-3)
 
+# manually names for pathways with NA
+daa_strict[3, 9] <- "peptidoglycan recycling II"
+
 peb = pathway_errorbar_fixed(abundance = path_filt, 
                      daa_results_df = daa_strict, 
                      Group = metadata_sub$Tert_BC, 
@@ -90,6 +89,17 @@ peb = pathway_errorbar_fixed(abundance = path_filt,
                      ko_to_kegg = FALSE, 
                      p_value_bar = TRUE, 
                      x_lab = "description")
+
+library(patchwork)
+
+# Add tags A and B automatically
+peb_final <- peb + plot_annotation(tag_levels = 'A')
+
+# View the result
+peb_final
+
+# Save the final version with the tags
+ggsave("../Results/Figures/BC-picrust-final-with-labels.png", plot = peb_final, width = 12, height = 7, dpi = 300)
 
 
 ggsave("../Results/Figures/BC-picrust-sig-pathways.png",
