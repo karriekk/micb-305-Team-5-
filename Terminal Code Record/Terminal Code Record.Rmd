@@ -211,4 +211,6 @@ mv picrust_out_PD_filtered/*.tsv export_PD_filtered/
 mv picrust_out_PD_filtered/pathways_out/path_abun_unstrat.tsv export_PD_filtered/
 ```
 
--   To export the file to our local computers scp -r [root\@10.34.36.92](mailto:root@10.34.36.92){.email}:/work/group_project/export_PD_filtered .
+-   To export the file to our local computers
+
+    scp -r [root\@10.34.36.92](mailto:root@10.34.36.92){.email}:/work/group_project/export_PD_filtered .

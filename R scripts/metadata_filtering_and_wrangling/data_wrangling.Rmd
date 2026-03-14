@@ -1,0 +1,43 @@
+---
+title: "Medata Wrangling"
+output: html_document
+date: "2026-03-13"
+---
+
+This R markdown script is used to wrangle the medata and look for potential confounding variables.
+
+### Library loading
+```{r library loading}
+library(tidyverse)
+library(phyloseq)
+```
+
+### Dataset loading
+```{r dataset loading}
+feature_table = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+parkinsons_metadata = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+```
+
+### Create a phyloseq object
+```{r phyloseq object creation}
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon,
+           into = c("Domain", "Phylum", "Class", "Order", "Family",
+                    "Genus", "Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+feature_table_formatted = feature_table %>% as.matrix()
+
+ps = phyloseq(sample_data(parkinsons_metadata),
+              otu_table(feature_table_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted))
+```
+
+### Screen metadata for potential confounding variables
+```{r confounding variable}
+
+
+```
