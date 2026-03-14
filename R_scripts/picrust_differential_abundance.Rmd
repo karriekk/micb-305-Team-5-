@@ -76,18 +76,23 @@ daa_annotated_results_df_filt %>%
 
 daa_annotated_results_df_filt %>% filter(p_adjust< 0.04, abs(log2_fold_change) > 5e-3) %>% nrow()
 
+# Dataframe for plotting
+daa_strict <- daa_annotated_results_df_filt %>% 
+  filter(p_adjust < 0.04, abs(log2_fold_change) > 5e-3)
+
 peb = pathway_errorbar_fixed(abundance = path_filt, 
-                     daa_results_df = daa_annotated_results_df_filt, 
+                     daa_results_df = daa_strict, 
                      Group = metadata_sub$Tert_BC, 
                      wrap_label = T, wraplength=60,
-                     fc_cutoff = 5e-3, order_by_log = F,
+                     fc_cutoff = 5e-3, order_by_log = T,
                      p_values_threshold = 0.04, 
                      order = "name", 
                      ko_to_kegg = FALSE, 
                      p_value_bar = TRUE, 
                      x_lab = "description")
 
-ggsave("peb Error Bar Fixed.png",
+
+ggsave("../Results/Figures/BC-picrust-sig-pathways.png",
        plot = peb, width = 18, height = 10)
 ```
 
