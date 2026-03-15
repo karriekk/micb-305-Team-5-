@@ -17,6 +17,8 @@ Link to dataset source from Cristea et al.:  https://doi.org/10.1002/mds.28052
 
 #### Aim 3: Metabolic Pathway Analysis
 
+#### Aim 4
+
 ## Weekly Meeting Agenda
 You can access all of our weekly meeting agendas [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/meeting_agenda).
 
