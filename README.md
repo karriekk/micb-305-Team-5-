@@ -9,6 +9,8 @@ Link to dataset source from Cristea et al.:  https://doi.org/10.1002/mds.28052
 
 ## Project Aims with Links to Corresponding R Scripts and Results
 
+#### Aim 0: QIIME2 and Metadata Wrangling
+
 #### Aim 1: Diversity Analysis
 
 #### Aim 2: Taxonomy Analysis
