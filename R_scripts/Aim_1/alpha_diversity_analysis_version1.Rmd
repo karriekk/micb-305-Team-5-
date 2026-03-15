@@ -3,6 +3,7 @@ title: "Alpha Diversity Analysis (Version 1)"
 author: Yanting Xiong
 output: html_document
 ---
+## Library loading
 
 ```{r libraries, include = FALSE}
 library(tidyverse)
@@ -16,9 +17,10 @@ library(broom)
 ## Load the data
 
 ```{r load_data}
-parkinsons_metadata_filt_cat = read.csv('../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
-counts = read.delim('../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
-taxonomy = read.delim('../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+parkinsons_metadata_filt_cat = read.csv('../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
+parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
+counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
 ## Make a Phyloseq object
@@ -34,7 +36,7 @@ taxonomy_formatted = taxonomy %>%
 
 counts_formatted = counts %>% as.matrix()
 
-ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
+ps = phyloseq(sample_data(parkinsons_metadata_filt_cat_entacapone_NA_removed),
               otu_table(counts_formatted, taxa_are_rows = T),
               tax_table(taxonomy_formatted))
 ```
@@ -105,7 +107,7 @@ stats_BC = pdata_BC %>% group_by(variable) %>% # running each metric concurrentl
     for (i in comparisons_BC) {
       temp = .x %>% filter(Tert_BC %in% i) 
       
-      linear_regression = lm(formula = value ~ Tert_BC + Age + Sex + Energy_kcal,
+      linear_regression = lm(formula = value ~ Tert_BC + Age + Sex + Energy_kcal + entacapone,
                              data = temp, conf.int = T) %>% 
         broom::tidy() %>% 
         mutate(group1 = i[1], group2 = i[2],
@@ -176,7 +178,7 @@ stats_AC = pdata_AC %>% group_by(variable) %>% # running each metric concurrentl
     for (i in comparisons_AC) {
       temp = .x %>% filter(Tert_AC %in% i) 
       
-      linear_regression = lm(formula = value ~ Tert_AC + Age + Sex + Energy_kcal,
+      linear_regression = lm(formula = value ~ Tert_AC + Age + Sex + Energy_kcal + entacapone,
                              data = temp, conf.int = T) %>% 
         broom::tidy() %>% 
         mutate(group1 = i[1], group2 = i[2],
@@ -244,10 +246,10 @@ stats_VC = pdata_VC %>% group_by(variable) %>% # running each metric concurrentl
     
     temp_stats = data.frame() # where we'll put our stats
     
-    for (i in comparisons_BC) {
+    for (i in comparisons_VC) {
       temp = .x %>% filter(Tert_VC %in% i) 
       
-      linear_regression = lm(formula = value ~ Tert_VC + Age + Sex + Energy_kcal,
+      linear_regression = lm(formula = value ~ Tert_VC + Age + Sex + Energy_kcal + entacapone,
                              data = temp, conf.int = T) %>% 
         broom::tidy() %>% 
         mutate(group1 = i[1], group2 = i[2],
@@ -318,7 +320,7 @@ stats_VA = pdata_VA %>% group_by(variable) %>% # running each metric concurrentl
     for (i in comparisons_VA) {
       temp = .x %>% filter(Tert_VA %in% i) 
       
-      linear_regression = lm(formula = value ~ Tert_VA + Age + Sex + Energy_kcal,
+      linear_regression = lm(formula = value ~ Tert_VA + Age + Sex + Energy_kcal + entacapone,
                              data = temp, conf.int = T) %>% 
         broom::tidy() %>% 
         mutate(group1 = i[1], group2 = i[2],
@@ -389,7 +391,7 @@ stats_VE = pdata_VE %>% group_by(variable) %>% # running each metric concurrentl
     for (i in comparisons_VE) {
       temp = .x %>% filter(Tert_VE %in% i) 
       
-      linear_regression = lm(formula = value ~ Tert_VE + Age + Sex + Energy_kcal,
+      linear_regression = lm(formula = value ~ Tert_VE + Age + Sex + Energy_kcal + entacapone,
                              data = temp, conf.int = T) %>% 
         broom::tidy() %>% 
         mutate(group1 = i[1], group2 = i[2],
@@ -460,7 +462,7 @@ stats_combine = pdata_combine %>% group_by(variable) %>% # running each metric c
     for (i in comparisons_combine) {
       temp = .x %>% filter(Tert_combine %in% i) 
       
-      linear_regression = lm(formula = value ~ Tert_combine + Age + Sex + Energy_kcal,
+      linear_regression = lm(formula = value ~ Tert_combine + Age + Sex + Energy_kcal + entacapone,
                              data = temp, conf.int = T) %>% 
         broom::tidy() %>% 
         mutate(group1 = i[1], group2 = i[2],

@@ -1,5 +1,6 @@
 ---
-title: "Data Filtering and Wrangling Preparation for Diversity and Taxa Analysis"
+title: "Metadata Filtering and Wrangling"
+author: Yanting Xiong
 output: html_document
 date: "2026-03-05"
 ---
