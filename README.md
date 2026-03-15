@@ -20,7 +20,7 @@ Link to original dataset by Cristea et al.:  https://doi.org/10.1002/mds.28052
 #### Aim 4
 
 ## Weekly Meeting Agenda
-You can access all of our weekly meeting agendas [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/meeting_agenda).
+You can access all of our weekly meeting agendas [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/meeting_agenda), or use the hyperlinks below to access one specific file.
 
 #### April
 
@@ -44,7 +44,7 @@ You can access all of our weekly meeting agendas [here](https://github.com/karri
 - [Jan 22](https://github.com/karriekk/micb-305-Team-5-/blob/main/meeting_agenda/Jan%2022%20Agenda.md)
 
 ## Weekly Team Meeting Notes
-You can access all of our weekly team meeting notes [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/team_meeting_notes).
+You can access all of our weekly team meeting notes [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/team_meeting_notes), or use the hyperlinks below to access one specific file.
 
 #### April
 
