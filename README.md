@@ -21,6 +21,17 @@ To achieve this goal, we will first filter the metadata to include only PD patie
 - [Metadata filtering and wrangling](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim%200/metadata_filtering_and_wrangling.Rmd)
 
 #### Aim 1: Diversity Analysis
+- Alpha diversity analysis
+
+  - R script
+
+  - Figures
+ 
+- Beta diversity analysis
+
+  - R script
+ 
+  - Figures
 
 #### Aim 2: Taxonomy Analysis
 
