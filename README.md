@@ -15,7 +15,10 @@ To achieve this goal, we will first filter the metadata to include only PD patie
 
 ## Project Aims with Links to Corresponding R Scripts and Results
 
-#### Aim 0: QIIME2 and Metadata Wrangling
+#### Aim 0: QIIME2 + Metadata Filtering and Wrangling
+- [QIIME2](https://github.com/karriekk/micb-305-Team-5-/blob/main/terminal_code_record/terminal_code_record.Rmd)
+
+- [Metadata filtering and wrangling](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim%200/metadata_filtering_and_wrangling.Rmd)
 
 #### Aim 1: Diversity Analysis
 
