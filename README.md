@@ -75,3 +75,4 @@ You can access all of our weekly team meeting notes [here](https://github.com/ka
 
 - [Jan 15](https://github.com/karriekk/micb-305-Team-5-/blob/main/team_meeting_notes/Jan%2015%20Team%20Meeting%20Notes.md)
 
+## Project Progress Timeline
