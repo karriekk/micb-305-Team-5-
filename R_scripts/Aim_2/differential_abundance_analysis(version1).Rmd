@@ -1,0 +1,174 @@
+---
+title: "Differential Abundance Analysis"
+author: Yanting Xiong
+output: html_document
+date: "2026-03-14"
+---
+
+## Library loading
+
+```{r library loading}
+library(tidyverse)
+library(phyloseq)
+library(ANCOMBC)
+```
+
+## Dataset loading
+
+```{r dataset loading}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# Because we will be controlling for entacapone in downstream analyses and it contains NA values, they need to be removed from the filtered metadata
+parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
+# 10 PD individuals are removed after this filtering step because they do not have entacapone intakes recorded
+
+# Load in feature table exported from QIIME2
+counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+```
+
+## Makr a Phyloseq object
+
+```{r phyloseq object}
+# Taxonomy
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c("Domain","Phylum","Class","Order",
+                    "Family","Genus","Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+
+# Create the phyloseq object
+ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
+              otu_table(counts_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted))
+```
+
+## Preprocessing
+
+```{r pre-processing}
+ps_genus = tax_glom(ps, "Genus")
+
+temp_relab = microbiome::transform(ps_genus, "compositional")
+
+temp_filt = filter_taxa(temp_relab, function(x) mean(x) >= 0.0001, TRUE)
+
+# Filter the raw count phyloseq object to only include taxa in ps_filt
+ps_filt = prune_taxa(taxa_names(temp_filt), ps_genus)
+```
+
+## Beta Carotene
+
+```{r beta_carotene}
+set.seed(421)
+
+sample_data(ps_filt)$Tert_BC = factor((sample_data(ps_filt))$Tert_BC,
+                                      levels = c("BC Low", "BC Medium", "BC High"))
+                                    
+out_BC = ancombc2(data = ps_filt,
+                  fix_formula = "Tert_BC + Age + Sex + entacapone",
+                  p_adj_method = "BH",
+                  prv_cut = 0.1)
+
+statistical_table_BC = out_BC$res
+
+# Filter the statistical table to only include taxa that are differentially abundant between "BC Low" and "BC High" groups
+
+```
+
+## Alpha Carotene
+
+```{r alpha_carotene}
+set.seed(421)
+
+sample_data(ps_filt)$Tert_AC = factor((sample_data(ps_filt))$Tert_AC,
+                                      levels = c("AC Low", "AC Medium", "AC High"))
+                                    
+out_AC = ancombc2(data = ps_filt,
+                  fix_formula = "Tert_AC + Age + Sex + entacapone",
+                  p_adj_method = "BH",
+                  prv_cut = 0.1)
+
+statistical_table_AC = out_AC$res
+
+# Filter the statistical table to only include taxa that are differentially abundant between "AC Low" and "AC High" groups
+```
+
+## Vitamin A
+
+```{r vitamin_a}
+set.seed(421)
+
+sample_data(ps_filt)$Tert_VA = factor((sample_data(ps_filt))$Tert_VA,
+                                      levels = c("VA Low", "VA Medium", "VA High"))
+                                    
+out_VA = ancombc2(data = ps_filt,
+                  fix_formula = "Tert_VA + Age + Sex + entacapone",
+                  p_adj_method = "BH",
+                  prv_cut = 0.1)
+
+statistical_table_VA = out_VA$res
+
+# Filter the statistical table to only include taxa that are differentially abundant between "AC Low" and "AC High" groups
+```
+
+## Vitamin C
+
+```{r vitamin_c}
+set.seed(421)
+
+sample_data(ps_filt)$Tert_VC = factor((sample_data(ps_filt))$Tert_VC,
+                                      levels = c("VC Low", "VC Medium", "VC High"))
+                                    
+out_VC = ancombc2(data = ps_filt,
+                  fix_formula = "Tert_VC + Age + Sex + entacapone",
+                  p_adj_method = "BH",
+                  prv_cut = 0.1)
+
+statistical_table_VC = out_VC$res
+
+# Filter the statistical table to only include taxa that are differentially abundant between "AC Low" and "AC High" groups
+```
+
+## Vitamin E
+
+```{r vitamin_e}
+set.seed(421)
+
+sample_data(ps_filt)$Tert_VE = factor((sample_data(ps_filt))$Tert_VE,
+                                      levels = c("VE Low", "VE Medium", "VE High"))
+                                    
+out_VE = ancombc2(data = ps_filt,
+                  fix_formula = "Tert_VE + Age + Sex + entacapone",
+                  p_adj_method = "BH",
+                  prv_cut = 0.1)
+
+statistical_table_VE = out_VE$res
+
+# Filter the statistical table to only include taxa that are differentially abundant between "AC Low" and "AC High" groups
+```
+
+## Combined Dietary Antioxidant Intake
+
+```{r combined_dietary_antioxidant_intake}
+set.seed(421)
+
+sample_data(ps_filt)$Tert_combine = factor((sample_data(ps_filt))$Tert_combine,
+                                      levels = c("Combine Low", "Combine Medium", "Combine High"))
+                                    
+out_combine = ancombc2(data = ps_filt,
+                       fix_formula = "Tert_combine + Age + Sex + entacapone",
+                       p_adj_method = "BH",
+                       prv_cut = 0.1)
+
+statistical_table_combine = out_combine$res
+
+# Filter the statistical table to only include taxa that are differentially abundant between "AC Low" and "AC High" groups
+```
