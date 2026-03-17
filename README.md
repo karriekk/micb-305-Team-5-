@@ -2,7 +2,7 @@
 
 Team 5 members: Carrie Sun, Coe McGrath, Cynthia Lin, Emily Ju, Yanting Xiong
 
-Link to original dataset by Cristea et al.:  https://doi.org/10.1002/mds.28052
+Link to the original dataset by Cristea et al.:  https://doi.org/10.1002/mds.28052
 
 ## Project Summary
 Parkinson's disease (PD) is an age-related, progressive neurodegenerative disease characterized by the selective degradation of dopaminergic neurons located in the substantia nigra of the midbrain, along with the presence of misfolded 𝛼-synuclein containing Lewy bodies. Despite the fact that it is the second most prevalent neurodegenerative disease worldwide, the precise mechanisms underlying PD pathogenesis still remains unclear, and no curative therapeutics currently exist to slow the progression of the disease.
