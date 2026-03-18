@@ -7,14 +7,15 @@ Library Loading
 ```{r Load Library}
 library(indicspecies)
 library(tidyverse)
-
+library(phyloseq)
 ```
-Dataset Loading
-```{r Loading Dataset}
+## Dataset Loading
+
+```{r loading_dataset}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
 
-#No confounding will impact indicator taxa analysis, so did not remove any confounding variables
+# As confounding variables are not adjusted for when doing indicator species analysis, they are not removed from the metadata
 
 # Load in feature table exported from QIIME2
 counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
@@ -23,8 +24,10 @@ counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.name
 taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 
 ```
-Make Phyloseq Object
-```{r phyloseq object}
+
+## Make Phyloseq Object
+
+```{r phyloseq_object}
 # Taxonomy
 taxonomy_formatted = taxonomy %>% 
   separate(col = Taxon, 
@@ -42,27 +45,36 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
               otu_table(counts_formatted, taxa_are_rows = T),
               tax_table(taxonomy_formatted))
 ```
-Preprocessing Data
+
+## Preprocessing Data
+
 ```{r Preprocessing data}
-#Run this at genus level
+# Run this at genus level
 ps_phylum = tax_glom(ps,'Genus')
-ps_relab = transform(ps_phylum, 'compositional')
-#remove relative abundance less than 0.0001
+
+ps_relab = microbiome::transform(ps_phylum, 'compositional')
+
+#Remove relative abundance less than 0.0001
 ps_filt = filter_taxa(ps_relab, function(x) mean(x) > 0.0001, TRUE)
+
 otu_table = data.frame(otu_table(ps_filt))
 
 ```
 
-Beta Carotene Indicctor Taxa Analysis
-```{r beta carotene}
+## Beta Carotene Indicctor Species Analysis
+
+```{r beta_carotene}
 set.seed(421)
+
 sample_data(ps_filt)$Tert_BC = factor((sample_data(ps_filt))$Tert_BC,
                                       levels = c("BC Low", "BC Medium", "BC High"))
+
 indval_bc = multipatt(
   t(otu_table),
   cluster = sample_data(ps_filt)$Tert_BC,
   control = how(nperm = 999)
 )
+
 summary(indval_bc, indvalcomp = TRUE)
 
 #　Extract beta carotene indicator taxa into table
@@ -71,137 +83,152 @@ indval_table_bc
 
 # Plot the two taxa that are indicators for the gut
 filtered_data_bc = indval_table_bc %>% 
-  filter(stat >= 0.7 & p.value <= 0.05 ) %>% 
+  filter(stat >= 0.7 & p.value <= 0.05) %>% 
   rownames()
 
-
 dim(filtered_data_bc)
+
 # No indicator taxa shown for Beta carotene group
 ```
-Alpha Carotene Indactor Taxa Analysis
-```{r Alpha Carotene}
+## Alpha Carotene Indactor Species Analysis
+
+```{r alpha_carotene}
 set.seed(421)
+
 sample_data(ps_filt)$Tert_AC = factor((sample_data(ps_filt))$Tert_AC,
                                       levels = c("AC Low", "AC Medium", "AC High"))
+
 indval_ac = multipatt(
   t(otu_table),
   cluster = sample_data(ps_filt)$Tert_AC,
   control = how(nperm = 999)
 )
+
 summary(indval_ac, indvalcomp = TRUE)
 
 #　Extract alpha  carotene indicator taxa into table
 indval_table_ac = as.data.frame(indval_ac$sign)
 
-
 # Plot the two taxa that are indicators for the gut
 filtered_data_ac = indval_table_ac %>% 
-  filter(stat >= 0.7 & p.value <= 0.05 ) %>% 
+  filter(stat >= 0.7 & p.value <= 0.05) %>% 
   rownames()
 
-
 dim(filtered_data_ac)
+
 # No indicator taxa shown for Alpha carotene group
 ```
-Vitamin A indicator Taxa Anlysis
-```{r Vitamin A}
+## Vitamin A indicator Species Anlysis
 
+```{r vitamin_a}
 set.seed(421)
+
 sample_data(ps_filt)$Tert_Va = factor((sample_data(ps_filt))$Tert_VA,
                                       levels = c("VA Low", "VA Medium", "VA High"))
+
 indval_VA = multipatt(
   t(otu_table),
   cluster = sample_data(ps_filt)$Tert_VA,
   control = how(nperm = 999)
 )
+
 summary(indval_VA, indvalcomp = TRUE)
 
 #　Extract Vitamin A indicator taxa into table
 indval_table_VA = as.data.frame(indval_VA$sign)
 
-
 # Plot the two taxa that are indicators for the gut
 filtered_data_VA = indval_table_VA %>% 
-  filter(stat >= 0.7 & p.value <= 0.05 ) %>% 
+  filter(stat >= 0.7 & p.value <= 0.05) %>% 
   rownames()
 
-
 dim(filtered_data_VA)
+
 # No indicator taxa shown for Vitamin A group
 ```
-Vitamin C Indicator Taxa
-```{r Vitamin C}
+## Vitamin C Indicator Species Analysis
+
+```{r vitamin_c}
 set.seed(421)
+
 sample_data(ps_filt)$Tert_VC = factor((sample_data(ps_filt))$Tert_VC,
                                       levels = c("VC Low", "VC Medium", "VC High"))
+
 indval_VC = multipatt(
   t(otu_table),
   cluster = sample_data(ps_filt)$Tert_VC,
   control = how(nperm = 999)
 )
+
 summary(indval_VC, indvalcomp = TRUE)
 
 #　Extract Vitamin A indicator taxa into table
 indval_table_VC = as.data.frame(indval_VC$sign)
 
-
 # Plot the two taxa that are indicators for the gut
 filtered_data_VC = indval_table_VC %>% 
-  filter(stat >= 0.7 & p.value <= 0.05 ) %>% 
+  filter(stat >= 0.7 & p.value <= 0.05) %>% 
   rownames()
 
-
 dim(filtered_data_VC)
+
 # No indicator taxa shown for Vitamin C group
 ```
-Vitamin E Indicator Taxa
-```{r Vitamin E}
+## Vitamin E Indicator Species Analysis
+
+```{r vitamin_e}
 set.seed(421)
+
 sample_data(ps_filt)$Tert_VE = factor((sample_data(ps_filt))$Tert_VE,
                                       levels = c("VE Low", "VE Medium", "VE High"))
+
 indval_VE = multipatt(
   t(otu_table),
   cluster = sample_data(ps_filt)$Tert_VE,
   control = how(nperm = 999)
 )
+
 summary(indval_VE, indvalcomp = TRUE)
 
 #　Extract Vitamin A indicator taxa into table
 indval_table_VE = as.data.frame(indval_VE$sign)
 
-
 # Plot the two taxa that are indicators for the gut
 filtered_data_VE = indval_table_VE %>% 
-  filter(stat >= 0.7 & p.value <= 0.05 ) %>% 
+  filter(stat >= 0.7 & p.value <= 0.05) %>% 
   rownames()
-
 
 dim(filtered_data_VE)
 
 # No indicator Taxa for Vitamin E
 ```
-Combined Dietary Antioxidant Intake
-```{r Combined Dietary Antioxidant Intake}
+
+## Combined Dietary Antioxidant Intake
+
+```{r combined_dietary_antioxidant_intake}
 set.seed(421)
+
+sample_data(ps_filt)$Tert_combine = factor((sample_data(ps_filt))$Tert_combine,
+                                      levels = c("Combine Low", "Combine Medium", "Combine High"))
 
 indval_Combine = multipatt(
   t(otu_table),
   cluster = sample_data(ps_filt)$Tert_combine,
   control = how(nperm = 999)
 )
+
 summary(indval_Combine, indvalcomp = TRUE)
 
 #　Extract Combine indicator taxa into table
 indval_table_Combine = as.data.frame(indval_Combine$sign)
 
-
 # Plot the two taxa that are indicators for the gut
 filtered_data_Combine = indval_table_Combine %>% 
-  filter(stat >= 0.7 & p.value <= 0.05 ) %>% 
+  filter(stat >= 0.7 & p.value <= 0.05) %>% 
   rownames()
 
-
 dim(filtered_data_Combine)
+
 #No indicator taxa for the combine antioxidant intake 
 ```
 
