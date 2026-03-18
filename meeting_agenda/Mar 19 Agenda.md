@@ -1,5 +1,5 @@
 ## Questions related to data analysis
-1. Do we need to specify permutations = when doing beta diversity analysis
+1. Do we need to specify permutations = when doing beta diversity analysis?
 2. Is there a way to factor in confounding variables when generating plots for beta-diversity analysis? Although the p-value indicates a statistically significant difference after adjusting for confounding variables, this difference is not readily apparent from visual inspection of the plots generated, therefore I was wondering if this might be an issue.
 3. I used linear regression model when running the alpha diversity analysis, and was wondering how to add the corresponding p-values onto the plots.
 4. Having troubles filtering the statistical_table generated when doing taxonomy differential abundance analysis due to the space in between words (want to filter for it and show the stats even though no significant difference is obeserved across all groups of dietary antioxidants).
