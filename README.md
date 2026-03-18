@@ -84,6 +84,8 @@ You can access all of our weekly team meeting notes [here](https://github.com/ka
 #### April
 
 #### March
+- [Mar 19](https://github.com/karriekk/micb-305-Team-5-/blob/main/team_meeting_notes/Mar%2019%20Team%20Meeting%20Notes.md)
+
 - [Mar 12](https://github.com/karriekk/micb-305-Team-5-/blob/main/team_meeting_notes/Mar%2012%20Team%20Meeting%20Notes.md)
 
 - [Mar 5](https://github.com/karriekk/micb-305-Team-5-/blob/main/team_meeting_notes/Mar%205%20Team%20Meeting%20Notes.md)
