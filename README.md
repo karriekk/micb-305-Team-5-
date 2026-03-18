@@ -13,7 +13,7 @@ Therefore, this study aims to investigate the association between dietary antiox
 
 To achieve this goal, we will first filter the metadata to include only PD patients with complete dietary antioxidant information. Subsequently, these patients will be categorized into tertiles according to their dietary antioxidant intake, which is quantified using the Dietary Antioxidant Index (DAI) method.
 
-## Project Aims with Links to Corresponding R Scripts and Results
+## Project Aims with Links to the Corresponding R Scripts and Results
 
 #### Aim 0: QIIME2 + Metadata Filtering and Wrangling
 - [QIIME2](https://github.com/karriekk/micb-305-Team-5-/blob/main/terminal_code_record/terminal_code_record.Rmd)
