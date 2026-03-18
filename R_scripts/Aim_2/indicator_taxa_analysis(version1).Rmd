@@ -1,0 +1,336 @@
+---
+title: "Indicator Taxa Analysis - compares only high and low intake groups (Version 1)"
+author: Yanting Xiong
+output: html_document
+date: "2026-03-16"
+---
+
+## Library loading
+
+```{r library_loading}
+library(tidyverse)
+library(phyloseq)
+library(indicspecies)
+```
+
+## Dataset loading
+
+```{r dataset_loading}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# For each variable prefixed with ‘Tert_’, the metadata will be filtered to only include PD patients in the low and high intake categories, and the resulting subsets will be used for downstream analyses.
+parkinsons_metadata_filt_cat_AC_LH_only = parkinsons_metadata_filt_cat %>% 
+  filter(Tert_AC == "AC Low" | Tert_AC == "AC High")
+
+parkinsons_metadata_filt_cat_BC_LH_only = parkinsons_metadata_filt_cat %>% 
+  filter(Tert_BC == "BC Low" | Tert_BC == "BC High")
+
+parkinsons_metadata_filt_cat_VA_LH_only = parkinsons_metadata_filt_cat %>% 
+  filter(Tert_VA == "VA Low" | Tert_VA == "VA High")
+
+parkinsons_metadata_filt_cat_VC_LH_only = parkinsons_metadata_filt_cat %>% 
+  filter(Tert_VC == "VC Low" | Tert_VC == "VC High")
+
+parkinsons_metadata_filt_cat_VE_LH_only = parkinsons_metadata_filt_cat %>% 
+  filter(Tert_VE == "VE Low" | Tert_VE == "VE High")
+
+parkinsons_metadata_filt_cat_combine_LH_only = parkinsons_metadata_filt_cat %>% 
+  filter(Tert_combine == "Combine Low" | Tert_combine == "Combine High")
+
+# Load in feature table exported from QIIME2
+counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+```
+
+## Create a Phyloseq Object
+
+```{r phyloseq_object}
+# Taxonomy
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c("Domain","Phylum","Class","Order",
+                    "Family","Genus","Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+
+# Create the phyloseq object for each dietary antioxidant 
+ps_AC = phyloseq(sample_data(parkinsons_metadata_filt_cat_AC_LH_only),
+                 otu_table(counts_formatted, taxa_are_rows = T),
+                 tax_table(taxonomy_formatted))
+
+ps_BC = phyloseq(sample_data(parkinsons_metadata_filt_cat_BC_LH_only),
+                 otu_table(counts_formatted, taxa_are_rows = T),
+                 tax_table(taxonomy_formatted))
+
+ps_VA = phyloseq(sample_data(parkinsons_metadata_filt_cat_VA_LH_only),
+                 otu_table(counts_formatted, taxa_are_rows = T),
+                 tax_table(taxonomy_formatted))
+
+ps_VC = phyloseq(sample_data(parkinsons_metadata_filt_cat_VC_LH_only),
+                 otu_table(counts_formatted, taxa_are_rows = T),
+                 tax_table(taxonomy_formatted))
+
+ps_VE = phyloseq(sample_data(parkinsons_metadata_filt_cat_VE_LH_only),
+                 otu_table(counts_formatted, taxa_are_rows = T),
+                 tax_table(taxonomy_formatted))
+
+ps_combine = phyloseq(sample_data(parkinsons_metadata_filt_cat_combine_LH_only),
+                      otu_table(counts_formatted, taxa_are_rows = T),
+                      tax_table(taxonomy_formatted))
+
+```
+
+## Preprocessing
+
+```{r preprocessing}
+# Aggregate ASVs to higher taxonomic level (genus level in this case)
+ps_genus_AC = tax_glom(ps_AC,"Genus")
+
+ps_genus_BC = tax_glom(ps_BC,"Genus")
+
+ps_genus_VA = tax_glom(ps_VA,"Genus")
+
+ps_genus_VC = tax_glom(ps_VC,"Genus")
+
+ps_genus_VE = tax_glom(ps_VE,"Genus")
+
+ps_genus_combine = tax_glom(ps_combine,"Genus")
+
+# Convert phyloseq to relative abundance
+ps_relab_AC = microbiome::transform(ps_genus_AC, "compositional")
+
+ps_relab_BC = microbiome::transform(ps_genus_BC, "compositional")
+
+ps_relab_VA = microbiome::transform(ps_genus_VA, "compositional")
+
+ps_relab_VC = microbiome::transform(ps_genus_VC, "compositional")
+
+ps_relab_VE = microbiome::transform(ps_genus_VE, "compositional")
+
+ps_relab_combine = microbiome::transform(ps_genus_combine, "compositional")
+
+# Filter to only include taxa that have a mean abundance of greater than or equal to 0.01%
+ps_filt_AC = filter_taxa(ps_relab_AC, function(x) mean(x) >= 0.0001, TRUE)
+
+ps_filt_BC = filter_taxa(ps_relab_BC, function(x) mean(x) >= 0.0001, TRUE)
+
+ps_filt_VA = filter_taxa(ps_relab_VA, function(x) mean(x) >= 0.0001, TRUE)
+
+ps_filt_VC = filter_taxa(ps_relab_VC, function(x) mean(x) >= 0.0001, TRUE)
+
+ps_filt_VE = filter_taxa(ps_relab_VE, function(x) mean(x) >= 0.0001, TRUE)
+
+ps_filt_combine = filter_taxa(ps_relab_combine, function(x) mean(x) >= 0.0001, TRUE)
+
+# Extract the otu_table as a data frame because only the otu_table, instead of the phyloseq object, will be used in indicator taxa analysis
+otu_table_AC = data.frame(otu_table(ps_filt_AC))
+
+otu_table_BC = data.frame(otu_table(ps_filt_BC))
+
+otu_table_VA = data.frame(otu_table(ps_filt_VA))
+
+otu_table_VC = data.frame(otu_table(ps_filt_VC))
+
+otu_table_VE = data.frame(otu_table(ps_filt_VE))
+
+otu_table_combine = data.frame(otu_table(ps_filt_combine))
+```
+
+## Alpha Carotene
+
+```{r alpha_carotene}
+set.seed(421)
+indval_AC = multipatt(t(otu_table_AC),
+                      cluster = ps_filt_AC@sam_data$Tert_AC,
+                      control = how(nperm = 999))
+
+summary(indval_AC, indvalcomp = TRUE) 
+# No indicator taxa associated with the high intake group
+# One indicator taxa associated with the low intake group
+  # 028e2c1b650e2e2b5847154a153e0166 (p-value = 0.045)
+
+# Extract into a table
+indval_table_AC = as.data.frame(indval_AC$sign)
+```
+
+## Beta Carotene
+
+```{r beta_carotene}
+set.seed(421)
+indval_BC = multipatt(t(otu_table_BC),
+                      cluster = ps_filt_BC@sam_data$Tert_BC,
+                      control = how(nperm = 999))
+
+summary(indval_BC, indvalcomp = TRUE) 
+# Two indicator taxa associated with the high intake group
+  # 630532cabb74720c1204579e6fe741b4 (p-value = 0.045, stat = 0.403)
+  # a030e5d5ff9c75a027e6cc58ff02cf7c (p-value = 0.026, stat = 0.370)
+
+# Extract into a table
+indval_table_BC = as.data.frame(indval_BC$sign)
+
+# Plot the two taxa that are indicators for the high BC intake group
+#phyla_to_plot_BC = indval_table_BC %>% 
+  #filter(index == 1 & p.value < 0.05) %>% 
+  #rownames()
+
+#df_of_taxa_BC = prune_taxa(phyla_to_plot_BC, ps_filt_BC) %>% psmelt()
+
+#df_of_taxa_BC %>% 
+  #ggplot(aes(Tert_BC, Abundance, fill = Tert_BC)) +
+  #geom_boxplot(outlier.shape = NA) +
+  #geom_jitter(height = 0, width = 0.2) +
+  #facet_wrap(~Genus, ncol = 8, scales = "free")
+```
+
+### Some Literature Search
+
+630532cabb74720c1204579e6fe741b4
+
+-   corresponds to Cloacibacillus
+
+    -   their metabolism produces SCFAs, including acetate, propionate, formate, and butyrate
+
+a030e5d5ff9c75a027e6cc58ff02cf7c
+
+-   corresponds to Alloprevotella
+
+    -   produce SCFAs, maintain intestinal barrier integrity, and modulate the immune system
+
+## Vitamin A
+
+```{r vitamin_a}
+set.seed(421)
+indval_VA = multipatt(t(otu_table_VA),
+                      cluster = ps_filt_VA@sam_data$Tert_VA,
+                      control = how(nperm = 999))
+
+summary(indval_VA, indvalcomp = TRUE) 
+# Two indicator taxa associated with the high intake group
+  # 7bf7ea59cac793e65c0bc293eabf44dc (p-value = 0.045, stat = 0.388)
+  # b287c87a16ef231b6b93625eceae36b1 (p-value = 0.013, stat = 0.313)
+
+# Extract into a table
+indval_table_VA = as.data.frame(indval_VA$sign)
+```
+
+### Some Literature Search
+
+7bf7ea59cac793e65c0bc293eabf44dc
+
+-   corresponds to Acidaminococcaceae
+
+    -   amino acid fermentation, SCFAs production, gut microbiota-brain axis
+
+b287c87a16ef231b6b93625eceae36b1
+
+-   corresponds to Anaeroplasma
+
+    -   acts as a potential anti-inflammatory probiotic
+
+## Vitamin C
+
+```{r vitamin_c}
+set.seed(421)
+indval_VC = multipatt(t(otu_table_VC),
+                      cluster = ps_filt_VC@sam_data$Tert_VC,
+                      control = how(nperm = 999))
+
+summary(indval_VC, indvalcomp = TRUE) 
+# Three indicator taxa associated with the high intake group
+  # a3d1f4355f204d4d49ad2bea3b801265 (p-value = 0.043, stat = 0.411)
+  # 6ca3f1e7d3011097ec41585e61307d26 (p-value = 0.015, stat = 0.361) - also enriched in VA high intake group
+  # a033d13f0f20b5a9847c0d750f9b257b (p-value = 0.044, stat = 0.305)
+
+# Extract into a table
+indval_table_VC = as.data.frame(indval_VC$sign)
+```
+
+### Some Literature Search
+
+a3d1f4355f204d4d49ad2bea3b80126
+
+-   corresponds to Anaerosporobacter
+
+    -   ferment various sugars (like glucose) into metabolites such as formate, acetate, and hydrogen
+
+a033d13f0f20b5a9847c0d750f9b257b
+
+-   corresponds to Intestinimonas
+
+    -   produces butyrate, a SCFA, from dietary fructoselysine and lysine
+
+## Vitamin E
+
+```{r vitamin_e}
+set.seed(421)
+indval_VE = multipatt(t(otu_table_VE),
+                      cluster = ps_filt_VE@sam_data$Tert_VE,
+                      control = how(nperm = 999))
+
+summary(indval_VE, indvalcomp = TRUE) 
+# Two indicator taxa associated with the high intake group
+  # b7fb7b8de1b4e013e7255cec428893a7 (p-value = 0.036, stat = 0.354)
+  # c97980fcfebe112b1e72f25624597e10 (p-value = 0.047, stat = 0.256)
+
+# Extract into a table
+indval_table_VE = as.data.frame(indval_VE$sign)
+```
+
+### Some Literature Search
+
+b7fb7b8de1b4e013e7255cec428893a7
+
+-   corresponds to Victivallaceae
+
+    -   ferment a wide variety of sugars into metabolites like acetate, ethanol, and hydrogen
+
+c97980fcfebe112b1e72f25624597e10
+
+-   corresponds to Succinivibrio
+
+    -   ferment glucose, dextrin, and other carbohydrates to produce large amounts of succinic acid, acetic acid, and formic acid
+
+    -   are associated with improved feed efficiency and nutrient utilization, including potential roles in producing vitamins and amino acids
+
+    -   has been positively correlated with proinflammatory cytokines (like IL-1β, IL-6, and TNF-α), suggesting a potential role in mediating inflammation and metabolic pathways
+
+## Combined
+
+```{r combine}
+set.seed(421)
+indval_combine = multipatt(t(otu_table_combine),
+                           cluster = ps_filt_combine@sam_data$Tert_combine,
+                           control = how(nperm = 999))
+
+summary(indval_combine, indvalcomp = TRUE) 
+# Two indicator taxa associated with the high intake group
+  # 4661cd41d2df6a4bf70276894e6cc779 (p-value = 0.047, stat = 0.404)
+  # 8408059b62784f6a2740d42ac2aa1069 (p-value = 0.017, stat = 0.347)
+
+# Extract into a table
+indval_table_combine = as.data.frame(indval_combine$sign)
+```
+
+### Some Literature Search
+
+4661cd41d2df6a4bf70276894e6cc779
+
+-   corresponds to Lachnospiraceae FCS020 group
+
+    -   contribute to the fermentation of carbohydrates, produce SCFAs
+
+    -   studies indicate an association between this group and brain activity, showing improved gut microbiome structure in models of cognitive impairment
+
+8408059b62784f6a2740d42ac2aa1069
+
+-   corresponds to Solobacterium
+
+    -   elevated levels in the gut are associated with imbalances in the microbial community (dysbiosis) and inflammation (?)
