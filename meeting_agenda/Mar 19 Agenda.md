@@ -6,3 +6,5 @@
 <img width="169" height="22" alt="diff_ robust_Tert_BCBC High" src="https://github.com/user-attachments/assets/2bc9ec26-b81d-41f4-83e1-34bf0c9da324" />
 
 5. Would it be possible to go over the code together to ensure that we are doing all the analyses correctly and logically?
+
+** Good news: found some SCFA-producing bacteria when doing the indicator taxa analysis!!!
