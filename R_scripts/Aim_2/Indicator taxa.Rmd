@@ -13,9 +13,7 @@ Dataset Loading
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
 
-# Because we will be controlling for entacapone in downstream analyses and it contains NA values, they need to be removed from the filtered metadata
-parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
-# 10 PD individuals are removed after this filtering step because they do not have entacapone intakes recorded
+#No confounding will impact indicator taxa analysis, so did not remove any confounding variables
 
 # Load in feature table exported from QIIME2
 counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
@@ -54,7 +52,7 @@ otu_table = data.frame(otu_table(ps_filt))
 
 ```
 
-Beta Carotene Indactor Taxa Analysis
+Beta Carotene Indicctor Taxa Analysis
 ```{r beta carotene}
 set.seed(421)
 sample_data(ps_filt)$Tert_BC = factor((sample_data(ps_filt))$Tert_BC,
