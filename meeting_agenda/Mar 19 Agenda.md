@@ -7,4 +7,8 @@
 
 5. Would it be possible to go over the code together to ensure that we are doing all the analyses correctly and logically?
 
-** Good news: found some SCFA-producing bacteria when doing the indicator taxa analysis!!! 😆
+## Some updates about the analysis
+### Indicator taxa analysis
+- Was able to find indicator taxa for "BC High", "VA High", "VC High", "VE High", and "Combine High" groups (p-values smaller than 0.05), but the stat values are all below 0.5. This means that although several taxa are significantly associated with the high intake groups, they all exhibited relatively low indicator values, which is drive primarily by the low within-group prevalence. This suggests that these taxa are not consistently present across samples within each sample and therefore represent weak indicators.
+  - Some of the taxa that are enriched are associated with SCFA-producing.
+  - I was wondering if I should keep these taxa and use them to perform analyses in aim 4 (and state the limitations in the discussion), or if I should filter out all these indicator taxa due to the stat threshold of 0.7. 
