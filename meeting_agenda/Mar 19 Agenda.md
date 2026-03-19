@@ -20,7 +20,8 @@
 - Did not find any taxa that are differentially abundant in the high intake group for all dietary antioxidants (diff_robust are all FALSE when high intake group is compared to the low intake group)
 
 ### Picrust analysis
-- Found significance in BC, VC groups with p < 0.05
+(BC, AC, VC, combine)
+- Found significance in BC, VC groups with p < 0.05 with VC being more significant with most p_adjust = 0.039
 - Interesting that high intake groups had general down regulation of pathways in comparison to low intake groups.
 - Was unsure about this result but double checked with other antioxidant groups and they observed same thing
 - Contradicts aim 2?
