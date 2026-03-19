@@ -17,9 +17,17 @@ library(broom)
 ## Load the data
 
 ```{r load_data}
+# Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv('../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
+
+# Because we will be controlling for entacapone in downstream analyses and it contains NA values, they need to be removed from the filtered metadata
 parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
+# 10 PD individuals are removed after this filtering step because they do not have entacapone intakes recorded
+
+# Load in feature table exported from QIIME2
 counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
 taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
@@ -61,6 +69,7 @@ psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
 
 ```{r alpha_diversity_analysis_for_beta_carotene}
 set.seed(421)
+
 p_BC = plot_richness(psrare, x = "Tert_BC",
                      measures = c("Observed", "Shannon", "Chao1", "Simpson"),
                      color = "Tert_BC")
@@ -90,7 +99,7 @@ p_BC_formatted = pdata_BC %>% ggplot(aes(Tert_BC,
   facet_wrap(~ variable, ncol = 2, scales = "free_y") +
   ylab("Alpha Diversity Metrics") + xlab(NULL) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-  labs(fill = "Beta Carotene Intake Categorization")
+  labs(fill = "Beta Carotene Intake Categorization") 
 p_BC_formatted
 
 
@@ -130,6 +139,7 @@ View(stats_BC)
 ```
 
 ### Alpha carotene
+
 ```{r alpha_diversity_analysis_for_alpha_carotene}
 set.seed(421)
 p_AC = plot_richness(psrare, x = "Tert_AC",
@@ -201,6 +211,7 @@ View(stats_AC)
 ```
 
 ### Vitamin C
+
 ```{r alpha_diversity_analysis_for_vitamin_c}
 set.seed(421)
 p_VC = plot_richness(psrare, x = "Tert_VC",
@@ -272,6 +283,7 @@ View(stats_VC)
 ```
 
 ### Vitamin A
+
 ```{r alpha_diversity_analysis_for_vitamin_a}
 set.seed(421)
 p_VA = plot_richness(psrare, x = "Tert_VA",
@@ -343,6 +355,7 @@ View(stats_VA)
 ```
 
 ### Vitamin E
+
 ```{r alpha_diversity_analysis_for_vitamin_e}
 set.seed(421)
 p_VE = plot_richness(psrare, x = "Tert_VE",
@@ -414,6 +427,7 @@ View(stats_VE)
 ```
 
 ### Combine all five dietary antioxidants together
+
 ```{r alpha_diversity_analysis_for_all_dietary_antioxidants}
 set.seed(421)
 p_combine = plot_richness(psrare, x = "Tert_combine",

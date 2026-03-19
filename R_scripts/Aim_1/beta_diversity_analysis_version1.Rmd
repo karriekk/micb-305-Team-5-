@@ -78,6 +78,8 @@ psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
 
 ## Beta Diversity Analysis
 
+### Pre-processing
+
 ```{r calculate beta-curtis distances}
 ps_bray = phyloseq::distance(psrare, method = "bray")
 # View(as.matrix(ps_bray)) # Every pairwise comparison included
@@ -101,7 +103,11 @@ p_BC = mds_data %>%
   geom_point() +
   stat_ellipse() +
   theme_classic(base_size = 18) +
-  labs(color = "Beta Carotene Intake Categorization")
+  labs(color = "Beta Carotene Intake Categorization", title = "Beta Diversity Analysis on Varying Levels of Beta Carotene Intake") +
+  scale_color_manual(
+    values = c("BC Low" = "goldenrod2", "BC Medium" = "steelblue", "BC High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
 p_BC
 
 parkinsons_metadata = sample_data(psrare) %>% data.frame()
@@ -128,7 +134,6 @@ stats_BC = stats_BC %>% rename(Pval = `Pr(>F)`) %>%
 ```
 
 #### "BC Low" vs. "BC High"
-
 ```{r}
 # List samples that belong to the categories of interest (low and high)
 to_compare_BC_LH = c("BC Low", "BC High")
@@ -149,7 +154,6 @@ stats_multivar_BC_LH = adonis2(ps_bray_sub_BC_LH ~ Tert_BC + Age + entacapone + 
 ```
 
 #### "BC Low" vs. "BC Medium"
-
 ```{r}
 # List samples that belong to the categories of interest (low and medium)
 to_compare_BC_LM = c("BC Low", "BC Medium")
@@ -170,7 +174,6 @@ stats_multivar_BC_LM = adonis2(ps_bray_sub_BC_LM ~ Tert_BC + Age + entacapone + 
 ```
 
 #### "BC Medium" vs. "BC High"
-
 ```{r}
 # List samples that belong to the categories of interest (medium and high)
 to_compare_BC_MH = c("BC Medium", "BC High")
@@ -200,7 +203,11 @@ p_AC = mds_data %>%
   geom_point() +
   stat_ellipse() +
   theme_classic(base_size = 18) +
-  labs(color = "Alpha Carotene Intake Categorization")
+  labs(color = "Alpha Carotene Intake Categorization", title = "Beta Diversity Analysis on Varying Levels of Alpha Carotene Intake") +
+  scale_color_manual(
+    values = c("AC Low" = "goldenrod2", "AC Medium" = "steelblue", "AC High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
 p_AC
 
 # PERMANOVA test
@@ -240,7 +247,7 @@ ps_bray_sub_AC_LH = as.matrix(ps_bray)[samples_to_keep_AC_LH, samples_to_keep_AC
 # Run a PERMANOVA test again and account for the real confounding variables
 set.seed(421)
 stats_multivar_AC_LH = adonis2(ps_bray_sub_AC_LH ~ Tert_AC + Age + entacapone + Sex,
-                               data = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LH)) #p-value is 0.129
+                               data = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LH)) #p-value is 0.129 
 ```
 
 ### Vitamin C
@@ -252,7 +259,11 @@ p_VC = mds_data %>%
   geom_point() +
   stat_ellipse() +
   theme_classic(base_size = 18) +
-  labs(color = "Vitamin C Intake Categorization")
+  labs(color = "Vitamin C Intake Categorization", title = "Beta Diversity Analysis on Varying Levels of Vitamin C Intake") +
+  scale_color_manual(
+    values = c("VC Low" = "goldenrod2", "VC Medium" = "steelblue", "VC High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
 p_VC
 
 # PERMANOVA test
@@ -276,7 +287,6 @@ stats_VC = stats_VC %>% rename(Pval = `Pr(>F)`) %>%
 ```
 
 #### "VC Low" vs. "VC High"
-
 ```{r}
 # List samples that belong to the categories of interest
 to_compare_VC_LH = c("VC Low", "VC High")
@@ -296,6 +306,46 @@ stats_multivar_VC_LH = adonis2(ps_bray_sub_VC_LH ~ Tert_VC + Age + entacapone + 
 
 ```
 
+#### "VC Low" vs. "VC Medium"
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_VC_LM = c("VC Low", "VC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VC_LM = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_bray_sub_VC_LM = as.matrix(ps_bray)[samples_to_keep_VC_LM, samples_to_keep_VC_LM] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VC_LM = adonis2(ps_bray_sub_VC_LM ~ Tert_VC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LM)) # p-value is 0.258
+
+```
+
+#### "VC Medium" vs. "VC High"
+```{r}
+# List samples that belong to the categories of interest (low and high)
+to_compare_VC_MH = c("VC High", "VC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VC_MH = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_bray_sub_VC_MH = as.matrix(ps_bray)[samples_to_keep_VC_MH, samples_to_keep_VC_MH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VC_MH = adonis2(ps_bray_sub_VC_MH ~ Tert_VC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_MH)) # p-value is 0.002
+
+```
+
 ### Vitamin A
 
 ```{r beta_diversity_analysis_for_vitamin_a}
@@ -305,7 +355,11 @@ p_VA = mds_data %>%
   geom_point() +
   stat_ellipse() +
   theme_classic(base_size = 18) +
-  labs(color = "Vitamin A Intake Categorization")
+  labs(color = "Vitamin A Intake Categorization", title = "Beta Diversity Analysis on Varying Levels of Vitamin A Intake") +
+  scale_color_manual(
+    values = c("VA Low" = "goldenrod2", "VA Medium" = "steelblue", "VA High" = "indianred3", title = "Beta Diversity Analysis on Varying Levels of Vitamin A Intake"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
 p_VA
 
 # PERMANOVA test
@@ -329,7 +383,6 @@ stats_VA = stats_VA %>% rename(Pval = `Pr(>F)`) %>%
 ```
 
 #### "VA Low vs. "VA High"
-
 ```{r}
 # List samples that belong to the categories of interest
 to_compare_VA_LH = c("VA Low", "VA High")
@@ -358,7 +411,11 @@ p_VE = mds_data %>%
   geom_point() +
   stat_ellipse() +
   theme_classic(base_size = 18) +
-  labs(color = "Vitamin E Intake Categorization")
+  labs(color = "Vitamin E Intake Categorization", title = "Beta Diversity Analysis on Varying Levels of Vitamin E Intake") +
+  scale_color_manual(
+    values = c("VE Low" = "goldenrod2", "VE Medium" = "steelblue", "VE High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
 p_VE
 
 # PERMANOVA test
@@ -381,13 +438,12 @@ stats_VE = stats_VE %>% rename(Pval = `Pr(>F)`) %>%
   filter(!is.na(Pval)) # remove irrelevant lines
 ```
 
-#### VE low vs VE high
-
+#### "VE Low" vs "VE High"
 ```{r}
-# List samples that belong to the categories of interest
+# List samples that belong to the categories of interest (low and high)
 to_compare_VE_LH = c("VE Low", "VE High")
 
-# List samples that belong to these categories of interest (low and high)
+# List samples that belong to these categories of interest
 samples_to_keep_VE_LH = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LH) %>%
   rownames()
 
@@ -402,6 +458,46 @@ stats_multivar_VE_LH = adonis2(ps_bray_sub_VE_LH ~ Tert_VE + Age + entacapone + 
 
 ```
 
+#### "VE Low" vs "VE Medium"
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_VE_LM = c("VE Low", "VE Medium")
+
+# List samples that belong to these categories of interest
+samples_to_keep_VE_LM = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_bray_sub_VE_LM = as.matrix(ps_bray)[samples_to_keep_VE_LM, samples_to_keep_VE_LM] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VE_LM = adonis2(ps_bray_sub_VE_LM ~ Tert_VE + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LM)) # p-value is 0.009
+
+```
+
+#### "VE High" vs "VE Medium"
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_VE_MH = c("VE High", "VE Medium")
+
+# List samples that belong to these categories of interest
+samples_to_keep_VE_MH = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_bray_sub_VE_MH = as.matrix(ps_bray)[samples_to_keep_VE_MH, samples_to_keep_VE_MH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VE_MH = adonis2(ps_bray_sub_VE_MH ~ Tert_VE + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_MH)) # p-value is 0.009
+
+```
+
 ### Five dietary antioxidants combined together
 
 ```{r beta_diversity_analysis_for_combined_dietary_antioxidants}
@@ -411,7 +507,11 @@ p_combine = mds_data %>%
   geom_point() +
   stat_ellipse() + 
   theme_classic(base_size = 18) +
-  labs(color = "Categorization of Combined Dietary Antioxidant Intake", title = "Beta Diversity Analysis on Combined Dietary Antioxidant Intake")
+  labs(color = "Categorization of Combined Dietary Antioxidant Intake", title = "Beta Diversity Analysis on Combined Dietary Antioxidant Intake") +
+   scale_color_manual(
+    values = c("Combine Low" = "goldenrod2", "Combine Medium" = "steelblue", "Combine High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
 p_combine
 
 # PERMANOVA test
@@ -435,7 +535,6 @@ stats_combine = stats_combine %>% rename(Pval = `Pr(>F)`) %>%
 ```
 
 #### "Combine Low" vs. "Combine High"
-
 ```{r}
 # List samples that belong to the categories of interest (low and high)
 to_compare_combine_LH = c("Combine Low", "Combine High")
@@ -456,7 +555,6 @@ stats_multivar_combine_LH # p-value is 0.001, indicating a significant differenc
 ```
 
 #### "Combine Low" vs. "Combine Medium"
-
 ```{r}
 # List samples that belong to the categories of interest (low and medium)
 to_compare_combine_LM = c("Combine Low", "Combine Medium")
@@ -477,7 +575,6 @@ stats_multivar_combine_LM # p-value is 0.172 --> no significant difference
 ```
 
 #### "Combine Medium" vs. "Combine High"
-
 ```{r}
 # List samples that belong to the categories of interest (medium and high)
 to_compare_combine_MH = c("Combine Medium", "Combine High")
