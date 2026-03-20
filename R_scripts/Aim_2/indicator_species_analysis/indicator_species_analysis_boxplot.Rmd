@@ -69,7 +69,7 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
 ps_genus = tax_glom(ps, "Genus")
 
 # Convert phyloseq to relative abundance
-ps_relab = microbiome::transform(ps_genus, "compositional")
+ps_relab = microbiome::transform(ps, "compositional")
 
 # Extract the otu_table as a data frame because only the otu_table, instead of the phyloseq object, will be used to make plots
 otu_table = data.frame(otu_table(ps_relab))
@@ -84,12 +84,12 @@ feature_id_extract = rownames(otu_table)
 ### Indicator taxa in the high intake group
 ```{r beta_carotene_plot}
 # Plot the two taxa that are indicators for the high BC intake group
-# First one
-phyla_to_plot_BC_high_one = feature_id_extract[feature_id_extract %in% "630532cabb74720c1204579e6fe741b4"] 
+# First one: Cloacibacillus
+phyla_to_plot_BC_high_first = feature_id_extract[feature_id_extract %in% "630532cabb74720c1204579e6fe741b4"] 
 
-df_of_taxa_BC_high_one = prune_taxa(phyla_to_plot_BC_high_one, ps_relab) %>% psmelt()
+df_of_taxa_BC_high_first = prune_taxa(phyla_to_plot_BC_high_first, ps_relab) %>% psmelt()
 
-df_of_taxa_BC_high_one %>% 
+df_of_taxa_BC_high_first %>% 
   ggplot(aes(Tert_BC, Abundance, fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
@@ -100,12 +100,12 @@ df_of_taxa_BC_high_one %>%
     labels = c("Low intake", "Medium intake", "High intake")
   )
 
-# Second one
-phyla_to_plot_BC_high_two = feature_id_extract[feature_id_extract %in% "a030e5d5ff9c75a027e6cc58ff02cf7c"] 
+# Second one: Alloprevotella
+phyla_to_plot_BC_high_second = feature_id_extract[feature_id_extract %in% "a030e5d5ff9c75a027e6cc58ff02cf7c"] 
 
-df_of_taxa_BC_high_two = prune_taxa(phyla_to_plot_BC_high_two, ps_relab) %>% psmelt()
+df_of_taxa_BC_high_second = prune_taxa(phyla_to_plot_BC_high_second, ps_relab) %>% psmelt()
 
-df_of_taxa_BC_high_two %>% 
+df_of_taxa_BC_high_second %>% 
   ggplot(aes(Tert_BC, Abundance, fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +

@@ -179,6 +179,19 @@ summary(indval_BC, indvalcomp = TRUE)
 # Extract into a table
 indval_table_BC = as.data.frame(indval_BC$sign)
 
+# Plot the two taxa that are indicators for the high BC intake group
+phyla_to_plot_BC = indval_table_BC %>% 
+  filter(stat >= 0.35 & p.value < 0.05) %>% 
+  rownames()
+
+df_of_taxa_BC = prune_taxa(phyla_to_plot_BC, ps_filt_BC) %>% psmelt()
+
+df_of_taxa_BC %>% 
+  ggplot(aes(Tert_BC, Abundance, fill = Tert_BC)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(height = 0, width = 0.2) +
+  facet_wrap(~Genus, ncol = 8, scales = "free")
+
 ```
 
 ## Vitamin A
