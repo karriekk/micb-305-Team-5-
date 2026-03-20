@@ -1,1 +1,6 @@
-
+## Answers to our Questions
+1. For the beta-diversity plots, it's okay to just state that confounding variables were taken into account when doing statistical analyses in the figure legend to explain why the p-values are below 0.05 even though the differences do not seem to be significant based on the plots.
+2. Need to re-do the alpha diversity analysis. And for the p-values, they can be manually added onto the plots using Affinity.
+3. To reference column name with space within, use backticks (`) instead of (' ').
+4. For the indicator taxa analysis, need to consider about the appropriate and reasonable adjusted stat cutoff to use to filter the data. And when graphing, it would be better to make a boxplot that also includes the medium group to show the overall trend (use the unfiltered phyloseq object, look for abundance and taxa that are identified to be significant, and make a box plot), and it is okay for the boxplots to have a lot of zeros clustered at the bottom. For the p-values, they can be manually added.
+5. Need to email Imogen to validate and discuss about the weird difference between log2fold change in our table and graphs. Need to double-check pathway differential abundance analysis.
