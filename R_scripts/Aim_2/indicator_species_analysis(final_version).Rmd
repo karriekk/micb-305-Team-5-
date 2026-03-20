@@ -1,6 +1,6 @@
 ---
 title: "Indicator Species Analysis (final version)"
-authors: Yanting Xiong, Carrie Sun
+authors: Carrie Sun, Yanting Xiong
 output: html_document
 date: "2026-03-20"
 ---
