@@ -17,7 +17,7 @@ library(indicspecies)
 
 ```{r dataset_loading}
 # Load in the filtered and wrangled Parkinson's metadata
-parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+parkinsons_metadata_filt_cat = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
 
 # For each variable prefixed with "Tert_", the metadata will be filtered to only include PD patients in the low and high intake categories, and the resulting subsets will be used for downstream analyses
 parkinsons_metadata_filt_cat_AC_LH_only = parkinsons_metadata_filt_cat %>% 
@@ -39,10 +39,10 @@ parkinsons_metadata_filt_cat_combine_LH_only = parkinsons_metadata_filt_cat %>%
   filter(Tert_combine == "Combine Low" | Tert_combine == "Combine High")
 
 # Load in feature table exported from QIIME2
-counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+counts = read.delim('../../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
 
 # Load in taxonomy table exported from QIIME2
-taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
 ## Create a Phyloseq Object

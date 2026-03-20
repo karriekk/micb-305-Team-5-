@@ -17,7 +17,7 @@ library(dplyr)
 ## Dataset loading
 ```{r dataset_loading}
 # Load in the filtered and wrangled Parkinson's metadata
-parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+parkinsons_metadata_filt_cat = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
 
 # Relevel the categorical variable in the metadata so that it appears in the order “low,” “medium,” and “high” in the plot, rather than the default alphabetical order
 vars = c("Tert_BC", "Tert_AC", "Tert_VA", "Tert_VC", "Tert_VE", "Tert_combine") # store the column names
@@ -34,10 +34,10 @@ for (i in seq_along(vars)) {
 }
 
 # Load in feature table exported from QIIME2
-counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+counts = read.delim('../../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
 
 # Load in taxonomy table exported from QIIME2
-taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
 ## Create a Phyloseq Object
