@@ -5,7 +5,7 @@ Team 5 members: Carrie Sun, Coe McGrath, Cynthia Lin, Emily Ju, Yanting Xiong
 Link to the original dataset by Cristea et al.:  https://doi.org/10.1002/mds.28052
 
 ## Project Summary
-Parkinson's disease (PD) is an age-related and progressive neurodegenerative disease. Despite the fact that it is the second most prevalent neurodegenerative disease worldwide, the precise mechanisms underlying PD pathogenesis still remains unclear, and no curative therapeutics currently exist to slow the progression of the disease.
+Parkinson's disease (PD) is an age-related and progressive neurodegenerative disease. Despite the fact that it is the second most prevalent neurodegenerative disease worldwide, the precise mechanisms underlying PD pathogenesis still remains unclear.
 
 Dietary antioxidants, which are compounds that neutralize free radicals to prevent clinical disease and cell damage, have been shown to modulate the gut microbiome and mitigate oxidative stress. And since oxidative stress has been widely recognized as a key contributor to the pathogenesis of PD, dietary antioxidants have been proposed as a promising therapeutic strategy for modifying the underlying disease processes of PD. 
 
