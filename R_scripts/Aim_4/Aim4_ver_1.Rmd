@@ -8,22 +8,87 @@ date: "2026-03-20"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Load Library
+```{r}
+library(tidyverse)
+```
+
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
+```{r Load datasets}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# Load in feature table exported from QIIME2
+counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+# Create the phyloseq object
+# Taxonomy
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c("Domain","Phylum","Class","Order",
+                    "Family","Genus","Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
+              otu_table(counts_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted))
+
 ```
 
-## Including Plots
+```{r Load the indicator taxa}
+#Extract the indicator taxa obtained from aim2 
+taxa_ids <- c(
+  "630532cabb74720c1204579e6fe741b4",  # Cloacibacillus
+  "a030e5d5ff9c75a027e6cc58ff02cf7c"   # Alloprevotella
+)
+ps_relab <- transform_sample_counts(ps, function(x) x / sum(x))
+#Extract the phyloseq abundance
+otu <- as.data.frame(otu_table(ps_relab))
 
-You can also embed plots, for example:
+# make samples = rows
+if (taxa_are_rows(ps_relab)) {
+  otu <- t(otu)
+}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# keep only your two taxa
+sub <- otu[, taxa_ids, drop = FALSE]
+```
+
+
+```{r Create Patient Scoring}
+score_pa <- rowSums(sub > 0.01)
+score_abundance <- rowSums(sub)
+
+z <- scale(sub)
+score_z <- rowSums(z, na.rm = TRUE)
+
+```
+
+
+```{r Add to Metadata}
+meta <- data.frame(sample_data(ps_relab))
+
+meta$score_pa <- score_pa[rownames(meta)]
+meta$score_abundance <- score_abundance[rownames(meta)]
+meta$score_z <- score_z[rownames(meta)]
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r Predict the MoCA based on the indicator taxa}
+model2 <- lm(moca_total ~ sub[,1] + sub[,2] + Age + Sex, data = meta)
+summary(model2)
+```
+Age seems to be the only predictor for MoCA score. 
