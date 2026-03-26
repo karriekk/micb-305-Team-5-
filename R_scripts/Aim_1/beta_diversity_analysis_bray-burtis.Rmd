@@ -1,5 +1,5 @@
 ---
-title: "Beta Diversity Analysis (Version 1)"
+title: "Beta Diversity Analysis (Bray-Curtis)"
 author: Yanting Xiong
 output: html_document
 date: "2026-03-15"
