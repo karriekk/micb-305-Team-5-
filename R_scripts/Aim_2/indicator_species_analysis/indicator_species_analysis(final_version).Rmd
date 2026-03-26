@@ -179,26 +179,6 @@ summary(indval_BC, indvalcomp = TRUE)
 # Extract into a table
 indval_table_BC = as.data.frame(indval_BC$sign)
 
-# Plot the indicator taxa
-phyla_to_plot_BC = indval_table_BC %>% 
-  filter(stat >= 0.35 & p.value < 0.05) %>% 
-  rownames()
-
-df_of_taxa_BC = prune_taxa(phyla_to_plot_BC, ps_filt_BC) %>% psmelt()
-
-# The smallest nonzero relative abundance value is 0.0001310101
-
-df_of_taxa_BC %>% 
-  ggplot(aes(Tert_BC, log10(Abundance + 0.0001310101/2), fill = Tert_BC)) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
-  scale_x_discrete(labels = c("High intake", "Low intake")) + 
-  scale_fill_discrete(
-    name = "Beta Carotene Intake Categorization",
-    labels = c("High intake", "Low intake")) +
-  facet_wrap(~Genus, ncol = 8, scales = "free")
-
 ```
 
 ## Vitamin A
