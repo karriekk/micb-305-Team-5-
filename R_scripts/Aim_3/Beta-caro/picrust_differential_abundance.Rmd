@@ -112,7 +112,7 @@ ratio_filt = ratio %>%
 daa_results_log2fc_filtered = daa_annotated_results_df %>% 
   filter(feature %in% ratio_filt$pathway)
 
-# Adjusted P-value = 17 hits
+# Adjusted P-value = 21 hits
 daa_results_log2fc_filtered %>% 
   filter(p_adjust < 0.05) %>% 
   nrow()
@@ -123,6 +123,9 @@ significant_pathways = daa_results_log2fc_filtered %>%
 
 view(significant_pathways)
 
+# save for aim 4
+saveRDS(significant_pathways,'BC_significant_pathways.rds')
+
 # Then use that in your plot function
 # Note that I had to increase the Padj cutoff to get enough to plot!
 sanity_peb = pathway_errorbar_fixed(abundance = path_filt, 
@@ -130,7 +133,7 @@ sanity_peb = pathway_errorbar_fixed(abundance = path_filt,
                      Group = metadata_sub$Tert_BC, 
                      wrap_label = F, wraplength=60,
                      fc_cutoff = 0, order_by_log = F,
-                     p_values_threshold = 0.0028, 
+                     p_values_threshold = 0.04, 
                      ko_to_kegg = F, 
                      p_value_bar = TRUE, 
                      x_lab = "description")

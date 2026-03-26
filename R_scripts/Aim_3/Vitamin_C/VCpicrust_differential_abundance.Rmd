@@ -112,7 +112,7 @@ ratio_filt = ratio %>%
 daa_results_log2fc_filtered = daa_annotated_results_df %>% 
   filter(feature %in% ratio_filt$pathway)
 
-# Adjusted P-value = 17 hits
+# Adjusted P-value = 37 hits
 daa_results_log2fc_filtered %>% 
   filter(p_adjust < 0.05) %>% 
   nrow()
@@ -120,6 +120,9 @@ daa_results_log2fc_filtered %>%
 significant_pathways = daa_results_log2fc_filtered %>% 
   filter(p_adjust < 0.05) %>%
   pull(feature)
+
+# save for aim 4
+saveRDS(significant_pathways,'VC_significant_pathways.rds')
 
 # Then use that in your plot function
 # Note that I had to increase the Padj cutoff to get enough to plot!
