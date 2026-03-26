@@ -37,6 +37,8 @@ To achieve this goal, we will first filter the metadata to include only PD patie
 - Indicator taxa analysis
 
   - R script
+ 
+  - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_2/Indicator_species_analysis_results_summary.md)
 
   - Tables
 
