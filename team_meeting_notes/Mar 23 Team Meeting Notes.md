@@ -12,7 +12,7 @@
 1. Increase the stat threshold to 0.7 (because if the stat cutoff is too low, it will be more like differential abundance analysis but less accurate than that) --> so only the indicator taxa associated with the low intake groups will be kept.
 
 ### Pathway Differential Abundance Analysis (Aim 3)
-1. Do a volcano plot to show all the results and to show the overall trend as well as fraction of pathways that are significant; can also do a PCA plot.
+1. Do a volcano plot to show all the results and to show the overall trend as well as the fraction of pathways that are significant; can also do a PCA plot.
 2. Alternatively, in the presentation or manuscript, we could perform a targeted literature search to identify pathways of particular interest, and then highlight these pathways while placing them in proper biological or conceptual context.
 
 ### Linear Regression Model (Aim 4)
