@@ -2,7 +2,7 @@
 - Note: when running beta-diversity analysis, age, sex, and entacapone were accounted for as confounding variables
 
 1. Beta diversity analysis of Beta Carotene
-<img width="1176" height="737" alt="Screenshot 2026-03-26 at 10 08 36" src="https://github.com/user-attachments/assets/62453696-60b7-41a5-aad2-332c9f6b015b" />
+<img width="1438" height="885" alt="Screenshot 2026-03-26 at 13 56 42" src="https://github.com/user-attachments/assets/1e012df1-0b15-4167-abbe-6023f8c45ce6" />
 
 - BC low vs BC high: P-value = 0.003
 - BC low vs BC medium: P-value = 0.296
