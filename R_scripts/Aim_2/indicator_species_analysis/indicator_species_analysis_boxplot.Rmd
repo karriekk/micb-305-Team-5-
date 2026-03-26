@@ -153,7 +153,7 @@ df_of_taxa_BC_high_Allo %>%
 
 #### Escherichia-Shigella
 
-``` {r boxplot_for_Escherichia-Shigella}
+``` {r boxplot_for_Escherichia-Shigella_first}
 phyla_to_plot_BC_low_Esch = feature_id_extract[feature_id_extract %in% "4c8288bfbd76958c0c094d87b97650f8"] 
 
 df_of_taxa_BC_low_Esch = prune_taxa(phyla_to_plot_BC_low_Esch, ps_relab) %>% psmelt()
@@ -250,7 +250,7 @@ df_of_taxa_VC_high_Astero %>%
 
 #### Escherichia-Shigella
 
-``` {r boxplot_for_Escherichia-Shigella}
+``` {r boxplot_for_Escherichia-Shigella_second}
 phyla_to_plot_VC_low_Esch = feature_id_extract[feature_id_extract %in% "4c8288bfbd76958c0c094d87b97650f8"] 
 
 df_of_taxa_VC_low_Esch = prune_taxa(phyla_to_plot_VC_low_Esch, ps_relab) %>% psmelt()
