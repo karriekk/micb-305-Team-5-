@@ -1,4 +1,4 @@
-## Results (tables) for alpha diversity analysis 
+## Summary of results for alpha diversity analysis 
 
 ### Section 1: alpha-rarefaction curve
 - A sampling depth of 6515 was chosen because at this sampling depth, only 14 samples are excluded from the analysis and we have retained 1,192,428 (50.04%) features in 183 (92.89%) samples.
