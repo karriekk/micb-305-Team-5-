@@ -210,7 +210,7 @@ indval_VC = multipatt(t(otu_table_VC),
 summary(indval_VC, indvalcomp = TRUE) 
 # Three indicator taxa associated with the high intake group
   # a3d1f4355f204d4d49ad2bea3b801265 (p-value = 0.043, stat = 0.411)
-  # 6ca3f1e7d3011097ec41585e61307d26 (p-value = 0.015, stat = 0.361) - also enriched in VA high intake group
+  # 6ca3f1e7d3011097ec41585e61307d26 (p-value = 0.015, stat = 0.361) 
   # a033d13f0f20b5a9847c0d750f9b257b (p-value = 0.044, stat = 0.305)
 
 # Three indicator taxa associated with the low intake group

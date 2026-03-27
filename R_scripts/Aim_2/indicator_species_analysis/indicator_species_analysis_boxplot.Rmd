@@ -4,7 +4,7 @@ author: Yanting Xiong
 output: html_document
 date: "2026-03-20"
 ---
-When plotting, a stat cutoff of greater than and equal to 0.35 is used, meaning that indicator taxa with a stat value of below 0.35 will not be plotted.
+When plotting, a stat cutoff of greater than and equal to 0.35 is used, therefore indicator taxa with a stat value of below 0.35 will not be plotted.
 
 ## Library loading
 
@@ -97,7 +97,7 @@ df_of_taxa_BC_high_Cloa %>%
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001313370/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Cloacibacillus Across Dietary Antioxidant Groups in PD Patients", x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Beta Carotene Intake Categorization",
@@ -140,7 +140,7 @@ df_of_taxa_BC_high_Allo %>%
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001310101/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Alloprevotella Across Dietary Antioxidant Groups in PD Patients", x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Beta Carotene Intake Categorization",
@@ -160,17 +160,23 @@ df_of_taxa_BC_low_Esch = prune_taxa(phyla_to_plot_BC_low_Esch, ps_relab) %>% psm
 
 # The smallest nonzero relative abundance value is 0.0001518834
 
-df_of_taxa_BC_low_Esch %>% 
+BC_low_Esch_plot = df_of_taxa_BC_low_Esch %>% 
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001518834/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Escherichia-Shigella Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
-  scale_fill_discrete(
+  scale_fill_manual(
     name = "Beta Carotene Intake Categorization",
+    values = c("BC Low" = "goldenrod2",
+               "BC Medium" = "steelblue",
+               "BC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   )
+BC_low_Esch_plot
 
+# Export the plot
+ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Beta-Carotene Intake Levels in PD.png", plot = BC_low_Esch_plot, width = 7, height = 8, dpi = 300)
 ```
 
 ## Vitamin A
@@ -190,7 +196,7 @@ df_of_taxa_VA_high_Acida %>%
   ggplot(aes(x = Tert_VA, y = log10(Abundance + 0.0006432050/2), fill = Tert_VA)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Acidaminococcus Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin A Intake Categorization",
@@ -216,7 +222,7 @@ df_of_taxa_VC_high_Anae %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0001980786/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Anaerosporobacter Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -224,6 +230,7 @@ df_of_taxa_VC_high_Anae %>%
   )
 
 ```
+
 #### Asteroleplasma
 
 ``` {r boxplot_for_Asteroleplasma}
@@ -237,7 +244,7 @@ df_of_taxa_VC_high_Astero %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0002391582/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Asteroleplasma Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -257,17 +264,23 @@ df_of_taxa_VC_low_Esch = prune_taxa(phyla_to_plot_VC_low_Esch, ps_relab) %>% psm
 
 # The smallest nonzero relative abundance value is 0.0001518834
 
-df_of_taxa_VC_low_Esch %>% 
+VC_low_Esch_plot = df_of_taxa_VC_low_Esch %>% 
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0001518834/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Escherichia-Shigella Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
-  scale_fill_discrete(
+  scale_fill_manual(
     name = "Vitamin C Intake Categorization",
+    values = c("VC Low" = "goldenrod2",
+               "VC Medium" = "steelblue",
+               "VC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   )
+VC_low_Esch_plot
 
+# Export the plot
+ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Vitamin C Intake Levels in PD.png", plot = VC_low_Esch_plot, width = 7, height = 8, dpi = 300)
 ```
 
 #### Acidaminococcus
@@ -283,7 +296,7 @@ df_of_taxa_VC_low_Acida %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0006432050/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Acidaminococcus Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -293,6 +306,7 @@ df_of_taxa_VC_low_Acida %>%
 ```
 
 #### Faecalitalea
+
 ``` {r boxplot_for_Faecalitalea}
 phyla_to_plot_VC_low_Fae = feature_id_extract[feature_id_extract %in% "f0135ea5c9854954ff851185c476e91c"] 
 
@@ -304,7 +318,7 @@ df_of_taxa_VC_low_Fae %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0001390530/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Faecalitalea Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -330,7 +344,7 @@ df_of_taxa_VE_high_Vic %>%
   ggplot(aes(x = Tert_VE, y = log10(Abundance + 0.0001997470/2), fill = Tert_VE)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Victivallaceae Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin E Intake Categorization",
@@ -354,7 +368,7 @@ df_of_taxa_VE_low_Rum %>%
   ggplot(aes(x = Tert_VE, y = log10(Abundance + 0.0004671650/2), fill = Tert_VE)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Ruminococcus gnavus group Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin E Intake Categorization",
@@ -380,7 +394,7 @@ df_of_taxa_combined_high_Lach %>%
   ggplot(aes(x = Tert_combine, y = log10(Abundance + 0.0002972946/2), fill = Tert_combine)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(title = "Relative Abundance of Lachnospiraceae FCS020 group Across Dietary Antioxidant Groups in PD", x = "Dietary Antioxidant Tertile", y = "Relative Abundance") +
+  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Combined Dietary Antioxidant Intake Categorization",
