@@ -17,6 +17,8 @@ Link to the original dataset by Cristea et al.:  https://doi.org/10.1002/mds.280
 - Alpha diversity analysis
 
   - R script
+ 
+  - [Summary of results]
 
   - Figures
  
