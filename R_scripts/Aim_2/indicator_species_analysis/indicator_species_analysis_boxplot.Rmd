@@ -97,7 +97,7 @@ df_of_taxa_BC_high_Cloa %>%
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001313370/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Beta Carotene Intake Categorization",
@@ -140,7 +140,7 @@ df_of_taxa_BC_high_Allo %>%
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001310101/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Beta Carotene Intake Categorization",
@@ -164,7 +164,7 @@ BC_low_Esch_plot = df_of_taxa_BC_low_Esch %>%
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001518834/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_manual(
     name = "Beta Carotene Intake Categorization",
@@ -196,7 +196,7 @@ df_of_taxa_VA_high_Acida %>%
   ggplot(aes(x = Tert_VA, y = log10(Abundance + 0.0006432050/2), fill = Tert_VA)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin A Intake Categorization",
@@ -222,7 +222,7 @@ df_of_taxa_VC_high_Anae %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0001980786/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -244,7 +244,7 @@ df_of_taxa_VC_high_Astero %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0002391582/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -268,7 +268,7 @@ VC_low_Esch_plot = df_of_taxa_VC_low_Esch %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0001518834/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_manual(
     name = "Vitamin C Intake Categorization",
@@ -296,7 +296,7 @@ df_of_taxa_VC_low_Acida %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0006432050/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -318,7 +318,7 @@ df_of_taxa_VC_low_Fae %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0001390530/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin C Intake Categorization",
@@ -344,7 +344,7 @@ df_of_taxa_VE_high_Vic %>%
   ggplot(aes(x = Tert_VE, y = log10(Abundance + 0.0001997470/2), fill = Tert_VE)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin E Intake Categorization",
@@ -368,7 +368,7 @@ df_of_taxa_VE_low_Rum %>%
   ggplot(aes(x = Tert_VE, y = log10(Abundance + 0.0004671650/2), fill = Tert_VE)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Vitamin E Intake Categorization",
@@ -394,7 +394,7 @@ df_of_taxa_combined_high_Lach %>%
   ggplot(aes(x = Tert_combine, y = log10(Abundance + 0.0002972946/2), fill = Tert_combine)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
     name = "Combined Dietary Antioxidant Intake Categorization",
