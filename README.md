@@ -36,7 +36,7 @@ To achieve this goal, we will first filter the metadata to include only PD patie
 #### Aim 2: Taxonomy Analysis
 - Indicator species analysis
 
-  - R script
+  - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_2/indicator_species_analysis/indicator_species_analysis(final_version).Rmd)
  
   - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_2/Indicator_species_analysis_results_summary.md)
 
