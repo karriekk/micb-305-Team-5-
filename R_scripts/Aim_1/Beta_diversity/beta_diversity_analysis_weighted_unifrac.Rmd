@@ -1,18 +1,10 @@
 ---
-title: "BetaDiversitywithUnifrac"
-name: "Coe McGrath"
-output: html_document
-date: "2026-03-27"
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
----
-title: "Beta diversity"
+title: "Beta Diversity Analysis using Weighted UniFrac"
+author: Coe McGrath
 output: html_document
 date: "2026-03-26"
---- 
+---
+
 ## Library loading
 
 ```{r libraries, include = FALSE}
@@ -26,7 +18,7 @@ library(ape)
 
 ```{r load_data}
 # Load in the filtered and wrangled Parkinson's metadata
-parkinsons_metadata_filt_cat = read.csv('~/Desktop/MICB305_folder/Alpha/Beta_Diversity_analysis/parkinsons_metadata_filt_cat.csv', row.names = 1)
+parkinsons_metadata_filt_cat = read.csv('../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
 
 # Because we will be controlling for entacapone in downstream analyses and it contains NA values, they need to be removed from the filtered metadata
 parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
@@ -47,14 +39,13 @@ for (i in seq_along(vars)) {
 }
 
 # Load in feature table exported from QIIME2
-counts = read.delim('~/Desktop/MICB305_folder/Alpha/Beta_Diversity_analysis/feature-table.txt', skip = 1, row.names = 1)
+counts = read.delim('../../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
 
 # Load in taxonomy table exported from QIIME2
-taxonomy = read.delim('~/Desktop/MICB305_folder/Alpha/Beta_Diversity_analysis/taxonomy.tsv', row.names = 1)
+taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 
 # Load in phylogenetic tree exported from QIIME2
-
-tree <- read_tree("~/Desktop/MICB305_folder/Alpha/Beta_Diversity_analysis/tree.nwk")
+tree <- read_tree('../../../QIIME2_outputs/tree.nwk')
 ```
 
 ## Make a Phyloseq object
@@ -75,8 +66,11 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat_entacapone_NA_removed),
               tax_table(taxonomy_formatted),
               phy_tree(tree))
 
+# Add the tree to the phyloseq object
 phy_tree(ps)
-all(taxa_names(ps) %in% tree$tip.label)
+
+# Check if tip names match the ASV IDs
+all(taxa_names(ps) %in% tree$tip.label) # Returns TRUE
 ```
 
 ## Alpha rarefaction curve
@@ -93,21 +87,23 @@ set.seed(421)
 psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
 ```
 
-```{r calculate beta-curtis distances}
-ps_unifrac = phyloseq::distance(psrare, method = "wunifrac")
-# View(as.matrix(ps_unifrac)) # Every pairwise comparison included
+```{r calculate Weighted UniFrac Distances}
+ps_weighted_unifrac = phyloseq::distance(psrare, method = "wunifrac")
+
+# View(as.matrix(ps_weighted_unifrac)) # Every pairwise comparison included
 
 # MDS scaling
 set.seed(421)
-mds = metaMDS(ps_unifrac)
+mds = metaMDS(ps_weighted_unifrac)
 
 # Extract data
 mds_data <- mds$points %>% 
   as.data.frame() %>% 
-  merge(sample_data(psrare), by = "row.names", sort = FALSE)
+  merge(sample_data(psrare), by = "row.names", sort = F)
 head(mds_data)
 
 ```
+
 ### Beta carotene
 
 ```{r beta_diversity_analysis_for_beta_carotene}
@@ -117,7 +113,7 @@ p_BC = mds_data %>%
   geom_point() +
   stat_ellipse() +
   theme_classic(base_size = 18) +
-  labs(color = "Beta Carotene Intake Categorization", title = "Beta Diversity Analysis on Varying Levels of Beta Carotene Intake") +
+  labs(color = "Beta Carotene Intake Categorization") +
   scale_color_manual(
     values = c("BC Low" = "goldenrod2", "BC Medium" = "steelblue", "BC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
@@ -148,6 +144,7 @@ stats_BC = stats_BC %>% rename(Pval = `Pr(>F)`) %>%
 ```
 
 #### "BC Low" vs. "BC High"
+
 ```{r}
 # List samples that belong to the categories of interest (low and high)
 to_compare_BC_LH = c("BC Low", "BC High")
@@ -168,6 +165,7 @@ stats_multivar_BC_LH = adonis2(ps_unifrac_sub_BC_LH ~ Tert_BC + Age + entacapone
 ```
 
 #### "BC Low" vs. "BC Medium"
+
 ```{r}
 # List samples that belong to the categories of interest (low and medium)
 to_compare_BC_LM = c("BC Low", "BC Medium")
@@ -188,6 +186,7 @@ stats_multivar_BC_LM = adonis2(ps_unifrac_sub_BC_LM ~ Tert_BC + Age + entacapone
 ```
 
 #### "BC Medium" vs. "BC High"
+
 ```{r}
 # List samples that belong to the categories of interest (medium and high)
 to_compare_BC_MH = c("BC Medium", "BC High")
@@ -625,3 +624,4 @@ stats_multivar_combine_MH = adonis2(ps_unifrac_sub_combine_MH ~ Tert_combine + A
                                     data = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_MH))
 stats_multivar_combine_MH 
 ```
+
