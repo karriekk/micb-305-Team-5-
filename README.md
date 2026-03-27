@@ -36,7 +36,7 @@ Link to the original dataset by Cristea et al.:  https://doi.org/10.1002/mds.280
  
   - Summary of results
  
-    - [Bray-Curtis]((https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Beta_diversity/beta_diversity(bray-curtis)_results_summary.md)
+    - [Bray-Curtis](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Beta_diversity/beta_diversity(bray-curtis)_results_summary.md)
    
     - Weighted UniFrac
    
