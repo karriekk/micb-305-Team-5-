@@ -23,6 +23,7 @@
 
 ### Some Notes about Making Publication-ready Plots
 1. Could use str_wrap() to set the maximum number of characters that are allowed to be in one line.
+2. Plots do NOT need to have titles.
 
 ### Some Notes about Adding P-values onto the Plot
 1. Can use Affinity to manually add p-values onto the plots instead of coding them in R.
