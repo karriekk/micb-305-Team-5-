@@ -1,0 +1,290 @@
+---
+title: "Differential Abundance Analysis using MaAsLin2"
+author: Yanting Xiong
+output: html_document
+date: "2026-03-14"
+---
+
+## Library loading
+
+```{r library loading}
+library(tidyverse)
+library(phyloseq)
+library(Maaslin2)
+```
+
+## Dataset loading
+
+```{r dataset loading}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# Because we will be controlling for entacapone in downstream analyses and it contains NA values, they need to be removed from the filtered metadata
+parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
+# 10 PD individuals are removed after this filtering step because they do not have entacapone intakes recorded
+
+# Load in feature table exported from QIIME2
+counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+```
+
+## Makr a Phyloseq object
+
+```{r phyloseq object}
+# Taxonomy
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c("Domain","Phylum","Class","Order",
+                    "Family","Genus","Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+
+# Create the phyloseq object
+ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
+              otu_table(counts_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted))
+```
+
+## Preprocessing
+
+```{r pre-processing}
+# Aggregate ASVs to the Genus level
+ps_genus = tax_glom(ps, "Genus")
+
+```
+
+## Beta Carotene
+
+```{r beta_carotene}
+set.seed(421)
+
+out_BC = Maaslin2(
+  # Your count table and metadata, extracted into data frames
+  input_data = data.frame(ps_genus@otu_table), 
+  input_metadata = data.frame(ps_genus@sam_data), 
+  output = "to_delete", 
+  # List out your explanatory variable(s) - ex. c('var1','var2')
+  fixed_effects = c("Tert_BC", "Age", "Sex", "entacapone"),
+  # Optional: specify a reference group for your categorical variable(s). 
+  # This will be the group that all other groups are compared to. 
+  # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
+  reference = "Tert_BC,BC Low",
+  # TSS is Total Sum Scaled, AKA relative abundance.
+  normalization = 'TSS',
+  # Arcsine transformation is recommended for relative abundance data.
+  transform = 'AST',
+  # Set abundance, prevalence, Padj value thresholds
+  min_abundance = 0.001, # 0.001 means 0.1% relative abundance
+  min_prevalence = 0.1, # 0.1 means 10% of samples
+  max_significance = 0.05, # Padj threshold
+  # These plots increase run time and are usually poorly formatted, so you might as well stop them from being generated
+  plot_heatmap = FALSE,
+  plot_scatter = FALSE
+)
+
+statistical_table_BC = out_BC$results
+
+writexl::write_xlsx(statistical_table_BC,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Beta_carotene - Maaslin2 Results.xlsx')
+
+# Filter stats to only include taxa that are differentially abundant between the low and high intake groups
+taxa_to_plot_BC = statistical_table_BC %>% 
+  filter(qval < 0.05 & value == "BC High") # 0 observations
+
+```
+
+## Alpha Carotene
+
+```{r alpha_carotene}
+set.seed(421)
+
+out_AC = Maaslin2(
+  # Your count table and metadata, extracted into data frames
+  input_data = data.frame(ps_genus@otu_table), 
+  input_metadata = data.frame(ps_genus@sam_data), 
+  output = "to_delete", 
+  # List out your explanatory variable(s) - ex. c('var1','var2')
+  fixed_effects = c("Tert_AC", "Age", "Sex", "entacapone"),
+  # Optional: specify a reference group for your categorical variable(s). 
+  # This will be the group that all other groups are compared to. 
+  # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
+  reference = "Tert_AC,AC Low",
+  # TSS is Total Sum Scaled, AKA relative abundance.
+  normalization = 'TSS',
+  # Arcsine transformation is recommended for relative abundance data.
+  transform = 'AST',
+  # Set abundance, prevalence, Padj value thresholds
+  min_abundance = 0.001, # 0.001 means 0.1% relative abundance
+  min_prevalence = 0.1, # 0.1 means 10% of samples
+  max_significance = 0.05, # Padj threshold
+  # These plots increase run time and are usually poorly formatted, so you might as well stop them from being generated
+  plot_heatmap = FALSE,
+  plot_scatter = FALSE
+)
+
+statistical_table_AC = out_AC$results
+
+writexl::write_xlsx(statistical_table_AC,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Alpha_carotene - Maaslin2 Results.xlsx')
+
+# Filter stats to only include taxa that are differentially abundant between the low and high intake groups
+taxa_to_plot_AC = statistical_table_AC %>% 
+  filter(qval < 0.05 & value == "AC High") # 0 observations
+
+```
+
+## Vitamin A
+
+```{r vitamin_a}
+set.seed(421)
+
+out_VA = Maaslin2(
+  # Your count table and metadata, extracted into data frames
+  input_data = data.frame(ps_genus@otu_table), 
+  input_metadata = data.frame(ps_genus@sam_data), 
+  output = "to_delete", 
+  # List out your explanatory variable(s) - ex. c('var1','var2')
+  fixed_effects = c("Tert_VA", "Age", "Sex", "entacapone"),
+  # Optional: specify a reference group for your categorical variable(s). 
+  # This will be the group that all other groups are compared to. 
+  # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
+  reference = "Tert_VA,VA Low",
+  # TSS is Total Sum Scaled, AKA relative abundance.
+  normalization = 'TSS',
+  # Arcsine transformation is recommended for relative abundance data.
+  transform = 'AST',
+  # Set abundance, prevalence, Padj value thresholds
+  min_abundance = 0.001, # 0.001 means 0.1% relative abundance
+  min_prevalence = 0.1, # 0.1 means 10% of samples
+  max_significance = 0.05, # Padj threshold
+  # These plots increase run time and are usually poorly formatted, so you might as well stop them from being generated
+  plot_heatmap = FALSE,
+  plot_scatter = FALSE
+)
+
+statistical_table_VA = out_VA$results
+
+writexl::write_xlsx(statistical_table_VA,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_A - Maaslin2 Results.xlsx')
+
+# Filter stats to only include taxa that are differentially abundant between the low and high intake groups
+taxa_to_plot_VA = statistical_table_VA %>% 
+  filter(qval < 0.05 & value == "VA High") # 0 observations
+```
+
+## Vitamin C
+
+```{r vitamin_c}
+set.seed(421)
+
+out_VC = Maaslin2(
+  # Your count table and metadata, extracted into data frames
+  input_data = data.frame(ps_genus@otu_table), 
+  input_metadata = data.frame(ps_genus@sam_data), 
+  output = "to_delete", 
+  # List out your explanatory variable(s) - ex. c('var1','var2')
+  fixed_effects = c("Tert_VC", "Age", "Sex", "entacapone"),
+  # Optional: specify a reference group for your categorical variable(s). 
+  # This will be the group that all other groups are compared to. 
+  # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
+  reference = "Tert_VC,VC Low",
+  # TSS is Total Sum Scaled, AKA relative abundance.
+  normalization = 'TSS',
+  # Arcsine transformation is recommended for relative abundance data.
+  transform = 'AST',
+  # Set abundance, prevalence, Padj value thresholds
+  min_abundance = 0.001, # 0.001 means 0.1% relative abundance
+  min_prevalence = 0.1, # 0.1 means 10% of samples
+  max_significance = 0.05, # Padj threshold
+  # These plots increase run time and are usually poorly formatted, so you might as well stop them from being generated
+  plot_heatmap = FALSE,
+  plot_scatter = FALSE
+)
+
+statistical_table_VC = out_VC$results
+
+writexl::write_xlsx(statistical_table_VC,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_C - Maaslin2 Results.xlsx')
+
+# Filter stats to only include taxa that are differentially abundant between the low and high intake groups
+taxa_to_plot_VC = statistical_table_VC %>% 
+  filter(qval < 0.05 & value == "VC High") # 0 observations
+```
+
+## Vitamin E
+
+```{r vitamin_e}
+set.seed(421)
+
+out_VE = Maaslin2(
+  # Your count table and metadata, extracted into data frames
+  input_data = data.frame(ps_genus@otu_table), 
+  input_metadata = data.frame(ps_genus@sam_data), 
+  output = "to_delete", 
+  # List out your explanatory variable(s) - ex. c('var1','var2')
+  fixed_effects = c("Tert_VE", "Age", "Sex", "entacapone"),
+  # Optional: specify a reference group for your categorical variable(s). 
+  # This will be the group that all other groups are compared to. 
+  # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
+  reference = "Tert_VE,VE Low",
+  # TSS is Total Sum Scaled, AKA relative abundance.
+  normalization = 'TSS',
+  # Arcsine transformation is recommended for relative abundance data.
+  transform = 'AST',
+  # Set abundance, prevalence, Padj value thresholds
+  min_abundance = 0.001, # 0.001 means 0.1% relative abundance
+  min_prevalence = 0.1, # 0.1 means 10% of samples
+  max_significance = 0.05, # Padj threshold
+  # These plots increase run time and are usually poorly formatted, so you might as well stop them from being generated
+  plot_heatmap = FALSE,
+  plot_scatter = FALSE
+)
+
+statistical_table_VE = out_VE$results
+
+writexl::write_xlsx(statistical_table_VE,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_E - Maaslin2 Results.xlsx')
+
+# Filter stats to only include taxa that are differentially abundant between the low and high intake groups
+taxa_to_plot_VE = statistical_table_VE %>% 
+  filter(qval < 0.05 & value == "VE High") # 0 observations
+```
+
+## Combined Dietary Antioxidant Intake
+
+```{r combined_dietary_antioxidant_intake}
+set.seed(421)
+
+out_combine = Maaslin2(
+  # Your count table and metadata, extracted into data frames
+  input_data = data.frame(ps_genus@otu_table), 
+  input_metadata = data.frame(ps_genus@sam_data), 
+  output = "to_delete", 
+  # List out your explanatory variable(s) - ex. c('var1','var2')
+  fixed_effects = c("Tert_combine", "Age", "Sex", "entacapone"),
+  # Optional: specify a reference group for your categorical variable(s). 
+  # This will be the group that all other groups are compared to. 
+  # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
+  reference = "Tert_combine,Combine Low",
+  # TSS is Total Sum Scaled, AKA relative abundance.
+  normalization = 'TSS',
+  # Arcsine transformation is recommended for relative abundance data.
+  transform = 'AST',
+  # Set abundance, prevalence, Padj value thresholds
+  min_abundance = 0.001, # 0.001 means 0.1% relative abundance
+  min_prevalence = 0.1, # 0.1 means 10% of samples
+  max_significance = 0.05, # Padj threshold
+  # These plots increase run time and are usually poorly formatted, so you might as well stop them from being generated
+  plot_heatmap = FALSE,
+  plot_scatter = FALSE
+)
+
+statistical_table_combine = out_combine$results
+
+writexl::write_xlsx(statistical_table_combine,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Combined - Maaslin2 Results.xlsx')
+
+# Filter stats to only include taxa that are differentially abundant between the low and high intake groups
+taxa_to_plot_combine = statistical_table_combine %>% 
+  filter(qval < 0.05 & value == "Combine High") # 0 observations
+```
