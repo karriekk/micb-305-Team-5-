@@ -24,7 +24,7 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
  
 - Beta diversity analysis
 
-  - R script
+  - R scripts
 
     - [Bray-Curtis](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_1/Beta_diversity/beta_diversity_analysis_bray-curtis.Rmd)
    
