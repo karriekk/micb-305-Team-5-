@@ -614,7 +614,7 @@ p_combine = mds_data %>%
   stat_ellipse() + 
   theme_classic(base_size = 18) +
   labs(color = "Categorization of Combined Dietary Antioxidant Intake") +
-   scale_color_manual(
+  scale_color_manual(
     values = c("Combine Low" = "goldenrod2", "Combine Medium" = "steelblue", "Combine High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   )
