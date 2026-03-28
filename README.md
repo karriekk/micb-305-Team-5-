@@ -57,9 +57,9 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
 
 - Differential abundance analysis
 
-  - R script
+  - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_2/differential_abundance_analysis_maaslin2.Rmd)
  
-  - Tables
+  - [Tables](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Tables/Aim_2/Differential_abundance_analysis)
 
 #### Aim 3: Metabolic Pathway Analysis
 
