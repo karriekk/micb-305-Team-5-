@@ -4,42 +4,47 @@
 1. Because we will be controlling for entacapone in downstream analyses and it contains NA values, they will be removed from the filtered metadata.
    - 10 PD patients are removed because they do not have entacapone intakes recorded.
 2. When running beta-diversity analysis, age, sex, and entacapone are accounted for as confounding variables.
+3. A sampling depth of 6515 is used when doing the analysis. At this sampling depth, only 14 samples are excluded from the analysis and we have retained 1,192,428 (50.04%) features in 183 (92.89%) samples.
 
 ### Beta diversity analysis of Beta Carotene
 <img width="1438" height="885" alt="Screenshot 2026-03-26 at 13 56 42" src="https://github.com/user-attachments/assets/1e012df1-0b15-4167-abbe-6023f8c45ce6" />
 
-- BC low vs BC high: P-value = 0.003
-- BC low vs BC medium: P-value = 0.296
-- BC medium vs BC high: P-value = 0.002
+- BC low vs BC high: p-value = 0.003
+- BC low vs BC medium: p-value = 0.296
+- BC medium vs BC high: p-value = 0.002
 
 ### Beta diversity analysis of Alpha Carotene
-<img width="1177" height="773" alt="Screenshot 2026-03-26 at 10 10 44" src="https://github.com/user-attachments/assets/47291462-c721-4103-bd01-c272aacc17ff" />
+<img width="1432" height="888" alt="Screenshot 2026-03-27 at 21 30 41" src="https://github.com/user-attachments/assets/a13726a7-3cbd-4bd0-9976-8522ebf85b68" />
 
-- AC low vs AC high: P-value = 0.129
+- AC low vs AC high: p-value = 0.129
+- AC low vs AC medium: p-value = 0.072
+- AC medium vs AC high: p-value = 0.052
 
 ### Beta diversity analysis of Vitamin C
-<img width="1181" height="778" alt="Screenshot 2026-03-26 at 10 14 05" src="https://github.com/user-attachments/assets/37f0cec9-51dd-4363-ace3-d8ceefad4bef" />
+<img width="1423" height="875" alt="Screenshot 2026-03-27 at 21 54 18" src="https://github.com/user-attachments/assets/f0b5a70a-9a9f-4696-b42e-780bc7774a24" />
 
-- VC low vs VC high: P-value = 0.006
-- VC low vs VC medium: P-value = 0.258
-- VC medium vs VC high: P-value = 0.002
+- VC low vs VC high: p-value = 0.006
+- VC low vs VC medium: p-value = 0.258
+- VC medium vs VC high: p-value = 0.002
 
 ### Beta diversity analysis of Vitamin A
-<img width="1180" height="711" alt="Screenshot 2026-03-26 at 10 15 59" src="https://github.com/user-attachments/assets/26800541-32dd-43fd-a8b3-059c16e6f01e" />   
-
-- VA low vs VA high: P-value = 0.06
+<img width="1415" height="883" alt="Screenshot 2026-03-27 at 21 56 45" src="https://github.com/user-attachments/assets/ff4c75e0-3cbf-4942-ab4e-6404f2a4f190" />
+  
+- VA low vs VA high: p-value = 0.06
+- VA low vs VA medium: p-value = 0.156
+- VA medium vs VA high: p-value = 0.009
 
 ### Beta diversity analysis of Vitamin E
-<img width="1180" height="726" alt="Screenshot 2026-03-26 at 10 17 06" src="https://github.com/user-attachments/assets/45d1a6c1-f03c-46fa-acd3-ddd5ed06b299" />
+<img width="1415" height="884" alt="Screenshot 2026-03-27 at 22 00 42" src="https://github.com/user-attachments/assets/d86fa32b-e77b-4d0a-961e-7e4feaa955fd" />
 
-- VE low vs VE high: P-value = 0.001
-- VE low vs VE medium: P-value = 0.009
-- VE medium vs VE high: P-value = 0.009
+- VE low vs VE high: p-value = 0.001
+- VE low vs VE medium: p-value = 0.009
+- VE medium vs VE high: p-value = 0.009
 
 ### Beta diversity analysis on combined dietary antioxidants
-<img width="1179" height="784" alt="Screenshot 2026-03-26 at 10 20 29" src="https://github.com/user-attachments/assets/5991f723-9499-42dc-9711-060ceb30fbcd" />
+<img width="1440" height="884" alt="Screenshot 2026-03-27 at 22 02 47" src="https://github.com/user-attachments/assets/ffd7926b-770e-4b00-a4a8-6d837d1011fc" />
 
-- Combined low vs Combined high: P-value = 0.001
-- Combined low vs Combined medium: P-value = 0.172
-- Combined medium vs Combined high: P-value = 0.003
+- Combined low vs Combined high: p-value = 0.001
+- Combined low vs Combined medium: p-value = 0.172
+- Combined medium vs Combined high: p-value = 0.003
 
