@@ -1,8 +1,8 @@
 ---
-title: "Beta Diversity Analysis using Weighted UniFrac"
+title: "Beta Diversity Analysis using Unweighted UniFrac"
 author: Coe McGrath
 output: html_document
-date: "2026-03-26"
+date: "2026-03-27"
 ---
 
 ## Library loading
@@ -84,16 +84,16 @@ set.seed(421)
 psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
 ```
 
-## Calculate Weighted UniFrac Distances
+## Calculate Unweighted UniFrac Distances
 
 ```{r calculate Weighted UniFrac Distances}
-ps_weighted_unifrac = phyloseq::distance(psrare, method = "wunifrac")
+ps_unweighted_unifrac = phyloseq::distance(psrare, method = "unifrac")
 
 # View(as.matrix(ps_weighted_unifrac)) # Every pairwise comparison included
 
 # MDS scaling
 set.seed(421)
-mds = metaMDS(ps_weighted_unifrac)
+mds = metaMDS(ps_unweighted_unifrac)
 
 # Extract data
 mds_data <- mds$points %>% 
@@ -124,11 +124,11 @@ parkinsons_metadata = sample_data(psrare) %>% data.frame()
 # PERMANOVA test
 # Single variable
 set.seed(421)
-stats_univar_BC = adonis2(ps_weighted_unifrac ~ Tert_BC, data = parkinsons_metadata)
+stats_univar_BC = adonis2(ps_unweighted_unifrac ~ Tert_BC, data = parkinsons_metadata)
 
 # Factor in confounding variables
 set.seed(421)
-stats_multivar_BC = adonis2(ps_weighted_unifrac ~ Tert_BC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+stats_multivar_BC = adonis2(ps_unweighted_unifrac ~ Tert_BC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
 
 # Combine into a table
 stats_BC = bind_rows("Univariate" = stats_univar_BC %>% as.data.frame() %>% 
@@ -153,13 +153,13 @@ samples_to_keep_BC_LH = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_B
   rownames()
 
 # Subset the distance matrix to only include those two categories of interest
-ps_weighted_unifrac_sub_BC_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_BC_LH, samples_to_keep_BC_LH] %>%
+ps_unweighted_unifrac_sub_BC_LH = as.matrix(ps_unweighted_unifrac)[samples_to_keep_BC_LH, samples_to_keep_BC_LH] %>%
   as.dist()
 
 # Run a PERMANOVA test again and account for the real confounding variables
 set.seed(421)
-stats_weighted_multivar_BC_LH = adonis2(ps_weighted_unifrac_sub_BC_LH ~ Tert_BC + Age + entacapone + Sex,
-                                        data = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_LH)) # p-value is 0.082
+stats_unweighted_multivar_BC_LH = adonis2(ps_unweighted_unifrac_sub_BC_LH ~ Tert_BC + Age + entacapone + Sex,
+                                          data = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_LH)) # p-value is 0.04
 
 ```
 
@@ -183,11 +183,11 @@ p_AC
 # PERMANOVA test
 # Single variable
 set.seed(421)
-stats_univar_AC = adonis2(ps_weighted_unifrac ~ Tert_AC, data = parkinsons_metadata)
+stats_univar_AC = adonis2(ps_unweighted_unifrac ~ Tert_AC, data = parkinsons_metadata)
 
 # Factor in confounding variables
 set.seed(421)
-stats_multivar_AC = adonis2(ps_weighted_unifrac ~ Tert_AC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+stats_multivar_AC = adonis2(ps_unweighted_unifrac ~ Tert_AC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
 
 # Combine into a table
 stats_AC = bind_rows("Univariate" = stats_univar_AC %>% as.data.frame() %>% 
@@ -211,13 +211,13 @@ samples_to_keep_AC_LH = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_A
   rownames()
 
 # Subset the distance matrix to only include those two categories of interest
-ps_weighted_unifrac_sub_AC_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_AC_LH, samples_to_keep_AC_LH] %>%
+ps_unweighted_unifrac_sub_AC_LH = as.matrix(ps_unweighted_unifrac)[samples_to_keep_AC_LH, samples_to_keep_AC_LH] %>%
   as.dist()
 
 # Run a PERMANOVA test again and account for the real confounding variables
 set.seed(421)
-stats_weighted_multivar_AC_LH = adonis2(ps_weighted_unifrac_sub_AC_LH ~ Tert_AC + Age + entacapone + Sex,
-                                        data = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LH)) # p-value is 0.299
+stats_unweighted_multivar_AC_LH = adonis2(ps_unweighted_unifrac_sub_AC_LH ~ Tert_AC + Age + entacapone + Sex,
+                                          data = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LH)) # p-value is 0.28
 ```
 
 
@@ -240,11 +240,11 @@ p_VC
 # PERMANOVA test
 # Single variable
 set.seed(421)
-stats_univar_VC = adonis2(ps_weighted_unifrac ~ Tert_VC, data = parkinsons_metadata)
+stats_univar_VC = adonis2(ps_unweighted_unifrac ~ Tert_VC, data = parkinsons_metadata)
 
 # Factor in confounding variables
 set.seed(421)
-stats_multivar_VC = adonis2(ps_weighted_unifrac ~ Tert_VC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+stats_multivar_VC = adonis2(ps_unweighted_unifrac ~ Tert_VC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
 
 # Combine into a table
 stats_VC = bind_rows("Univariate" = stats_univar_VC %>% as.data.frame() %>% 
@@ -268,13 +268,13 @@ samples_to_keep_VC_LH = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_V
   rownames()
 
 # Subset the distance matrix to only include those two categories of interest
-ps_weighted_unifrac_sub_VC_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VC_LH, samples_to_keep_VC_LH] %>%
+ps_unweighted_unifrac_sub_VC_LH = as.matrix(ps_unweighted_unifrac)[samples_to_keep_VC_LH, samples_to_keep_VC_LH] %>%
   as.dist()
 
 # Run a PERMANOVA test again and account for the real confounding variables
 set.seed(421)
-stats_weighted_multivar_VC_LH = adonis2(ps_weighted_unifrac_sub_VC_LH ~ Tert_VC + Age + entacapone + Sex,
-                                        data = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LH)) # p-value is 0.455
+stats_unweighted_multivar_VC_LH = adonis2(ps_unweighted_unifrac_sub_VC_LH ~ Tert_VC + Age + entacapone + Sex,
+                                          data = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LH)) # p-value is 0.033
 
 ```
 
@@ -298,11 +298,11 @@ p_VA
 # PERMANOVA test
 # Single variable
 set.seed(421)
-stats_univar_VA = adonis2(ps_weighted_unifrac ~ Tert_VA, data = parkinsons_metadata)
+stats_univar_VA = adonis2(ps_unweighted_unifrac ~ Tert_VA, data = parkinsons_metadata)
 
 # Factor in confounding variables
 set.seed(421)
-stats_multivar_VA = adonis2(ps_weighted_unifrac ~ Tert_VA + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+stats_multivar_VA = adonis2(ps_unweighted_unifrac ~ Tert_VA + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
 
 # Combine into a table
 stats_VA = bind_rows("Univariate" = stats_univar_VA %>% as.data.frame() %>% 
@@ -326,13 +326,13 @@ samples_to_keep_VA_LH = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_V
   rownames()
 
 # Subset the distance matrix to only include those two categories of interest
-ps_weighted_unifrac_sub_VA_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VA_LH, samples_to_keep_VA_LH] %>%
+ps_unweighted_unifrac_sub_VA_LH = as.matrix(ps_unweighted_unifrac)[samples_to_keep_VA_LH, samples_to_keep_VA_LH] %>%
   as.dist()
 
 # Run a PERMANOVA test again and account for the real confounding variables
 set.seed(421)
-stats_weighted_multivar_VA_LH = adonis2(ps_weighted_unifrac_sub_VA_LH ~ Tert_VA + Age + entacapone + Sex,
-                                        data = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_LH)) # p-value is 0.275
+stats_unweighted_multivar_VA_LH = adonis2(ps_unweighted_unifrac_sub_VA_LH ~ Tert_VA + Age + entacapone + Sex,
+                                          data = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_LH)) # p-value is 0.116
 
 ```
 
@@ -355,11 +355,11 @@ p_VE
 # PERMANOVA test
 # Single variable
 set.seed(421)
-stats_univar_VE = adonis2(ps_weighted_unifrac ~ Tert_VE, data = parkinsons_metadata)
+stats_univar_VE = adonis2(ps_unweighted_unifrac ~ Tert_VE, data = parkinsons_metadata)
 
 # Factor in confounding variables
 set.seed(421)
-stats_multivar_VE = adonis2(ps_weighted_unifrac ~ Tert_VE + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+stats_multivar_VE = adonis2(ps_unweighted_unifrac ~ Tert_VE + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
 
 # Combine into a table
 stats_VE = bind_rows("Univariate" = stats_univar_VE %>% as.data.frame() %>% 
@@ -383,13 +383,13 @@ samples_to_keep_VE_LH = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_V
   rownames()
 
 # Subset the distance matrix to only include those two categories of interest
-ps_weighted_unifrac_sub_VE_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VE_LH, samples_to_keep_VE_LH] %>%
+ps_unweighted_unifrac_sub_VE_LH = as.matrix(ps_unweighted_unifrac)[samples_to_keep_VE_LH, samples_to_keep_VE_LH] %>%
   as.dist()
 
 # Run a PERMANOVA test again and account for the real confounding variables
 set.seed(421)
-stats_weighted_multivar_VE_LH = adonis2(ps_weighted_unifrac_sub_VE_LH ~ Tert_VE + Age + entacapone + Sex,
-                                        data = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LH)) # p-value is 0.204
+stats_unweighted_multivar_VE_LH = adonis2(ps_unweighted_unifrac_sub_VE_LH ~ Tert_VE + Age + entacapone + Sex,
+                                          data = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LH)) # p-value is 0.001
 
 ```
 
@@ -413,11 +413,11 @@ p_combine
 # PERMANOVA test
 # Single variable
 set.seed(421)
-stats_univar_combine = adonis2(ps_weighted_unifrac ~ Tert_combine, data = parkinsons_metadata)
+stats_univar_combine = adonis2(ps_unweighted_unifrac ~ Tert_combine, data = parkinsons_metadata)
 
 # Factor in confounding variables
 set.seed(421)
-stats_multivar_combine = adonis2(ps_weighted_unifrac ~ Tert_combine + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+stats_multivar_combine = adonis2(ps_unweighted_unifrac ~ Tert_combine + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
 
 # Combine into a table
 stats_combine = bind_rows("Univariate" = stats_univar_combine %>% as.data.frame() %>% 
@@ -441,10 +441,10 @@ samples_to_keep_combine_LH = parkinsons_metadata %>% filter(Tert_combine %in% to
   rownames()
 
 # Subset the distance matrix to only include those two categories of interest
-ps_weighted_unifrac_sub_combine_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_combine_LH, samples_to_keep_combine_LH] %>% as.dist()
+ps_unweighted_unifrac_sub_combine_LH = as.matrix(ps_unweighted_unifrac)[samples_to_keep_combine_LH, samples_to_keep_combine_LH] %>% as.dist()
 
 # Run a PERMANOVA test again and account for the real confounding variables
 set.seed(421)
-stats_weighted_multivar_combine_LH = adonis2(ps_weighted_unifrac_sub_combine_LH ~ Tert_combine + Age + entacapone + Sex,
-                                             data = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_LH)) # p-value is 0.32
+stats_unweighted_multivar_combine_LH = adonis2(ps_unweighted_unifrac_sub_combine_LH ~ Tert_combine + Age + entacapone + Sex,
+                                               data = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_LH)) # p-value is 0.077
 ```
