@@ -2,7 +2,7 @@
 
 Team 5 members: Carrie Sun, Coe McGrath, Cynthia Lin, Emily Ju, Yanting Xiong
 
-Link to the original dataset by Cristea et al.:  https://doi.org/10.1002/mds.28052
+Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.28052
 
 ## Project Summary
 
