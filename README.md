@@ -16,7 +16,7 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
 #### Aim 1: Diversity Analysis
 - Alpha diversity analysis
 
-  - R script
+  - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_1/Alpha_diversity/alpha_diversity_analysis.Rmd)
  
   - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Alpha_diversity/alpha_diversity_results_summary.md)
 
