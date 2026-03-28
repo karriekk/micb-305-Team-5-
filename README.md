@@ -38,11 +38,11 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
  
     - [Bray-Curtis](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Beta_diversity/beta_diversity(bray-curtis)_results_summary.md)
    
-    - Weighted UniFrac
+    - [Weighted UniFrac](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Beta_diversity/beta_diversity_weighted_unifrac_results_summary.md)
    
-    - Unweighted UniFrac
+    - [Unweighted UniFrac](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Beta_diversity/beta_diversity_unweighted_unifrac_results_summary.md)
    
-    - Jaccard
+    - [Jaccard](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Beta_diversity/beta_diversity_jaccard_results_summary.md)
  
   - Figures
 
