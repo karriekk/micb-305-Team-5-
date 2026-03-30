@@ -166,8 +166,8 @@ ggsave("../../../Results/Figures/Aim_3/BC-picrust-sig-pathways.png",
 Heatmap
 
 ```{r identical features}
-sig_features = daa_annotated_results_df %>% 
-  filter(p_adjust < 0.04, abs(log2_fold_change) > 5e-3) %>% 
+sig_features = daa_results_log2fc_filtered %>% 
+  filter(p_adjust < 0.05, abs(log2_fold_change) > 0) %>% 
   pull('feature') %>% unique()
 
 path_relab = path_filt %>% 
@@ -186,17 +186,52 @@ color_palette <- colorRampPalette(c("blue", "white", "red"))(40)
 breaks <- seq(-1, 1, length.out = 41)  # 40 colors + 1 for the endpoint
 
 # Lookup Names
-name_lookup <- daa_annotated_results_df %>%
+name_lookup <- daa_results_log2fc_filtered %>%
   filter(feature %in% sig_features) %>%
   select(feature, description) %>% # Adjust 'description' to your actual column name
   distinct()
 
 readable_names <- name_lookup$description[match(rownames(stats), name_lookup$feature)]
-readable_names[3] <- "peptidoglycan recycling II"
-rownames(stats) <- readable_names
-colnames(stats) <- readable_names
+readable_names[17] <- "Entner-Doudoroff pathway I"
+
+# wrapping labels
+rownames(stats) <- str_wrap(rownames(stats), width = 35)
+colnames(stats) <- str_wrap(colnames(stats), width = 35)
 
 view(readable_names)
+
+# heatmap plot
+pheatmap(stats, 
+         clustering_distance_rows = "euclidean",  
+         clustering_distance_cols = "euclidean", 
+         clustering_method = "complete",          
+         color = color_palette, 
+         breaks = breaks,
+         border_color = "white",
+         
+         # 2. NUMBERS: Shrink them or hide them. 
+         # If you MUST keep them, make the font tiny (e.g., 6)
+         display_numbers = TRUE, 
+         number_format = "%.2f",      
+         fontsize_number = 6,          # New: specifically shrinks the numbers in cells
+         
+         # 3. TEXT SIZES: Slightly smaller to fit the grid
+         fontsize_row = 8,
+         fontsize_col = 8,
+         angle_col = 315,               # 45 is usually cleaner for wrapped text
+         
+         treeheight_row = 15,          # Shorter trees save more space for text
+         treeheight_col = 15, 
+         
+         legend = TRUE,                
+         main = NA,                    
+         
+         # 4. DIMENSIONS: Bump these up. 
+         # 8x6 is too small for this much data. 12x10 gives it room to breathe.
+         filename = "../../../Results/Figures/Aim_3/MetaCyc-BC_Heatmap_Final-new.png",
+         width = 15,                   
+         height = 13)
+
 
 # Create the clustered heatmap with centered color at zero
 # install.packages("pheatmap")
@@ -214,7 +249,7 @@ pheatmap(stats,
          fontsize_col = 12,
          angle_col = 45,               # Tilt labels so they don't overlap
          main = '',
-         filename = "../../../Results/Figures/MetaCyc-BC_Heatmap_Final.png",
+         filename = "../../../Results/Figures/Aim_3/MetaCyc-BC_Heatmap_Final.png",
          height = 8, width = 10)       # Wider to accommodate long names
 
 # to try to minimize white space
@@ -234,7 +269,7 @@ pheatmap(stats,
          treeheight_col = 25, 
          legend = TRUE,               
          main = NA,                   # Use NA to properly suppress the title space
-         filename = "../../../Results/Figures/MetaCyc-BC_Heatmap_Final-new.png",
+         filename = "../../../Results/Figures/Aim_3/MetaCyc-BC_Heatmap_Final-new.png",
          width = 8,                   # Increased slightly for your long pathway names
          height = 6)
 
@@ -242,18 +277,31 @@ pheatmap(stats,
 See how similar your sample groups are
 
 ```{r PCA}
-# Generate pathway PCA plot
-pca_plot = pathway_pca(abundance = path_filt,
-            metadata = metadata_sub, 
-            group = "Tert_BC")
+library(ggExtra)
 
+# Generate the base PCA plot WITHOUT the marginals
+pca_plot = pathway_pca(abundance = path_filt,
+                        metadata = metadata_sub, 
+                        group = "Tert_VC",
+                        show_marginal = FALSE) # Disable the hardcoded curves
+
+# labels
 pca_plot = pca_plot + 
   theme_minimal() +
-  labs(
-    color = "Tert_BC"
-  )
-ggsave("../../../Results/Figures/Aim_3/BC-pathway-pca.png", 
-       plot = pca_plot, 
+  labs(color = "Tert_VC")
+
+# Add the marginal density plots manually
+# type = "density" creates the curves
+# groupFill = TRUE ensures the colors match your groups
+# alpha = 0.3 sets the transparency you want
+final_plot = ggMarginal(pca_plot, 
+                        type = "density", 
+                        groupFill = TRUE, 
+                        alpha = 0.3)
+
+# 4. Save the final object
+ggsave("../../../Results/Figures/Aim_3/VC-pathway-pca.png", 
+       plot = final_plot, 
        width = 8, 
        height = 6, 
        dpi = 300)
