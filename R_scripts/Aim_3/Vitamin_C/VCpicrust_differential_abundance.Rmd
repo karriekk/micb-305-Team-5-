@@ -269,18 +269,32 @@ pheatmap(stats,
 
 See how similar your sample groups are
 ```{r PCA}
-# Generate pathway PCA plot
-pca_plot = pathway_pca(abundance = path_filt,
-            metadata = metadata_sub, 
-            group = "Tert_VC")
+# You may need to install this if you haven't yet: install.packages("ggExtra")
+library(ggExtra)
 
+# 1. Generate the base PCA plot WITHOUT the marginals
+pca_plot = pathway_pca(abundance = path_filt,
+                        metadata = metadata_sub, 
+                        group = "Tert_VC",
+                        show_marginal = FALSE) # Disable the hardcoded curves
+
+# 2. Add your themes and labels
 pca_plot = pca_plot + 
   theme_minimal() +
-  labs(
-    color = "Tert_VC"
-  )
+  labs(color = "Tert_VC")
+
+# 3. Add the marginal density plots manually
+# type = "density" creates the curves
+# groupFill = TRUE ensures the colors match your groups
+# alpha = 0.3 sets the transparency you want
+final_plot = ggMarginal(pca_plot, 
+                        type = "density", 
+                        groupFill = TRUE, 
+                        alpha = 0.3)
+
+# 4. Save the final object
 ggsave("../../../Results/Figures/Aim_3/VC-pathway-pca.png", 
-       plot = pca_plot, 
+       plot = final_plot, 
        width = 8, 
        height = 6, 
        dpi = 300)
