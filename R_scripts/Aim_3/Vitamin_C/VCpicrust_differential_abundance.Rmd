@@ -175,20 +175,31 @@ peb = pathway_errorbar_fixed(abundance = path_filt,
                      p_value_bar = TRUE, 
                      x_lab = "description")
 
-library(patchwork)
+# filter for only significant pathways
+signif_path = daa_results_log2fc_filtered %>% 
+  filter(p_adjust < 0.05)
 
-# Add tags A and B automatically
-peb_final <- peb + plot_annotation(tag_levels = 'A')
+# filter for top 10 greatest magnitude changes
+top_10 <- ratio %>%
+  filter(pathway %in% signif_path$feature)%>%
+  arrange(desc(abs(log2fc))) %>%  # Sort by greates magnitude L2FC
+  head(10)
 
-# View the result
-peb_final
+daa_results_top10 = daa_annotated_results_df %>% 
+  filter(feature %in% top_10_decrease$pathway)
 
-# Save the final version with the tags
-ggsave("../../../Results/Figures/Aim_3/VC-picrust-final-with-labels.png", plot = peb_final, width = 12, height = 7, dpi = 300)
+peb10 = pathway_errorbar_fixed(abundance = path_filt, 
+                     daa_results_df = daa_results_top10, 
+                     Group = metadata_sub$Tert_VC, 
+                     wrap_label = F, wraplength=60,
+                     fc_cutoff = 0, order_by_log = F,
+                     p_values_threshold = 1, 
+                     ko_to_kegg = F, 
+                     p_value_bar = TRUE, 
+                     x_lab = "description")
 
-
-ggsave("../../../Results/Figures/Aim_3/VC-picrust-sig-pathways.png",
-       plot = peb, width = 18, height = 10)
+ggsave("../../../Results/Figures/Aim_3/VC-picrust-sig-pathways10.png",
+       plot = peb10, width = 18, height = 10)
 ```
 
 Heatmap
