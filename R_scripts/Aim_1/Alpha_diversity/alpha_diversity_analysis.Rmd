@@ -110,6 +110,8 @@ p_BC_formatted = pdata_BC %>% ggplot(aes(Tert_BC,
                "BC High" = "High intake"))
 p_BC_formatted
 
+# Export the boxplots
+ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Alpha diversity analysis of beta-carotene.png", plot = p_BC_formatted, width = 9, height = 10, dpi = 300)
 
 comparisons_BC = list(c("BC High", "BC Low"),
                       c("BC High", "BC Medium"),
@@ -210,6 +212,9 @@ p_AC_formatted = pdata_AC %>% ggplot(aes(Tert_AC,
                "AC Medium" = "Medium intake",
                "AC High" = "High intake"))
 p_AC_formatted
+
+# Export the boxplots
+ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Alpha diversity analysis of alpha-carotene.png", plot = p_AC_formatted, width = 9, height = 10, dpi = 300)
 
 
 comparisons_AC = list(c("AC High", "AC Low"),
@@ -312,6 +317,9 @@ p_VC_formatted = pdata_VC %>% ggplot(aes(Tert_VC,
                "VC High" = "High intake"))
 p_VC_formatted
 
+# Export the boxplots
+ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Alpha diversity analysis of vitamin C.png", plot = p_VC_formatted, width = 9, height = 10, dpi = 300)
+
 
 comparisons_VC = list(c("VC High", "VC Low"),
                       c("VC High", "VC Medium"),
@@ -412,6 +420,9 @@ p_VA_formatted = pdata_VA %>% ggplot(aes(Tert_VA,
                "VA Medium" = "Medium intake",
                "VA High" = "High intake"))
 p_VA_formatted
+
+# Export the boxplots
+ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Alpha diversity analysis of vitamin A.png", plot = p_VA_formatted, width = 9, height = 10, dpi = 300)
 
 
 comparisons_VA = list(c("VA High", "VA Low"),
@@ -514,6 +525,9 @@ p_VE_formatted = pdata_VE %>% ggplot(aes(Tert_VE,
                "VE High" = "High intake"))
 p_VE_formatted
 
+# Export the boxplots
+ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Alpha diversity analysis of vitamin E.png", plot = p_VE_formatted, width = 9, height = 10, dpi = 300)
+
 
 comparisons_VE = list(c("VE High", "VE Low"),
                       c("VE High", "VE Medium"),
@@ -614,6 +628,9 @@ p_combine_formatted = pdata_combine %>% ggplot(aes(Tert_combine,
                "Combine Medium" = "Medium intake",
                "Combine High" = "High intake"))
 p_combine_formatted
+
+# Export the boxplots
+ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Alpha diversity analysis of combined.png", plot = p_combine_formatted, width = 9, height = 10, dpi = 300)
 
 
 comparisons_combine = list(c("Combine High", "Combine Low"),
