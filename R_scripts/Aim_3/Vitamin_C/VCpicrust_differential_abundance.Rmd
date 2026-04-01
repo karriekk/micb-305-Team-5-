@@ -114,7 +114,7 @@ daa_results_log2fc_filtered = daa_annotated_results_df %>%
 
 # Adjusted P-value = 37 hits
 daa_results_log2fc_filtered %>% 
-  filter(p_adjust < 0.05) %>% 
+  filter(p_adjust < 0.005) %>% 
   nrow()
 
 significant_pathways = daa_results_log2fc_filtered %>% 
@@ -131,7 +131,7 @@ sanity_peb = pathway_errorbar_fixed(abundance = path_filt,
                      Group = metadata_sub$Tert_VC, 
                      wrap_label = F, wraplength=60,
                      fc_cutoff = 0, order_by_log = F,
-                     p_values_threshold = 0.0028, 
+                     p_values_threshold = 0.005, 
                      ko_to_kegg = F, 
                      p_value_bar = TRUE, 
                      x_lab = "description")
@@ -182,11 +182,11 @@ signif_path = daa_results_log2fc_filtered %>%
 # filter for top 10 greatest magnitude changes
 top_10 <- ratio %>%
   filter(pathway %in% signif_path$feature)%>%
-  arrange(desc(abs(log2fc))) %>%  # Sort by greates magnitude L2FC
+  arrange(desc(abs(log2fc))) %>%  # Sort by greatest magnitude L2FC
   head(10)
 
 daa_results_top10 = daa_annotated_results_df %>% 
-  filter(feature %in% top_10_decrease$pathway)
+  filter(feature %in% top_10$pathway)
 
 peb10 = pathway_errorbar_fixed(abundance = path_filt, 
                      daa_results_df = daa_results_top10, 
@@ -205,8 +205,8 @@ ggsave("../../../Results/Figures/Aim_3/VC-picrust-sig-pathways10.png",
 Heatmap
 
 ```{r identical features}
-sig_features = daa_annotated_results_df %>% 
-  filter(p_adjust < 0.005, abs(log2_fold_change) > 4e-3) %>% 
+sig_features = daa_results_top10 %>% 
+  filter(p_adjust < 1, abs(log2_fold_change) > 0) %>% 
   pull('feature') %>% unique()
 
 path_relab = path_filt %>% 
@@ -233,7 +233,11 @@ name_lookup <- daa_annotated_results_df %>%
 readable_names <- name_lookup$description[match(rownames(stats), name_lookup$feature)]
 rownames(stats) <- readable_names
 colnames(stats) <- readable_names
+# Wrap row names (pathway names) at 30 characters
+rownames(stats) <- str_wrap(rownames(stats), width = 30)
 
+# Wrap column names at 30 characters
+colnames(stats) <- str_wrap(colnames(stats), width = 30)
 view(readable_names)
 
 # Create the clustered heatmap with centered color at zero
