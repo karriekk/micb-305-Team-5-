@@ -13,6 +13,7 @@ library(tidyverse)
 library(phyloseq)
 library(indicspecies)
 library(dplyr)
+library(ggpubr)
 ```
 
 ## Dataset loading
@@ -160,6 +161,14 @@ df_of_taxa_BC_low_Esch = prune_taxa(phyla_to_plot_BC_low_Esch, ps_relab) %>% psm
 
 # The smallest nonzero relative abundance value is 0.0001518834
 
+# Create p-value data frame
+stat.test_BC = data.frame(
+  group1 = "BC Low",
+  group2 = "BC High",
+  p = "0.006",
+  y.position = 0
+)
+
 BC_low_Esch_plot = df_of_taxa_BC_low_Esch %>% 
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001518834/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
@@ -172,7 +181,8 @@ BC_low_Esch_plot = df_of_taxa_BC_low_Esch %>%
                "BC Medium" = "goldenrod2",
                "BC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
-  )
+  ) +
+  stat_pvalue_manual(stat.test_BC, label = "p")
 BC_low_Esch_plot
 
 # Export the plot
@@ -262,6 +272,14 @@ phyla_to_plot_VC_low_Esch = feature_id_extract[feature_id_extract %in% "4c8288bf
 
 df_of_taxa_VC_low_Esch = prune_taxa(phyla_to_plot_VC_low_Esch, ps_relab) %>% psmelt()
 
+# Create p-value data frame
+stat.test_VC = data.frame(
+  group1 = "VC Low",
+  group2 = "VC High",
+  p = "0.003",
+  y.position = 0
+)
+
 # The smallest nonzero relative abundance value is 0.0001518834
 
 VC_low_Esch_plot = df_of_taxa_VC_low_Esch %>% 
@@ -276,7 +294,8 @@ VC_low_Esch_plot = df_of_taxa_VC_low_Esch %>%
                "VC Medium" ="goldenrod2",
                "VC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
-  )
+  ) +
+  stat_pvalue_manual(stat.test_VC, label = "p")
 VC_low_Esch_plot
 
 # Export the plot
