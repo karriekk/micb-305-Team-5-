@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Load Library
 ```{r}
 library(tidyverse)
+library(phyloseq)
 ```
 
 
@@ -51,8 +52,9 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
 ```{r Load the indicator taxa}
 #Extract the indicator taxa obtained from aim2 
 taxa_ids <- c(
-  "630532cabb74720c1204579e6fe741b4",  # Cloacibacillus
-  "a030e5d5ff9c75a027e6cc58ff02cf7c"   # Alloprevotella
+  #"630532cabb74720c1204579e6fe741b4",  # Cloacibacillus
+  #"a030e5d5ff9c75a027e6cc58ff02cf7c" # Alloprevotella
+  "4c8288bfbd76958c0c094d87b97650f8" #Escherichia-Shigella
 )
 ps_relab <- transform_sample_counts(ps, function(x) x / sum(x))
 #Extract the phyloseq abundance
@@ -81,6 +83,11 @@ score_z <- rowSums(z, na.rm = TRUE)
 ```{r Add to Metadata}
 meta <- data.frame(sample_data(ps_relab))
 
+# Give the first column a simple name, e.g., "Sub1"
+# Take the first column of `sub` and give it a simple name
+meta$Sub1 <- sub[,1]
+
+
 meta$score_pa <- score_pa[rownames(meta)]
 meta$score_abundance <- score_abundance[rownames(meta)]
 meta$score_z <- score_z[rownames(meta)]
@@ -88,7 +95,40 @@ meta$score_z <- score_z[rownames(meta)]
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 ```{r Predict the MoCA based on the indicator taxa}
-model2 <- lm(moca_total ~ sub[,1] + sub[,2] + Age + Sex, data = meta)
+model2 <- lm(moca_total ~ Sub1 + Age + Sex, data = meta)
 summary(model2)
 ```
-Age seems to be the only predictor for MoCA score. 
+Age and E.shigella (0.0230) seems to be the  predictors for MoCA score. 
+```{r Generate Plot for Aim4}
+
+library(ggplot2)
+
+# Create a sequence of Sub1 values
+sub_seq <- seq(min(meta$Sub1, na.rm = TRUE),
+               max(meta$Sub1, na.rm = TRUE),
+               length.out = 100)
+
+# Create newdata holding Age at mean and Sex as reference
+newdata <- data.frame(
+  Sub1 = sub_seq,
+  Age = mean(meta$Age, na.rm = TRUE),
+  Sex = "Female"  # adjust to your reference group
+)
+
+# Predict MoCA with confidence intervals
+pred <- predict(model2, newdata, interval = "confidence")
+plot_df <- cbind(newdata, pred)
+
+# Plot
+ggplot(plot_df, aes(x = Sub1, y = fit)) +
+  geom_line(size = 1, color = "blue") +
+  geom_ribbon(aes(ymin = lwr, ymax = upr), alpha = 0.2) +
+  geom_point(data = meta, aes(x = Sub1, y = moca_total), alpha = 0.4) +
+  labs(x = "Indicator Taxa Score (Presence of Escherichia-Shigella in PD patients) ",
+       y = "Predicted MoCA Score",
+       title = "Adjusted regression of MoCA on indicator taxa Escherichia-Shigella") +
+  theme_classic()
+
+```
+
+
