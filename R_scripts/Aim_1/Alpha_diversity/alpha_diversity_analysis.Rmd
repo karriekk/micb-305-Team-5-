@@ -101,7 +101,7 @@ p_BC_formatted = pdata_BC %>% ggplot(aes(Tert_BC,
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(fill = "Beta Carotene Intake Categorization") +
   scale_fill_manual(
-    values = c("BC Low" = "goldenrod2", "BC Medium" = "steelblue", "BC High" = "indianred3"),
+    values = c("BC Low" = "steelblue", "BC Medium" = "goldenrod2", "BC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   ) +
   scale_x_discrete(
@@ -204,7 +204,7 @@ p_AC_formatted = pdata_AC %>% ggplot(aes(Tert_AC,
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(fill = "Alpha Carotene Intake Categorization") +
   scale_fill_manual(
-    values = c("AC Low" = "goldenrod2", "AC Medium" = "steelblue", "AC High" = "indianred3"),
+    values = c("AC Low" = "steelblue", "AC Medium" = "goldenrod2", "AC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   ) +
   scale_x_discrete(
@@ -308,7 +308,7 @@ p_VC_formatted = pdata_VC %>% ggplot(aes(Tert_VC,
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(fill = "Vitamin C Intake Categorization") +
   scale_fill_manual(
-    values = c("VC Low" = "goldenrod2", "VC Medium" = "steelblue", "VC High" = "indianred3"),
+    values = c("VC Low" = "steelblue", "VC Medium" = "goldenrod2", "VC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   ) +
   scale_x_discrete(
@@ -412,7 +412,7 @@ p_VA_formatted = pdata_VA %>% ggplot(aes(Tert_VA,
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(fill = "Vitamin A Intake Categorization") +
   scale_fill_manual(
-    values = c("VA Low" = "goldenrod2", "VA Medium" = "steelblue", "VA High" = "indianred3"),
+    values = c("VA Low" = "steelblue", "VA Medium" = "goldenrod2", "VA High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   ) +
   scale_x_discrete(
@@ -516,7 +516,7 @@ p_VE_formatted = pdata_VE %>% ggplot(aes(Tert_VE,
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(fill = "Vitamin E Intake Categorization") +
   scale_fill_manual(
-    values = c("VE Low" = "goldenrod2", "VE Medium" = "steelblue", "VE High" = "indianred3"),
+    values = c("VE Low" = "steelblue", "VE Medium" = "goldenrod2", "VE High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   ) +
   scale_x_discrete(
@@ -620,7 +620,7 @@ p_combine_formatted = pdata_combine %>% ggplot(aes(Tert_combine,
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(fill = "Combine Dietary Antioxidant Intake Categorization") +
   scale_fill_manual(
-    values = c("Combine Low" = "goldenrod2", "Combine Medium" = "steelblue", "Combine High" = "indianred3"),
+    values = c("Combine Low" = "steelblue", "Combine Medium" = "goldenrod2", "Combine High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   ) +
   scale_x_discrete(
