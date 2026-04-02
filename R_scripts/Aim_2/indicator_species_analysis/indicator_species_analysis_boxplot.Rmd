@@ -101,7 +101,7 @@ df_of_taxa_BC_high_Cloa %>%
   labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
-    name = "Beta Carotene Intake Categorization",
+    name = "Beta-carotene Intake Categorization",
     labels = c("Low intake", "Medium intake", "High intake")
   )
 
@@ -144,7 +144,7 @@ df_of_taxa_BC_high_Allo %>%
   labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_discrete(
-    name = "Beta Carotene Intake Categorization",
+    name = "Beta-carotene Intake Categorization",
     labels = c("Low intake", "Medium intake", "High intake")
   )
 
