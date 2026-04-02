@@ -330,22 +330,31 @@ plot_data <- daa_annotated_results_df %>%
     )
   )
 
-# 2. Create the Volcano Plot
+# 1. Create a separate dataframe for just the top 10 hits
+# We use slice_min to get the 10 lowest p_adjust values
+top_10_labels <- plot_data %>%
+  filter(p_adjust < 0.05) %>%      # Only significant hits
+  slice_min(p_adjust, n = 10)      # Take the 10 smallest p-values
+
+# 2. Update your volcano plot
 volcano_plot <- ggplot(plot_data, aes(x = log2fc, y = -log10(p_adjust), color = status)) +
   geom_point(alpha = 0.6, size = 2) +
-  # Add threshold lines
   geom_vline(xintercept = c(-1, 1), linetype = "dashed", color = "grey50") +
   geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "grey50") +
-  # Custom colors
   scale_color_manual(values = c("Up-regulated (VC Low)" = "#D55E00", 
                                 "Down-regulated (VC High)" = "#0072B2", 
                                 "Not Significant" = "grey70")) +
-  # Optional: Label the top significant pathways
+  
+  # Use the new top_10_labels dataframe here
   geom_text_repel(
-    data = subset(plot_data, p_adjust < 0.05 & abs(log2fc) > 1),
-    aes(label = description), # Using the description from the annotation
-    size = 3,
-    max.overlaps = 10,
+    data = top_10_labels,
+    # str_wrap ensures long pathway names break into multiple lines
+    aes(label = str_wrap(description, width = 30)), 
+    size = 4,                       # Slightly larger text for the top 10
+    fontface = "italic",            # Italicizing pathway names is standard
+    max.overlaps = Inf,             # Forces all 10 labels to show up
+    box.padding = 0.8,              # Space around the label
+    point.padding = 0.5,            # Space between label and the point
     show.legend = FALSE
   ) +
   theme_minimal() +
@@ -354,30 +363,17 @@ volcano_plot <- ggplot(plot_data, aes(x = log2fc, y = -log10(p_adjust), color = 
     y = expression(-log[10]~"Adjusted P-value"),
     color = "Significance"
   ) +
-  theme(legend.position = "bottom")
-
-volcano_plot <- volcano_plot +
   theme(
-    # Increase general text size (base_size)
-    text = element_text(size = 16), 
-    
-    # Specifically target axis titles (the labels on the X and Y axes)
+    text = element_text(size = 16),
     axis.title = element_text(size = 18, face = "bold"),
-    
-    # Specifically target axis numbers (the tick labels)
     axis.text = element_text(size = 14),
-    
-    # Increase legend text and title
-    legend.text = element_text(size = 14),
-    legend.title = element_text(size = 16, face = "bold")
+    legend.position = "bottom"
   )
 
-# Show the plot
+# Display and Save
 print(volcano_plot)
-
-# 3. Save the plot
-ggsave("../../../Results/Figures/Aim_3/VC-volcano-plot.png", 
-       plot = volcano_plot, width = 10, height = 8, dpi = 300)
+ggsave("../../../Results/Figures/Aim_3/VC-volcano-plot-top10.png", 
+       plot = volcano_plot, width = 12, height = 10, dpi = 300)
 ```
 
 
