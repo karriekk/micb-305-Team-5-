@@ -4,7 +4,7 @@
   - For instance, for the indicator species analysis, do we need to include bacterial taxa with a stat value < 0.7?
  - We are unsure about the appropriate level of detail to include for each figure and analysis in the presentation.
 
-### About the Plots
+## Question about the Plots
 - If no significant difference was observed for alpha-diversity, do we still need to label the p-values on the plots?
 
 ## Questions about Data Analysis
