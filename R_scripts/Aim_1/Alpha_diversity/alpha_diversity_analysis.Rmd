@@ -618,7 +618,7 @@ p_combine_formatted = pdata_combine %>% ggplot(aes(Tert_combine,
   facet_wrap(~ variable, ncol = 2, scales = "free_y") +
   ylab("Alpha Diversity Metrics") + xlab(NULL) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
-  labs(fill = "Combine Dietary Antioxidant Intake Categorization") +
+  labs(fill = "Combined Dietary Antioxidant Intake Categorization") +
   scale_fill_manual(
     values = c("Combine Low" = "steelblue", "Combine Medium" = "goldenrod2", "Combine High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
