@@ -17,6 +17,7 @@ library(ggpubr)
 ```
 
 ## Dataset loading
+
 ```{r dataset_loading}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
@@ -186,7 +187,7 @@ BC_low_Esch_plot = df_of_taxa_BC_low_Esch %>%
 BC_low_Esch_plot
 
 # Export the plot
-ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Beta-Carotene Intake Levels in PD.png", plot = BC_low_Esch_plot, width = 7, height = 8, dpi = 300)
+ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Beta-carotene Intake Levels in PD.png", plot = BC_low_Esch_plot, width = 7, height = 8, dpi = 300)
 ```
 
 ## Vitamin A
