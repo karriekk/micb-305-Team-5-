@@ -1,0 +1,121 @@
+---
+title: "Aim4 _Ver_1"
+output: html_document
+date: "2026-03-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Library
+```{r}
+library(tidyverse)
+library(phyloseq)
+```
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r Load datasets}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# Load in feature table exported from QIIME2
+counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+# Create the phyloseq object
+# Taxonomy
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c("Domain","Phylum","Class","Order",
+                    "Family","Genus","Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+# Counts
+counts_formatted = counts %>% as.matrix()
+ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
+              otu_table(counts_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted))
+
+```
+
+```{r Load the indicator taxa}
+#Extract the indicator taxa obtained from aim2 
+taxa_id <- c(
+  "4c8288bfbd76958c0c094d87b97650f8" #Escherichia-Shigella
+)
+
+#Find out the relative abundance
+ps_relab <- transform_sample_counts(ps, function(x) x / sum(x))
+
+##Get the relative abundance and wrangle to keep only Escherichia-Shigella
+
+###Extract the phyloseq abundance
+otu <- as.data.frame(otu_table(ps_relab))
+
+
+# make samples = rows
+if (taxa_are_rows(ps_relab)) {
+  otu <- t(otu)
+}
+
+otu <- as.data.frame(otu)   
+
+# keep only Escherichia-Shigella
+sub <- otu[, taxa_id, drop = FALSE]
+
+sub <- data.frame(
+  SampleID = rownames(otu),
+  rel_abund = otu[, taxa_id]
+)
+
+
+
+#Log transform it, since the not transformed data is not normalized 
+sub$log_rel_abund <- log10(sub$rel_abund + 1e-6)
+
+```
+
+
+
+
+```{r Add to Metadata}
+meta <- data.frame(sample_data(ps_relab))
+meta$SampleID <- rownames(meta)
+
+meta2 <- merge(meta, sub, by="SampleID")
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r Predict the MoCA based on the indicator taxa}
+model <- lm(moca_total ~ log_rel_abund + Age + Sex, data = meta2)
+summary(model)
+```
+Age and E.shigella (0.0230) seems to be the  predictors for MoCA score. 
+```{r Generate Plot for Aim4}
+
+library(ggplot2)
+
+ggplot(meta2, aes(x = log_rel_abund, y = moca_total)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(
+    title = "Association between Escherichia-Shigella relative abundance in PD patients and MoCA",
+    x = "log10(Relative abundance + 1e-6) of Escherichia-Shigella",
+    y = "MoCA score"
+  ) +
+  theme_classic(base_size = 8)
+
+```
+
+
