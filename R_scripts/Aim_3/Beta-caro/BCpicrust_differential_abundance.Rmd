@@ -341,8 +341,8 @@ plot_data <- daa_annotated_results_df %>%
   mutate(
     # Define significance categories for coloring
     status = case_when(
-      p_adjust < 0.05 & log2fc >= 1 ~ "Up-regulated (BC Low)",
-      p_adjust < 0.05 & log2fc <= -1 ~ "Down-regulated (BC High)",
+      p_adjust < 0.05 & log2fc >= 1 ~ "More Abundant (BC Low)",
+      p_adjust < 0.05 & log2fc <= -1 ~ "Less Abundant (BC High)",
       TRUE ~ "Not Significant"
     )
   )
@@ -354,8 +354,8 @@ volcano_plot <- ggplot(plot_data, aes(x = log2fc, y = -log10(p_adjust), color = 
   geom_vline(xintercept = c(-1, 1), linetype = "dashed", color = "grey50") +
   geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "grey50") +
   # Custom colors
-  scale_color_manual(values = c("Up-regulated (BC Low)" = "#D55E00", 
-                                "Down-regulated (BC High)" = "#0072B2", 
+  scale_color_manual(values = c("More Abundant (BC Low)" = "#D55E00", 
+                                "Less Abundant (BC High)" = "#0072B2", 
                                 "Not Significant" = "grey70")) +
   # Optional: Label the top significant pathways
   geom_text_repel(

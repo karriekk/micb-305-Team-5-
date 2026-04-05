@@ -24,7 +24,7 @@ metadata_sub = metadata %>% filter(Tert_VC %in% c("VC Low", "VC High")) %>%
   mutate(Tert_VC = fct_drop(as.factor(Tert_VC)))
 ```
 
-ggpicrust2 to run "Maaslin2", another common differential abundance tool, on your groups of interest and add pathway annotations
+# ggpicrust2 to run "Maaslin2", another common differential abundance tool, on your groups of interest and add pathway annotations
 ```{r}
 meta = readRDS('../../../Datasets/phyloseq_taxonomy.rds') %>% .@sam_data %>% data.frame() %>% 
   rownames_to_column('sample_name')
@@ -53,7 +53,8 @@ saveRDS(daa_annotated_results_df,'daa_annotated_results_df.rds')
 readRDS('daa_annotated_results_df.rds')
 
 ```
-Sanity Check/Manual
+
+# Sanity Check/Manual
 ```{r}
 # STEP 1: Convert your counts to relative abundance
 
@@ -128,7 +129,7 @@ saveRDS(significant_pathways,'VC_significant_pathways.rds')
 sanity_peb = pathway_errorbar_fixed(abundance = path_filt, 
                      daa_results_df = daa_results_log2fc_filtered, 
                      Group = metadata_sub$Tert_VC, 
-                     wrap_label = F, wraplength=60,
+                     wrap_label = F, wraplength = 60,
                      fc_cutoff = 0, order_by_log = F,
                      p_values_threshold = 0.005, 
                      ko_to_kegg = F, 
@@ -190,12 +191,13 @@ daa_results_top10 = daa_annotated_results_df %>%
 peb10 = pathway_errorbar_fixed(abundance = path_filt, 
                      daa_results_df = daa_results_top10, 
                      Group = metadata_sub$Tert_VC, 
-                     wrap_label = F, wraplength=60,
+                     wrap_label = F, wraplength = 60,
                      fc_cutoff = 0, order_by_log = F,
                      p_values_threshold = 1, 
                      ko_to_kegg = F, 
                      p_value_bar = TRUE, 
                      x_lab = "description")
+peb10
 
 ggsave("../../../Results/Figures/Aim_3/VC-picrust-sig-pathways10.png",
        plot = peb10, width = 18, height = 10)
@@ -340,7 +342,7 @@ volcano_plot <- ggplot(plot_data, aes(x = log2fc, y = -log10(p_adjust), color = 
   geom_point(alpha = 0.6, size = 2) +
   geom_vline(xintercept = c(-1, 1), linetype = "dashed", color = "grey50") +
   geom_hline(yintercept = -log10(0.05), linetype = "dashed", color = "grey50") +
-  scale_color_manual(values = c("Up-regulated (VC Low)" = "#D55E00", 
+  scale_color_manual(values = c("More Abundant (VC Low)" = "#D55E00", 
                                 "Less Abundant (VC High)" = "#0072B2", 
                                 "Not Significant" = "grey70")) +
   
