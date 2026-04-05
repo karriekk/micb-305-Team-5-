@@ -283,34 +283,54 @@ pheatmap(stats,
 See how similar your sample groups are
 
 ```{r PCA}
+
 library(ggExtra)
+library(ggplot2)
 
-# Generate the base PCA plot WITHOUT the marginals
-pca_plot = pathway_pca(abundance = path_filt,
-                        metadata = metadata_sub, 
-                        group = "Tert_VC",
-                        show_marginal = FALSE) # Disable the hardcoded curves
+line_cols <- c(
+  "BC High" = "#D96B6B",
+  "BC Low"  = "#4F97D7"
+)
 
-# labels
-pca_plot = pca_plot + 
-  theme_minimal() +
-  labs(color = "Tert_VC")
 
-# Add the marginal density plots manually
-# type = "density" creates the curves
-# groupFill = TRUE ensures the colors match your groups
-# alpha = 0.3 sets the transparency you want
-final_plot = ggMarginal(pca_plot, 
-                        type = "density", 
-                        groupFill = TRUE, 
-                        alpha = 0.3)
+fill_cols <- c(
+  "BC High" = "#E07B7B",
+  "BC Low"  = "#6FA8DC"
+)
 
-# 4. Save the final object
-ggsave("../../../Results/Figures/Aim_3/VC-pathway-pca.png", 
-       plot = final_plot, 
-       width = 8, 
-       height = 6, 
-       dpi = 300)
+pca_plot <- pathway_pca(
+  abundance = path_filt,
+  metadata = metadata_sub, 
+  group = "Tert_BC",
+  show_marginal = FALSE
+) +
+  labs(color = "Tert_BC", fill = "Tert_BC") +
+  scale_color_manual(values = line_cols) +
+  scale_fill_manual(values = fill_cols) +
+  theme_classic() +
+  theme(
+    panel.background = element_rect(fill = "white", color = NA),
+    plot.background = element_rect(fill = "white", color = NA),
+    legend.background = element_rect(fill = "white", color = NA),
+    legend.key = element_rect(fill = "white", color = NA)
+  )
+
+final_plot <- ggMarginal(
+  pca_plot,
+  type = "density",
+  groupFill = TRUE,
+  groupColour = TRUE,
+  alpha = 0.35
+)
+
+ggsave(
+  "../../../Results/Figures/Aim_3/BC-pathway-pca.png",
+  plot = final_plot,
+  width = 8,
+  height = 6,
+  dpi = 300,
+  bg = "white"
+)
 ```
 
 Volcano
