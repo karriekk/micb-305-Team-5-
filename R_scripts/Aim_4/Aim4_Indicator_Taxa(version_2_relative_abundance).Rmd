@@ -1,5 +1,6 @@
 ---
-title: "Aim4 _Ver_1"
+title: "Aim 4 - Indicator Taxon and MoCA Score (version 2)"
+author: Carrie Sun
 output: html_document
 date: "2026-03-20"
 ---
@@ -13,11 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(phyloseq)
 ```
-
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Load dataset
 
 ```{r Load datasets}
 # Load in the filtered and wrangled Parkinson's metadata
@@ -29,9 +26,13 @@ counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.name
 # Load in taxonomy table exported from QIIME2
 taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 
+```
+
+# Create a Phyloseq Object
+```{r phyloseq_object}
 # Counts
 counts_formatted = counts %>% as.matrix()
-# Create the phyloseq object
+
 # Taxonomy
 taxonomy_formatted = taxonomy %>% 
   separate(col = Taxon, 
@@ -41,87 +42,92 @@ taxonomy_formatted = taxonomy %>%
   select(-Confidence) %>% 
   as.matrix()
 
-# Counts
-counts_formatted = counts %>% as.matrix()
 ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
               otu_table(counts_formatted, taxa_are_rows = T),
               tax_table(taxonomy_formatted))
 
 ```
 
+
 ```{r Load the indicator taxa}
-#Extract the indicator taxa obtained from aim2 
-taxa_id <- c(
-  #"630532cabb74720c1204579e6fe741b4",  # Cloacibacillus
-  #"a030e5d5ff9c75a027e6cc58ff02cf7c" # Alloprevotella
-  "4c8288bfbd76958c0c094d87b97650f8" #Escherichia-Shigella
-)
-ps_relab <- transform_sample_counts(ps, function(x) x / sum(x))
+# Extract the indicator taxa obtained from Aim 2 
+taxa_id <- c("4c8288bfbd76958c0c094d87b97650f8") # Corresponds to Escherichia-Shigella
+
+# Aggregate ASVs to higher taxonomic level (genus level in this case)
+ps_genus = tax_glom(ps, "Genus")
+
+# Convert phyloseq to relative abundance
+ps_relab = transform_sample_counts(ps_genus, function(x) x / sum(x))
+
 #Extract the phyloseq abundance
-otu <- as.data.frame(otu_table(ps_relab))
+otu = as.data.frame(otu_table(ps_relab))
 
-
-# make samples = rows
+# Make samples = rows
 if (taxa_are_rows(ps_relab)) {
-  otu <- t(otu)
+  otu = t(otu)
 }
 
-otu <- as.data.frame(otu)   
+otu = as.data.frame(otu)   
 
-# keep only your  taxa
-sub <- otu[, taxa_id, drop = FALSE]
+# Keep only the taxon of interest
+sub = otu[, taxa_id, drop = FALSE]
 
-sub <- data.frame(
+sub = data.frame(
   SampleID = rownames(otu),
   rel_abund = otu[, taxa_id]
 )
 
-
-
-#Log transform it
-sub$log_rel_abund <- log10(sub$rel_abund + 1e-6)
-
-#Raw relative abundance histogram--right skewed, not good for LM.
+# Raw relative abundance histogram -- right skewed, not good for LM.
 hist(sub$rel_abund,
      breaks = 30,
      main = "Distribution of Relative Abundance",
      xlab = "Relative Abundance",
      ylab = "Frequency")
 
+# The lowest non-zero relative abundance is 0.0001518834
+
+# Log transform it
+sub$log_rel_abund <- log10(sub$rel_abund + 0.0001518834/2)
+
 hist(sub$log_rel_abund,
      breaks = 30,
      main = "Distribution of Log10 Relative Abundance",
-     xlab = "log10(Relative Abundance + 1e-6)",
+     xlab = "log10(Relative Abundance + 0.0001518834/2)",
      ylab = "Frequency")
 ```
 
 
-
-
 ```{r Add to Metadata}
 meta <- data.frame(sample_data(ps_relab))
+
 meta$SampleID <- rownames(meta)
 
 meta2 <- merge(meta, sub, by="SampleID")
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-```{r Predict the MoCA based on the indicator taxa}
-model <- lm(moca_total ~ log_rel_abund + Age + Sex, data = meta2)
-summary(model)
-```
-Age and E.shigella (0.0230) seems to be the  predictors for MoCA score. 
-```{r Generate Plot for Aim4}
 
+```{r Predict the MoCA based on the indicator taxa}
+
+model <- lm(moca_total ~ log_rel_abund + Age + Sex + entacapone, data = meta2)
+
+summary(model)
+
+# Age seems to be the predictor of MoCA score.
+
+```
+
+
+```{r Generate Plot for Aim 4}
 library(ggplot2)
 
 ggplot(meta2, aes(x = log_rel_abund, y = moca_total)) +
   geom_point(size = 3, alpha = 0.7) +
   geom_smooth(method = "lm", se = TRUE) +
   labs(
-    title = "Association between Escherichia-Shigella relative abundance in PD patients and MoCA",
-    x = "log10(Relative abundance + 1e-6) of Escherichia-Shigella",
-    y = "MoCA score"
+    title = "Association between the Relative Abundance of Escherichia-Shigella and Cognitive Function in PD Patients",
+    x = "Log-10 Transformed Relative Abundance of Escherichia-Shigella",
+    y = "MoCA Score"
   ) +
   theme_classic(base_size = 8)
 
