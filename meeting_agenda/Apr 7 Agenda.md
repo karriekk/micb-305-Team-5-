@@ -2,7 +2,7 @@
 - As a group, decide on clear deadlines for each part of the manuscript and assign responsibilities.
   - Discussion, conclusion, limitations: everyone work together
 - Since we identified a large number of significantly differentially abundant pathways, what would be an effective approach to conducting a literature search to prioritize the most relevant pathways for further analysis and/or discussion in the manuscript? (none of us are very familiar with those biochemical pathways and their potential associations with each other ;-;)
-- Maybe go over what we currently have for the draft manuscript and provide some feedback? https://docs.google.com/document/d/1lFjCtwyVhdoewE-s-pe93BtddrK5Q22kV6oHEbVP6-Y/edit?tab=t.3mt680f73tg6
+- Maybe go over what we currently have for the draft manuscript and provide some feedback (we could go over this at the very end if time permits)? https://docs.google.com/document/d/1lFjCtwyVhdoewE-s-pe93BtddrK5Q22kV6oHEbVP6-Y/edit?tab=t.3mt680f73tg6
 
 
 ## Data Analysis
