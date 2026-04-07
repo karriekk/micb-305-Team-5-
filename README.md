@@ -99,6 +99,11 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
   - Figures
 
 #### Aim 4: Link Everything to Cognitive Performance (MoCA)
+- Indicator Taxon - Escherichia-Shigella
+
+  - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_4/Aim4_Indicator_Taxa(version_2_relative_abundance).Rmd)
+ 
+  - Figure
 
 ## Weekly Meeting Agenda
 You can access all of our weekly meeting agendas [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/meeting_agenda), or click the hyperlinks below to open a specific agenda.
