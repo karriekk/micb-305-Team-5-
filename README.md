@@ -109,6 +109,8 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
 You can access all of our weekly meeting agendas [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/meeting_agenda), or click the hyperlinks below to open a specific agenda.
 
 #### April
+- [Apr 7](https://github.com/karriekk/micb-305-Team-5-/blob/main/meeting_agenda/Apr%207%20Agenda.md)
+
 - [Apr 2](https://github.com/karriekk/micb-305-Team-5-/blob/main/meeting_agenda/Apr%202%20Agenda.md)
 
 #### March
@@ -138,6 +140,8 @@ You can access all of our weekly meeting agendas [here](https://github.com/karri
 You can access all of our weekly team meeting notes [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/team_meeting_notes), or click the hyperlinks below to open a specific note.
 
 #### April
+- Apr 7
+
 - [Apr 2](https://github.com/karriekk/micb-305-Team-5-/blob/main/team_meeting_notes/Apr%202%20Team%20Meeting%20Notes.md)
 
 #### March
