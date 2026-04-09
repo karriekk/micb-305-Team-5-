@@ -71,7 +71,7 @@ How is gut microbiota taxonomic and functional composition in Parkinson’s Dise
  
   - [Tables](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Tables/Aim_2/Differential_abundance_analysis)
 
-#### Aim 3: Metabolic Pathway Analysis
+#### Aim 3: Functional Analysis
 - Alpha-carotene
   
   - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_3/Alpha-caro/ACpicrust_differential_abundance.Rmd)
