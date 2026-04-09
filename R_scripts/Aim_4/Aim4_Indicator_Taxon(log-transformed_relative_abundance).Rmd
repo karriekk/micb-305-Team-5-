@@ -1,5 +1,5 @@
 ---
-title: "Aim 4 - Indicator Taxon and MoCA Score (version 2)"
+title: "Aim 4 - Indicator Taxon and MoCA Score"
 author: Carrie Sun
 output: html_document
 date: "2026-03-20"
