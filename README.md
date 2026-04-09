@@ -140,7 +140,7 @@ You can access all of our weekly meeting agendas [here](https://github.com/karri
 You can access all of our weekly team meeting notes [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/team_meeting_notes), or click the hyperlinks below to open a specific note.
 
 #### April
-- Apr 7
+- [Apr 7](https://github.com/karriekk/micb-305-Team-5-/blob/main/team_meeting_notes/Apr%207%20Team%20Meeting%20Notes.md)
 
 - [Apr 2](https://github.com/karriekk/micb-305-Team-5-/blob/main/team_meeting_notes/Apr%202%20Team%20Meeting%20Notes.md)
 
