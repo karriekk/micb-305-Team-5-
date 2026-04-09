@@ -30,7 +30,7 @@ How is gut microbiota taxonomic and functional composition in Parkinson’s Dise
  
   - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Alpha_diversity/alpha_diversity_results_summary.md)
 
-  - Figures
+  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity)
  
 - Beta diversity analysis
 
