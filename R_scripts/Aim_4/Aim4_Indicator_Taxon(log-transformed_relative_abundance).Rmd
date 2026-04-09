@@ -125,7 +125,6 @@ ggplot(meta2, aes(x = log_rel_abund, y = moca_total)) +
   geom_point(size = 3, alpha = 0.7) +
   geom_smooth(method = "lm", se = TRUE) +
   labs(
-    title = "Association between the Relative Abundance of Escherichia-Shigella and Cognitive Function in PD Patients",
     x = "Log-10 Transformed Relative Abundance of Escherichia-Shigella",
     y = "MoCA Score"
   ) +
