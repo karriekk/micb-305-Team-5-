@@ -5,6 +5,16 @@ Team 5 members: Carrie Sun, Coe McGrath, Cynthia Lin, Emily Ju, Yanting Xiong
 Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.28052
 
 ## Project Summary
+Parkinson’s disease, or PD, is an age-related, progressive neurodegenerative disorder characterized by both motor and non-motor symptoms. In addition to the well-established neuropathological and clinical features, growing evidence highlights the significance of gut microbiome in modulating the nervous system through the gut-brain axis, as well as its potential role in PD pathophysiology. 
+
+Alterations in the gut microbiome of PD patients have been increasingly found in recent research, which is characterized by reduced short-chain fatty acid (SCFA)-producing bacteria and increased pro-inflammatory taxa. 
+
+Diet plays a key role in shaping the microbiome, and healthy dietary patterns have been associated with beneficial microbial changes in PD patients. In particular, dietary antioxidants have been found to reduce gut inflammation and promote beneficial microbial activity. Thus, antioxidants are hypothesized to indirectly provide neuroprotection through microbiome modulation. 
+
+Despite growing research in the field, most studies focus on comparing between PD patients and healthy controls, with few examining microbiome variability within PD populations. Additionally, it remains unclear whether antioxidant-driven microbiome changes are correlated with shifts in cognitive performance in PD patients. Therefore, our study aims to address these knowledge gaps using the dataset by Cirstea et al.
+
+## Research Question
+How is gut microbiota taxonomic and functional composition in Parkinson’s Disease patients affected by dietary antioxidant intake, and how are these microbial features correlated with cognitive performance change assessed by Montreal Cognitive Assessment (MoCA)?
 
 ## Project Aims with Links to the Corresponding R Scripts and Results
 
