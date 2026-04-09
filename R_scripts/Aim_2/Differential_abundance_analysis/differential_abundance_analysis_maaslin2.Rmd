@@ -11,30 +11,46 @@ date: "2026-03-14"
 library(tidyverse)
 library(phyloseq)
 library(Maaslin2)
+library(dplyr)
 ```
 
 ## Dataset loading
 
 ```{r dataset loading}
 # Load in the filtered and wrangled Parkinson's metadata
-parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+parkinsons_metadata_filt_cat = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
 
 # Because we will be controlling for entacapone in downstream analyses and it contains NA values, they need to be removed from the filtered metadata
 parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
 # 10 PD individuals are removed after this filtering step because they do not have entacapone intakes recorded
 
 # Load in feature table exported from QIIME2
-counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+counts = read.delim("../../../QIIME2_outputs/feature-table.txt", skip = 1)
+
+counts$X.OTU.ID = paste0("X", counts$X.OTU.ID) # An arbitrary “X” was prefixed to each feature ID to prevent MaAsLin2 from automatically appending a character to IDs that begin with a numeric value.
+
+write.csv(counts, "Modified_tables/modified_counts_table.csv", row.names = FALSE) # Export the modified counts table
+
+# Load in the modified counts table again
+counts_modified = read.csv("Modified_tables/modified_counts_table.csv", row.names = 1) 
 
 # Load in taxonomy table exported from QIIME2
-taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+taxonomy = read.delim("../../../QIIME2_outputs/taxonomy.tsv") 
+
+taxonomy$Feature.ID = paste0("X", taxonomy$Feature.ID) # An arbitrary “X” was prefixed to each feature ID to prevent MaAsLin2 from automatically appending a character to IDs that begin with a numeric value.
+
+write.csv(taxonomy, "Modified_tables/modified_taxonomy_table.csv", row.names = FALSE) # Export the modified taxonomy table
+
+# Load in the modified taxonomy table
+taxonomy_modified = read.csv("Modified_tables/modified_taxonomy_table.csv", row.names = 1) 
+
 ```
 
 ## Makr a Phyloseq object
 
 ```{r phyloseq object}
 # Taxonomy
-taxonomy_formatted = taxonomy %>% 
+taxonomy_formatted = taxonomy_modified %>% 
   separate(col = Taxon, 
            into = c("Domain","Phylum","Class","Order",
                     "Family","Genus","Species"),
@@ -43,7 +59,7 @@ taxonomy_formatted = taxonomy %>%
   as.matrix()
 
 # Counts
-counts_formatted = counts %>% as.matrix()
+counts_formatted = counts_modified %>% as.matrix()
 
 # Create the phyloseq object
 ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
@@ -90,7 +106,16 @@ out_BC = Maaslin2(
 
 statistical_table_BC = out_BC$results
 
-writexl::write_xlsx(statistical_table_BC,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Beta_carotene - Maaslin2 Results.xlsx')
+# Match the feature IDs with the corresponding bacteria genus name
+tax_df = data.frame(ps_genus@tax_table)
+
+genus_map = setNames(tax_df$Genus, rownames(tax_df))
+
+statistical_table_BC$Genus = genus_map[statistical_table_BC$feature] 
+
+statistical_table_BC = statistical_table_BC %>% relocate(Genus, .after = feature)
+
+writexl::write_xlsx(statistical_table_BC,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Beta_carotene - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_BC = statistical_table_BC %>% 
@@ -129,7 +154,12 @@ out_AC = Maaslin2(
 
 statistical_table_AC = out_AC$results
 
-writexl::write_xlsx(statistical_table_AC,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Alpha_carotene - Maaslin2 Results.xlsx')
+# Match the feature IDs with the corresponding bacteria genus name
+statistical_table_AC$Genus = genus_map[statistical_table_AC$feature] 
+
+statistical_table_AC = statistical_table_AC %>% relocate(Genus, .after = feature)
+
+writexl::write_xlsx(statistical_table_AC,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Alpha_carotene - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_AC = statistical_table_AC %>% 
@@ -168,7 +198,12 @@ out_VA = Maaslin2(
 
 statistical_table_VA = out_VA$results
 
-writexl::write_xlsx(statistical_table_VA,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_A - Maaslin2 Results.xlsx')
+# Match the feature IDs with the corresponding bacteria genus name
+statistical_table_VA$Genus = genus_map[statistical_table_VA$feature] 
+
+statistical_table_VA = statistical_table_VA %>% relocate(Genus, .after = feature)
+
+writexl::write_xlsx(statistical_table_VA,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_A - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_VA = statistical_table_VA %>% 
@@ -206,7 +241,12 @@ out_VC = Maaslin2(
 
 statistical_table_VC = out_VC$results
 
-writexl::write_xlsx(statistical_table_VC,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_C - Maaslin2 Results.xlsx')
+# Match the feature IDs with the corresponding bacteria genus name
+statistical_table_VC$Genus = genus_map[statistical_table_VC$feature] 
+
+statistical_table_VC = statistical_table_VC %>% relocate(Genus, .after = feature)
+
+writexl::write_xlsx(statistical_table_VC,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_C - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_VC = statistical_table_VC %>% 
@@ -244,7 +284,12 @@ out_VE = Maaslin2(
 
 statistical_table_VE = out_VE$results
 
-writexl::write_xlsx(statistical_table_VE,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_E - Maaslin2 Results.xlsx')
+# Match the feature IDs with the corresponding bacteria genus name
+statistical_table_VE$Genus = genus_map[statistical_table_VE$feature] 
+
+statistical_table_VE = statistical_table_VE %>% relocate(Genus, .after = feature)
+
+writexl::write_xlsx(statistical_table_VE,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_E - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_VE = statistical_table_VE %>% 
@@ -282,7 +327,12 @@ out_combine = Maaslin2(
 
 statistical_table_combine = out_combine$results
 
-writexl::write_xlsx(statistical_table_combine,'../../Results/Tables/Aim_2/Differential_abundance_analysis/Combined - Maaslin2 Results.xlsx')
+# Match the feature IDs with the corresponding bacteria genus name
+statistical_table_combine$Genus = genus_map[statistical_table_combine$feature] 
+
+statistical_table_combine = statistical_table_combine %>% relocate(Genus, .after = feature)
+
+writexl::write_xlsx(statistical_table_combine,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Combined - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_combine = statistical_table_combine %>% 

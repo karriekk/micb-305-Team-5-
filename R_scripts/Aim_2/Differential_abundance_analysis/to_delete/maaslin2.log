@@ -1,0 +1,171 @@
+2026-04-09 12:33:49.892718 INFO::Writing function arguments to log file
+2026-04-09 12:33:49.893628 DEBUG::Function arguments
+2026-04-09 12:33:49.893948 DEBUG::Output folder: to_delete
+2026-04-09 12:33:49.894181 DEBUG::Min Abundance: 0.001000
+2026-04-09 12:33:49.894368 DEBUG::Min Prevalence: 0.100000
+2026-04-09 12:33:49.894545 DEBUG::Normalization: TSS
+2026-04-09 12:33:49.894726 DEBUG::Transform: AST
+2026-04-09 12:33:49.894895 DEBUG::Analysis method: LM
+2026-04-09 12:33:49.895063 DEBUG::Max significance: 0.050000
+2026-04-09 12:33:49.895216 DEBUG::Random effects:
+2026-04-09 12:33:49.895367 DEBUG::Fixed effects: Tert_combine,Age,Sex,entacapone
+2026-04-09 12:33:49.895512 DEBUG::Correction method: BH
+2026-04-09 12:33:49.895659 DEBUG::Standardize: TRUE
+2026-04-09 12:33:49.895824 DEBUG::Cores: 1
+2026-04-09 12:33:49.89597 INFO::Verifying options selected are valid
+2026-04-09 12:33:49.896572 INFO::Determining format of input files
+2026-04-09 12:33:49.897142 INFO::Input format is data samples as columns and metadata samples as rows
+2026-04-09 12:33:49.89942 DEBUG::Transformed data so samples are rows
+2026-04-09 12:33:49.900938 DEBUG::A total of 184 samples were found in both the data and metadata
+2026-04-09 12:33:49.901168 DEBUG::Reordering data/metadata to use same sample ordering
+2026-04-09 12:33:49.90341 INFO::Formula for fixed effects: expr ~  Tert_combine + Age + Sex + entacapone
+2026-04-09 12:33:49.904431 INFO::Filter data based on min abundance and min prevalence
+2026-04-09 12:33:49.904919 INFO::Total samples in data: 184
+2026-04-09 12:33:49.905375 INFO::Min samples required with min abundance for a feature not to be filtered: 18.400000
+2026-04-09 12:33:49.907663 INFO::Total filtered features: 126
+2026-04-09 12:33:49.908282 INFO::Filtered feature names from abundance and prevalence filtering: X63ad4d902d2a3cd457b673b184d6ca5b, Xd5f4783a8b79c08fa4ef338018fb8f35, X8b6fc6fb23f8c07caa6993b8507bca94, Xa5a29d893593f089364cacd37d73a028, X8c0f7b375999bd7ec32a0eefd6c40cb9, X7fd81661e64bc63eb4aa56cb6fdf0450, Xb287c87a16ef231b6b93625eceae36b1, X81add53acc2ecc3510cffa95d8929b27, X219314c570a401e3169b30e2612b5951, Xa033d13f0f20b5a9847c0d750f9b257b, Xe0bc7a8b1e63a4d5130a9d20a42a6aa6, X60cd37a59c17eee0da24fa90b752cff2, X64c7c71132ec289ef08411572de40d77, X7c40d04aa6e286b185ee4bc8f8e3f8c2, Xe13131fc3cfcc1f84c85ea484a9bd32d, Xa21ea2256e478b9ba3ce0ec8af6b4f38, Xc58a7bf7c275236996f0b2e7cdeaadb4, Xa3c51c8458a8b398fd48fb13eab89d30, X5a08b136304e05ee8edaadbbc2fae904, Xde9c44ef287cf610a0a4aec84ab93245, Xc6f5c643df83ad7e9136b2325bb056b3, Xfa9a63f9976661d6ae8db48ee3181df7, X4e08c378c8474aa2c2f6143389c8ffcf, X378abaddaee3a4538b1fd63920da5092, X259d5e093914f9f5b067e8e6de92a2a6, X67ee7d8563bb02d0d54f077807ea5ecb, Xa733025634eb9da6c6ae57ca4f843276, X8261e8a258f04149bd57e115608d58cc, Xc4af48baf45e8f24d7d7979a8699627f, X6f1063a32e907f6e7f8c93b46039ac84, X94d658971ae4da1ee91c7d3e51cecc57, X0847b7f50eee6edbfdd905fb821fdccd, Xb6821525c7f466e4c10fe931d73ff56e, X7181b9d732cc0c95f0f605bff39302dd, Xc98acd3391ae662ae958f61cf9a950de, X3276c1b55a910395f24f51758f5ed6bd, X788cd2fab180ca78a4376c6afc0e61c6, X62eabc852419521c3efd1020d11d7f1f, X22f8493a81bc1cbf2a83218f4f334a0c, Xac6477fff954092f5aa27b371d0f5c85, X26082afd548052874e29702d196b85f0, X448b1492442158abaf38e2bc1d9870d0, Xfdc9a6c69a6b7d728eb6dfe27e462441, X028e2c1b650e2e2b5847154a153e0166, Xc0a0588789c30c5f413216dfef6cc8f0, X2a8ee040866133a5a917c38abe783402, X4e41d17793e1b908b2b9be8fb22d1ccc, Xce19a32484459ac7f28a5201858efe2a, Xbf8b84f3b4506cf8bed2c2b22fddb848, Xd3e1db9859fb7407ab40421b9dcedb4b, Xf4d751396d86b42b5d473b3ba5053f80, X2ff90d72acbc98e273afbdf395353a43, Xf9a31f0e20a6345322d37d2a8b73e833, X80834b7fe3c3e3a492e66808cc889518, Xe8c8570aba7bac8629fadc51698efcd5, Xea7763a61685bc23f03edea1a8bdf0c1, X58ee68af6ed3ecc53b8c10f063ef7ea6, Xd66aac85f9494c693c06c2185d63c79f, Xfcdc35211f0f8bb1f5ca3cbf7bfdaf9e, X1f98ceb2d38a3d49993f5746b3051957, X64561fc1fb1f3e539e63faab957256ce, Xb05520bb7a218aafa7656bb7c7747b37, Xafd39e4c44959b3bb51820d40a10e966, Xc3d1af853645ac967c74ba5bf7c341d9, X4fe5e0b2d61af0e16cef1293dd8ba1c8, Xe4899a4ab0c9dd980251244cf1c81d3c, X9acab948cc8c490513c3f62be2215323, Xfbae4ac6a4b85e184d81a60f1e24615a, X5c41806f924fb1e703e71cf0d2414e60, Xfd219b4788a39c31ed2afe03c9d1af1c, Xdc22bc7eb9ba13b61fc9b53c8c3210cd, X7da53279bbff72658e905fb272ee7d08, X716ae213aa7e960a98f2e209821d43e8, X37215a224f88ccf70b62388afb50677b, X248867b524a8888350c3bc333d9489b5, X5657f059384253a34ad339d7d915d62a, Xed3150fb565d8c0cda0ffb34b871fbe3, X028a69b1729bd2b20b5d207c85829309, X0c2532300c50f60f0a4586f0b7a7b865, X1dd0de0176ddf4ce0f0b8ab5fb4d5bde, X69918dabc37e61bf06e5a4346722f074, X9071b067cce42807642f9dbc412ea14e, X180880f1991889278ba1edab451f4519, X6ca3f1e7d3011097ec41585e61307d26, X15c4743e2d680ecefb3ea053d9cc98bd, X813d1d1d161c8e8f7c36ebecdaba3530, Xb7fb7b8de1b4e013e7255cec428893a7, X44dc7f1aa8950eb0a1df549b9daed3bc, X8f0798ce640164d9d0d044c8b8882965, X1aa080381bb40a5eccce552133930d5d, X78903cbbbff0539dd3580cbd9caef861, X50325490afb474851e69fc2fab2458dc, Xc003202be6a53b07fbb26ecd2161fe2c, X38bcad9f398b4528cd91e97ec0079bbd, X69dd8bcea64a2b0a4238e560a00ce6aa, Xe9b61e26319af1f703fe51e108e285f5, X544965b66196cc8658a9d55dd328b7bb, X9dadda847599bdd14914b92de79d0ced, Xf4c1c883e499e7bd0b79e8389fda2c1a, X23667231b1722eb51bc7ccfaa5e5c38a, X857294e4d825ece40ed0e9ca9884a1ac, X9d3eb6f2b59a2f63dd757bac3ccd9147, Xb1f8705070b6198db8030db9b0ed9adc, X899a17421c7f1ed9d9f12dd5325d715b, X5a3a601a1eb46ee2f21e8fb509c0720c, X37f98379b3111573de3aeb557cc3be49, Xfc06b9b3e6fa0f7d22c986569d0e7d89, X1f5d9d04a7543f68efcbc6bca3265f33, X5a5f253a2a67908d77c510b9ea541d67, X15c4a7a11ad1466019c3b85fb85559a3, X8408059b62784f6a2740d42ac2aa1069, Xb8af5204d2aaf8055bd75a71bab04e51, Xefcd0461ac1ed0fea763be1234b924d9, X2ef58836a614ef6310e132323f695557, X56eae32de969a8a47844eedc53db08e6, X5ddf8f4c1b671d63629dbea81e5c4791, X4ccc3a4d66d27412694b72fd6d056801, X509eef1e1803c2fc35f831dc128c06e6, X45f56bd5f81a3d1bde7fa38ee4cb798f, Xd7dcb7dc7f6e9c2ff81256554fef6e77, Xf0135ea5c9854954ff851185c476e91c, X969deec2ae0da8684a13ab43a5339a7d, Xc439827363b2d9ed68d0d4361cb5f264, X049438a503f0071feabdd89415749f0a, Xdcc0d07a71334aed6173a8eb627563ac, Xc97980fcfebe112b1e72f25624597e10
+2026-04-09 12:33:49.910353 INFO::Total filtered features with variance filtering: 0
+2026-04-09 12:33:49.910838 INFO::Filtered feature names from variance filtering:
+2026-04-09 12:33:49.911289 INFO::Running selected normalization method: TSS
+2026-04-09 12:33:49.913645 INFO::Applying z-score to standardize continuous metadata
+2026-04-09 12:33:49.916466 INFO::Running selected transform method: AST
+2026-04-09 12:33:49.918773 INFO::Running selected analysis method: LM
+2026-04-09 12:33:49.919899 INFO::Fitting model to feature number 1, X1f9695def389854178788b2e4a8792ee
+2026-04-09 12:33:49.922233 INFO::Fitting model to feature number 2, Xd3f1d99ffce8ccadfd2ee75f7b86b0c5
+2026-04-09 12:33:49.924383 INFO::Fitting model to feature number 3, X79a123f051e7c2965a46226b1d95246e
+2026-04-09 12:33:49.926268 INFO::Fitting model to feature number 4, X84311c29ab5cf09c0720c450dc7c1a43
+2026-04-09 12:33:49.928539 INFO::Fitting model to feature number 5, Xd926c5000a193dc8473f190e75b9fcd0
+2026-04-09 12:33:49.930378 INFO::Fitting model to feature number 6, Xd039ffee9e93545befc0b24c6b1adb8a
+2026-04-09 12:33:49.952029 INFO::Fitting model to feature number 7, X630532cabb74720c1204579e6fe741b4
+2026-04-09 12:33:49.956516 INFO::Fitting model to feature number 8, Xd4dcc0bc5f5a6e517ddf472187dbc2e7
+2026-04-09 12:33:49.990628 INFO::Fitting model to feature number 9, Xfc4575c432e5f43c1eaf202f1c5816c4
+2026-04-09 12:33:49.99274 INFO::Fitting model to feature number 10, Xcbd66fa79a3e7fa1c33d29ed908de048
+2026-04-09 12:33:49.995147 INFO::Fitting model to feature number 11, Xa81bf36dba92ea8defbda21f3633f8fe
+2026-04-09 12:33:49.996906 INFO::Fitting model to feature number 12, X860a5e9ee39ccb39131b57de03fb5bf8
+2026-04-09 12:33:49.99892 INFO::Fitting model to feature number 13, X9c19eb9efc671777c92ee43ca21be172
+2026-04-09 12:33:50.000568 INFO::Fitting model to feature number 14, Xfc2bf17d11280ea7e498670124f07400
+2026-04-09 12:33:50.002486 INFO::Fitting model to feature number 15, X1a9b1bbd7d800a46e40664e26298b33b
+2026-04-09 12:33:50.004252 INFO::Fitting model to feature number 16, Xcb645d9e303b0e2d761969abb610d210
+2026-04-09 12:33:50.00608 INFO::Fitting model to feature number 17, X2487d88c9966a6b0e2b87711d51811a8
+2026-04-09 12:33:50.007755 INFO::Fitting model to feature number 18, X4c089330a0f8ccdd7dd92492808e9247
+2026-04-09 12:33:50.009597 INFO::Fitting model to feature number 19, X9f05e4992392a05c38e1c790e07f3e5c
+2026-04-09 12:33:50.011205 INFO::Fitting model to feature number 20, Xa49ea569715664c78018691088f7aaac
+2026-04-09 12:33:50.013119 INFO::Fitting model to feature number 21, X855166a7ea9905b7590e5e5fb7da7866
+2026-04-09 12:33:50.014842 INFO::Fitting model to feature number 22, X5b73138c8555560a7cd45cb7bd7ca6da
+2026-04-09 12:33:50.01672 INFO::Fitting model to feature number 23, X7888dc681f2841bbc77d1f456dbda3d9
+2026-04-09 12:33:50.018234 INFO::Fitting model to feature number 24, X960b9cea75175246a62496526868a249
+2026-04-09 12:33:50.020294 INFO::Fitting model to feature number 25, X74fafaec802530941890c1f49dfbf3e4
+2026-04-09 12:33:50.022033 INFO::Fitting model to feature number 26, X9228756628ca33af7e8809e0968c79f8
+2026-04-09 12:33:50.024036 INFO::Fitting model to feature number 27, X6f0b4058c92e83c77533a218739a0e38
+2026-04-09 12:33:50.025762 INFO::Fitting model to feature number 28, Xc43bbd203d077ba15c26090580d64d32
+2026-04-09 12:33:50.027649 INFO::Fitting model to feature number 29, X40f29bc827ddfc03d7fb5b76fb311557
+2026-04-09 12:33:50.029236 INFO::Fitting model to feature number 30, Xc44642d31840ae8b6896c0bc0f5a8802
+2026-04-09 12:33:50.031068 INFO::Fitting model to feature number 31, X18f3b811ae49dad2e01b20f5f39d10a7
+2026-04-09 12:33:50.032629 INFO::Fitting model to feature number 32, Xa3d1f4355f204d4d49ad2bea3b801265
+2026-04-09 12:33:50.034425 INFO::Fitting model to feature number 33, X93f6e99ff381954b541d29cc24c2be7c
+2026-04-09 12:33:50.036443 INFO::Fitting model to feature number 34, Xa0ac269acfcd16c66700762ee6340b07
+2026-04-09 12:33:50.038444 INFO::Fitting model to feature number 35, X68ee03666c1dd76a9a1ca298d04bc99e
+2026-04-09 12:33:50.040153 INFO::Fitting model to feature number 36, X8ac938c2111c4dea67b9a99a3f7900bc
+2026-04-09 12:33:50.042003 INFO::Fitting model to feature number 37, X8c3c2cadc6f0966f44b3f2371d81abd3
+2026-04-09 12:33:50.043666 INFO::Fitting model to feature number 38, Xc00514d54b15725f03c323c54796a7c0
+2026-04-09 12:33:50.045679 INFO::Fitting model to feature number 39, X9d7e2f75c0754a3aaf6bf21a479a0046
+2026-04-09 12:33:50.047505 INFO::Fitting model to feature number 40, X1941bdf9450a85f4069a80e526137af7
+2026-04-09 12:33:50.049662 INFO::Fitting model to feature number 41, Xce7e172e3d64bc42dddb2f4aa26e3a03
+2026-04-09 12:33:50.051457 INFO::Fitting model to feature number 42, Xfbbeae3dceada6928b2cdc472f5d9901
+2026-04-09 12:33:50.053516 INFO::Fitting model to feature number 43, X1131f697b19dc061094f3b846b9f66a0
+2026-04-09 12:33:50.057305 INFO::Fitting model to feature number 44, X94adac1e5690b5aef26d6014e471f458
+2026-04-09 12:33:50.060031 INFO::Fitting model to feature number 45, Xc2f27e09022e99cda9f6629948f66252
+2026-04-09 12:33:50.061867 INFO::Fitting model to feature number 46, X2a7ee151e83dbc4a4ac13f84a434c8c7
+2026-04-09 12:33:50.063667 INFO::Fitting model to feature number 47, X3d846e34d0ebbaa6096f5b1e5e8afa03
+2026-04-09 12:33:50.06534 INFO::Fitting model to feature number 48, X194d511e554b455dac7747ef6442339f
+2026-04-09 12:33:50.06743 INFO::Fitting model to feature number 49, X19563b70bb3469c665c888e4685e7f99
+2026-04-09 12:33:50.069597 INFO::Fitting model to feature number 50, X0bc4e35da130d9cb9fc1090c80011153
+2026-04-09 12:33:50.071903 INFO::Fitting model to feature number 51, X988ee95161bcfd6129fddab0fda16d68
+2026-04-09 12:33:50.073679 INFO::Fitting model to feature number 52, X970d6f0c54e1e999cbdcdefc80299e2b
+2026-04-09 12:33:50.07548 INFO::Fitting model to feature number 53, X86b5603a79c587d59312beef52df3409
+2026-04-09 12:33:50.07701 INFO::Fitting model to feature number 54, X9d2a55480c1cd54eacfb0243d4562261
+2026-04-09 12:33:50.078717 INFO::Fitting model to feature number 55, Xf3e1ff3be3a6f13f24666ea97d99cd0b
+2026-04-09 12:33:50.080297 INFO::Fitting model to feature number 56, X9c804f3d76b861e98e017e380f2f04df
+2026-04-09 12:33:50.082163 INFO::Fitting model to feature number 57, X7bf7ea59cac793e65c0bc293eabf44dc
+2026-04-09 12:33:50.083761 INFO::Fitting model to feature number 58, X5fe7ab4157717cdcf56706e5c043b959
+2026-04-09 12:33:50.085631 INFO::Fitting model to feature number 59, X85c51ab58e3beec0355a935d17f0758e
+2026-04-09 12:33:50.087196 INFO::Fitting model to feature number 60, X47837e1a0b06f78d52ce1faf831fec84
+2026-04-09 12:33:50.089042 INFO::Fitting model to feature number 61, X76214bb13d1e7d69ca2f7827e3ac12e2
+2026-04-09 12:33:50.090607 INFO::Fitting model to feature number 62, Xa0f9d2150e3f8419a6ade2e296eafb5f
+2026-04-09 12:33:50.097307 INFO::Fitting model to feature number 63, Xa55f549b9a40506a070a2fb7e8ca0726
+2026-04-09 12:33:50.136243 INFO::Fitting model to feature number 64, X3d514b698192fb4c2a0445c3498b2cfb
+2026-04-09 12:33:50.139303 INFO::Fitting model to feature number 65, X1daf7490935642942f91e007dfefa7e9
+2026-04-09 12:33:50.141091 INFO::Fitting model to feature number 66, X1e10ca4ce57e3019886b4f75360a76fa
+2026-04-09 12:33:50.143067 INFO::Fitting model to feature number 67, Xe52994cd67774b8f72113d04a0b2c493
+2026-04-09 12:33:50.144784 INFO::Fitting model to feature number 68, X77be5efca77e4204775e4e828a1580db
+2026-04-09 12:33:50.146717 INFO::Fitting model to feature number 69, X00dcba6e262a3194c68f52e6af48a071
+2026-04-09 12:33:50.148402 INFO::Fitting model to feature number 70, Xec65ab01e974afdd946f7c025b3ceba5
+2026-04-09 12:33:50.150456 INFO::Fitting model to feature number 71, X7d0ccb9242c92ba67eae0552bf7c6f94
+2026-04-09 12:33:50.152496 INFO::Fitting model to feature number 72, X970c4c927d69ee41accb2c1a29f9a023
+2026-04-09 12:33:50.154419 INFO::Fitting model to feature number 73, Xe8d0f444dc3a43708bc843fd8472b381
+2026-04-09 12:33:50.156158 INFO::Fitting model to feature number 74, X0b3590ab4de6582222af6f3565ceca0c
+2026-04-09 12:33:50.158242 INFO::Fitting model to feature number 75, X269fea3886e14ab0acb08ade901906fd
+2026-04-09 12:33:50.160174 INFO::Fitting model to feature number 76, X278651ccb0f0d07cd2ab0837262dfc39
+2026-04-09 12:33:50.162428 INFO::Fitting model to feature number 77, X84b17f815f1e8767da103f96068901ec
+2026-04-09 12:33:50.164442 INFO::Fitting model to feature number 78, X1300fb2208dcbb54d400995de3bc2eaa
+2026-04-09 12:33:50.166637 INFO::Fitting model to feature number 79, X7ba07d9f4e22c332b04d5646fe2ea051
+2026-04-09 12:33:50.168259 INFO::Fitting model to feature number 80, Xecb427bf4473bf2f3205b06132125d07
+2026-04-09 12:33:50.170432 INFO::Fitting model to feature number 81, Xc5a684b3dfddaa1e68d4563ea771ed15
+2026-04-09 12:33:50.172178 INFO::Fitting model to feature number 82, Xf9fecdd58f0cedd3463e687ffd85ef48
+2026-04-09 12:33:50.174006 INFO::Fitting model to feature number 83, X5c7f516ff4d244a8f63e883a44267f20
+2026-04-09 12:33:50.17561 INFO::Fitting model to feature number 84, Xa965d63a2b3f783b281a48f774847f29
+2026-04-09 12:33:50.177462 INFO::Fitting model to feature number 85, X80a9a51ced500bf3bfbca440e0971948
+2026-04-09 12:33:50.179014 INFO::Fitting model to feature number 86, X0029d1a452fe37b0ff76a9c1da5ccf21
+2026-04-09 12:33:50.180973 INFO::Fitting model to feature number 87, X059d6e79cba765d062053442b8ada21c
+2026-04-09 12:33:50.182634 INFO::Fitting model to feature number 88, X1d25e5714547bb8a8f93b8364d36889e
+2026-04-09 12:33:50.184564 INFO::Fitting model to feature number 89, Xc71265e180d7e06bd350017b893ea44a
+2026-04-09 12:33:50.18667 INFO::Fitting model to feature number 90, X264be41ad2f4137d7cd5fefe393e1b92
+2026-04-09 12:33:50.188935 INFO::Fitting model to feature number 91, X61d6589645d112c45ea0478e6445fa34
+2026-04-09 12:33:50.190663 INFO::Fitting model to feature number 92, X6e373fe39ea68760cf9b2bf171476a55
+2026-04-09 12:33:50.192813 INFO::Fitting model to feature number 93, X182071d231a63cae957730240a214721
+2026-04-09 12:33:50.194348 INFO::Fitting model to feature number 94, Xde021ed367003d69832c2a5461985f38
+2026-04-09 12:33:50.196147 INFO::Fitting model to feature number 95, Xc6b61011752152bbbc32003f5d0c5398
+2026-04-09 12:33:50.197714 INFO::Fitting model to feature number 96, X6ca83bb8d84d22ff21607c96e42f4295
+2026-04-09 12:33:50.199406 INFO::Fitting model to feature number 97, Xdc04cb67b3295173275e20a8a7a3d16a
+2026-04-09 12:33:50.200934 INFO::Fitting model to feature number 98, Xdd887bed9045e6e59c223bf9074e8f71
+2026-04-09 12:33:50.202791 INFO::Fitting model to feature number 99, X7a6db5f059c69a310d7c97e1b488fe74
+2026-04-09 12:33:50.204293 INFO::Fitting model to feature number 100, X96c7cedbae877361d087a8b39206d408
+2026-04-09 12:33:50.206042 INFO::Fitting model to feature number 101, X86486b103104c344caa9a990b454797c
+2026-04-09 12:33:50.207539 INFO::Fitting model to feature number 102, X0b2e7a7da00f71987193e385a9a4a4d1
+2026-04-09 12:33:50.209315 INFO::Fitting model to feature number 103, X57188cc28844564b611d3dd0d6e30de7
+2026-04-09 12:33:50.211074 INFO::Fitting model to feature number 104, X76aa915543cd876d620ebeafeb9fd767
+2026-04-09 12:33:50.213659 INFO::Fitting model to feature number 105, X570cad8230542ad8f2c032a719120bee
+2026-04-09 12:33:50.215255 INFO::Fitting model to feature number 106, Xc6faae06a70c97500e4f329b617e70b7
+2026-04-09 12:33:50.217076 INFO::Fitting model to feature number 107, X9f185911874fb5d5b2623b647359f33b
+2026-04-09 12:33:50.21866 INFO::Fitting model to feature number 108, X4661cd41d2df6a4bf70276894e6cc779
+2026-04-09 12:33:50.220642 INFO::Fitting model to feature number 109, Xe0565865ef72ba498c2938b247ff36dc
+2026-04-09 12:33:50.222185 INFO::Fitting model to feature number 110, X94a45fbb634a4ae23f34d8160d95c8b7
+2026-04-09 12:33:50.223913 INFO::Fitting model to feature number 111, Xf3270b7f9b020567e59ec30f7d15fc14
+2026-04-09 12:33:50.225364 INFO::Fitting model to feature number 112, X9f79ff73dcbc3e304545d60cdbbca33b
+2026-04-09 12:33:50.22708 INFO::Fitting model to feature number 113, X6be7c1afdd690efab2c28453f0d304da
+2026-04-09 12:33:50.228624 INFO::Fitting model to feature number 114, Xa75f6c6ef715f88994d61a440132c65b
+2026-04-09 12:33:50.230399 INFO::Fitting model to feature number 115, X959a41695798ad7798d39740d7e9ae19
+2026-04-09 12:33:50.232002 INFO::Fitting model to feature number 116, X4c8288bfbd76958c0c094d87b97650f8
+2026-04-09 12:33:50.234028 INFO::Fitting model to feature number 117, X4a21bd45b5ff48f40bbcadf6930fc3ee
+2026-04-09 12:33:50.23597 INFO::Fitting model to feature number 118, Xf857e38c09d5f11ed7357057fffcc3a0
+2026-04-09 12:33:50.238432 INFO::Fitting model to feature number 119, X327e928d80b137060bd55c0515d64b2a
+2026-04-09 12:33:50.251068 INFO::Fitting model to feature number 120, Xede2e1cdf233330f3e67603862d90fd5
+2026-04-09 12:33:50.264405 INFO::Fitting model to feature number 121, X2132a94c12039eca49c517950714e48a
+2026-04-09 12:33:50.266026 INFO::Fitting model to feature number 122, X5d1a7a11e80c627fbc98743087f309f0
+2026-04-09 12:33:50.26808 INFO::Fitting model to feature number 123, X64d94620fe0f5db1cd211f24f6a6d659
+2026-04-09 12:33:50.270362 INFO::Fitting model to feature number 124, Xf247c06edb93b0f02277e395b87328aa
+2026-04-09 12:33:50.272503 INFO::Fitting model to feature number 125, Xa9625534f57e5ed4661782588cc20467
+2026-04-09 12:33:50.274725 INFO::Fitting model to feature number 126, Xff241ad98176a2c70cdb70878176ca2e
+2026-04-09 12:33:50.277226 INFO::Fitting model to feature number 127, Xac4a57c0c6ca41f976c5c914e25ed371
+2026-04-09 12:33:50.281796 INFO::Fitting model to feature number 128, X76d6be90e19a660c9a84b35fa31d801c
+2026-04-09 12:33:50.28488 INFO::Fitting model to feature number 129, X1703aefcb845a13faff8f80ea8265820
+2026-04-09 12:33:50.301536 INFO::Counting total values for each feature
+2026-04-09 12:33:50.311769 INFO::Writing filtered data to file to_delete/features/filtered_data.tsv
+2026-04-09 12:33:50.321204 INFO::Writing filtered, normalized data to file to_delete/features/filtered_data_norm.tsv
+2026-04-09 12:33:50.332407 INFO::Writing filtered, normalized, transformed data to file to_delete/features/filtered_data_norm_transformed.tsv
+2026-04-09 12:33:50.344057 WARNING::Deleting existing residuals file: to_delete/fits/residuals.rds
+2026-04-09 12:33:50.344976 INFO::Writing residuals to file to_delete/fits/residuals.rds
+2026-04-09 12:33:50.350601 WARNING::Deleting existing fitted file: to_delete/fits/fitted.rds
+2026-04-09 12:33:50.351283 INFO::Writing fitted values to file to_delete/fits/fitted.rds
+2026-04-09 12:33:50.356394 INFO::Writing all results to file (ordered by increasing q-values): to_delete/all_results.tsv
+2026-04-09 12:33:50.3596 INFO::Writing the significant results (those which are less than or equal to the threshold of 0.050000 ) to file (ordered by increasing q-values): to_delete/significant_results.tsv
