@@ -46,7 +46,7 @@ taxonomy_modified = read.csv("Modified_tables/modified_taxonomy_table.csv", row.
 
 ```
 
-## Makr a Phyloseq object
+## Make a Phyloseq object
 
 ```{r phyloseq object}
 # Taxonomy

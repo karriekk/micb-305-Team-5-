@@ -105,7 +105,7 @@ meta <- data.frame(sample_data(ps_relab))
 
 meta$SampleID <- rownames(meta)
 
-meta2 <- merge(meta, sub, by="SampleID")
+meta2 <- merge(meta, sub, by = "SampleID")
 ```
 
 # Linear Regression Model
