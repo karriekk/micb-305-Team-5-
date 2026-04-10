@@ -1,0 +1,30 @@
+---
+title: "Manuscript additional plots"
+author: Yanting Xiong
+output: html_document
+date: "2026-04-10"
+---
+
+# This R script is created to generate some additional plots that might be used in the manuscript
+
+# Library loading
+```{r library_loading}
+library(tidyverse)
+library(ggplot2)
+
+```
+
+# Dataset loading
+```{r dataset_loading}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv("../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+```
+
+# Visualize the distribution of MoCA Score using Histogram
+```{r MoCA_score_visualization}
+moca_histogram = ggplot(parkinsons_metadata_filt_cat, aes(x = moca_total)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "black")
+moca_histogram
+
+```
