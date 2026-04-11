@@ -5,7 +5,7 @@
 - Trend does not seem to be specific to a particular dietary antioxidant as some pathways are shared between beta-carotene and vitamin C, can talk about potential impacts/biological relevance of these pathways briefly.
 
 ### Discussion
-- Relate to current literature in the discussion (tie in high antioxidant intake is correlated with gut microbiome shift based on the literature, we expect to see a cognitive performance but we did not see it, explain why we expected to see shifts in cognitive performance and why we did not find this trend based on the actual results of the analysis).
+- Relate to current literature in the discussion (tie in high antioxidant intake is correlated with gut microbiome shift based on the literature, we expect to see a change cognitive performance but we did not see it, explain why we expected to see shifts in cognitive performance and why we did not find this trend based on the actual results of the analysis).
 - We want to look further into something because what we find might not be consistent with current literature
 - Sensitivity of the analysis and size of the sample
 
