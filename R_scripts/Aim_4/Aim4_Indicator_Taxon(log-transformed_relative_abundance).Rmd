@@ -90,7 +90,7 @@ hist(sub$rel_abund,
 # The lowest non-zero relative abundance is 0.0001518834
 
 # Log transform relative abundance
-sub$log_rel_abund <- log10(sub$rel_abund + 0.0001518834/2)
+sub$log_rel_abund = log10(sub$rel_abund + 0.0001518834/2)
 
 hist(sub$log_rel_abund,
      breaks = 30,
@@ -129,11 +129,10 @@ library(ggplot2)
 linear_regression_plot = ggplot(meta2, aes(x = log_rel_abund, y = moca_total)) +
   geom_point(size = 3, alpha = 0.7) +
   geom_smooth(method = "lm", se = TRUE) +
-  labs(
-    x = "Log-10 Transformed Relative Abundance of Escherichia-Shigella",
-    y = "Cognitive Performance of PD Patients Assessed Using MoCA Score"
-  ) +
-  theme_classic(base_size = 8)
+  labs(x = "Log-10 Relative Abundance of Escherichia-Shigella",
+       y = "MoCA Score of PD Patients") +
+  theme_classic(base_size = 18) +
+  theme(axis.title = element_text(face = "bold")) 
 linear_regression_plot
 
 # Export the plot
