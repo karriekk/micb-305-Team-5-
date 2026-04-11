@@ -14,6 +14,7 @@ library(phyloseq)
 library(indicspecies)
 library(dplyr)
 library(ggpubr)
+library(ggplot2)
 ```
 
 ## Dataset loading
@@ -174,7 +175,9 @@ BC_low_Esch_plot = df_of_taxa_BC_low_Esch %>%
   ggplot(aes(x = Tert_BC, y = log10(Abundance + 0.0001518834/2), fill = Tert_BC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Relative Abundance of Escherichia-Shigella") +
+  theme_classic(base_size = 18) +
+  theme(axis.title = element_text(face = "bold")) +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
   scale_fill_manual(
     name = "Beta-carotene Intake Categorization",
@@ -183,11 +186,12 @@ BC_low_Esch_plot = df_of_taxa_BC_low_Esch %>%
                "BC High" = "indianred3"),
     labels = c("Low intake", "Medium intake", "High intake")
   ) +
-  stat_pvalue_manual(stat.test_BC, label = "p")
+  stat_pvalue_manual(stat.test_BC, label = "p") 
 BC_low_Esch_plot
 
 # Export the plot
-ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Beta-carotene Intake Levels in PD.png", plot = BC_low_Esch_plot, width = 7, height = 8, dpi = 300)
+ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Beta-carotene Intake Levels in PD.png", plot = BC_low_Esch_plot, width = 12, height = 11, dpi = 300)
+
 ```
 
 ## Vitamin A
@@ -287,8 +291,10 @@ VC_low_Esch_plot = df_of_taxa_VC_low_Esch %>%
   ggplot(aes(x = Tert_VC, y = log10(Abundance + 0.0001518834/2), fill = Tert_VC)) +
   geom_boxplot(outlier.shape = NA) +
   geom_jitter(height = 0, width = 0.2) +
-  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Transformed Relative Abundance") +
+  labs(x = "Dietary Antioxidant Intake Tertile", y = "Log-10 Relative Abundance of Escherichia-Shigella") +
   scale_x_discrete(labels = c("Low intake", "Medium intake", "High intake")) +
+  theme_classic(base_size = 18) +
+  theme(axis.title = element_text(face = "bold")) + 
   scale_fill_manual(
     name = "Vitamin C Intake Categorization",
     values = c("VC Low" = "steelblue",
@@ -300,7 +306,8 @@ VC_low_Esch_plot = df_of_taxa_VC_low_Esch %>%
 VC_low_Esch_plot
 
 # Export the plot
-ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Vitamin C Intake Levels in PD.png", plot = VC_low_Esch_plot, width = 7, height = 8, dpi = 300)
+ggsave("../../../Results/Figures/Aim_2/Indicator_species/Relative Abundance of Escherichia–Shigella Across Vitamin C Intake Levels in PD.png", plot = VC_low_Esch_plot, width = 12, height = 11, dpi = 300)
+
 ```
 
 #### Acidaminococcus
