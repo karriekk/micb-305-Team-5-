@@ -24,7 +24,15 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
  
   - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Alpha_diversity/alpha_diversity_results_summary.md)
 
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity)
+  - Figures
+ 
+    - [Simpson](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Simpson)
+   
+    - [Shannon](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Shannon)
+   
+    - [Chao1](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Chao1)
+   
+    - [Observed](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Observed)
  
 - Beta diversity analysis
 
