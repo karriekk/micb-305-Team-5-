@@ -233,10 +233,9 @@ peb10 = pathway_errorbar_fixed(abundance = path_filt,
                      ko_to_kegg = F, 
                      p_value_bar = TRUE, 
                      x_lab = "description")
-peb10
 
 ggsave("../../../Results/Figures/Aim_3/Vitamin_C/VC-picrust-sig-pathways10.png",
-       plot = peb10, width = 18, height = 10)
+       plot = peb10, width = 18, height = 15, dpi = 300)
 ```
 
 Heatmap
