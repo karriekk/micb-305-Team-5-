@@ -73,6 +73,7 @@ if (taxa_are_rows(ps_relab)) {
 otu = as.data.frame(otu)   
 
 # Keep only the taxon of interest
+#drop= false will ensure keep the extracted column as dataframe
 sub = otu[, taxa_id, drop = FALSE]
 
 sub = data.frame(
