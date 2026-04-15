@@ -1,4 +1,5 @@
 ## What we have done:
+(draft manuscript link: https://docs.google.com/document/d/1lFjCtwyVhdoewE-s-pe93BtddrK5Q22kV6oHEbVP6-Y/edit?tab=t.y1zjgefi3pbv)
 - completed rough drafts of intro, methods, results, figures and/or tables
 - discussion flow and general ideas outlined -> maybe we can go over to see if coherent?
 
