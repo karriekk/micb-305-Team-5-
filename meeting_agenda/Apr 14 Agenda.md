@@ -22,6 +22,5 @@
 - in the methods section, we mentioned the confounding variables that were adjusted during analysis, do we need to justify why we chose to control for these variables using literature?
 - in the methods section, would it feel redundant to mention packages used to do statistical analysis and plotting separately?
 - does Benjamini-Hochberg false discovery rate (FDR) method need a citation?
-- if the p-value and estimate value are annotated in the plot, do we still need to state them in the results section?
 - for beta-diversity analysis results section, was wondering what is the best way to describe/explain the results - we did multiple metrics and the results are heterogenous
 - what is the best way to write the results section for pathway analysis?
