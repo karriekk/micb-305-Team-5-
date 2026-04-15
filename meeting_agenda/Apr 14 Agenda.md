@@ -24,3 +24,4 @@
 - does Benjamini-Hochberg false discovery rate (FDR) method need a citation?
 - for beta-diversity analysis results section, was wondering what is the best way to describe/explain the results - we did multiple metrics and the results are heterogenous
 - what is the best way to write the results section for pathway analysis?
+- do I need to state the version of QIIME 2 in the in-text citation?
