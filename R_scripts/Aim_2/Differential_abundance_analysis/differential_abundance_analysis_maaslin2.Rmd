@@ -10,8 +10,6 @@ date: "2026-03-14"
 ```{r library loading}
 library(tidyverse)
 library(phyloseq)
-library(Maaslin2)
-library(dplyr)
 ```
 
 ## Dataset loading
@@ -90,7 +88,7 @@ out_BC = Maaslin2(
   # Optional: specify a reference group for your categorical variable(s). 
   # This will be the group that all other groups are compared to. 
   # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
-  reference = "Tert_BC,BC Low",
+  reference = c("Tert_BC,BC Low", "entacapone,0", "Sex,Male"),
   # TSS is Total Sum Scaled, AKA relative abundance.
   normalization = 'TSS',
   # Arcsine transformation is recommended for relative abundance data.
@@ -141,7 +139,7 @@ out_AC = Maaslin2(
   # Optional: specify a reference group for your categorical variable(s). 
   # This will be the group that all other groups are compared to. 
   # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
-  reference = "Tert_AC,AC Low",
+  reference = c("Tert_AC,AC Low", "entacapone,0", "Sex,Male"),
   # TSS is Total Sum Scaled, AKA relative abundance.
   normalization = 'TSS',
   # Arcsine transformation is recommended for relative abundance data.
@@ -188,7 +186,7 @@ out_VA = Maaslin2(
   # Optional: specify a reference group for your categorical variable(s). 
   # This will be the group that all other groups are compared to. 
   # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
-  reference = "Tert_VA,VA Low",
+  reference = c("Tert_VA,VA Low", "entacapone,0", "Sex,Male"),
   # TSS is Total Sum Scaled, AKA relative abundance.
   normalization = 'TSS',
   # Arcsine transformation is recommended for relative abundance data.
@@ -234,7 +232,7 @@ out_VC = Maaslin2(
   # Optional: specify a reference group for your categorical variable(s). 
   # This will be the group that all other groups are compared to. 
   # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
-  reference = "Tert_VC,VC Low",
+  reference = c("Tert_VC,VC Low", "entacapone,0", "Sex,Male"),
   # TSS is Total Sum Scaled, AKA relative abundance.
   normalization = 'TSS',
   # Arcsine transformation is recommended for relative abundance data.
@@ -280,7 +278,7 @@ out_VE = Maaslin2(
   # Optional: specify a reference group for your categorical variable(s). 
   # This will be the group that all other groups are compared to. 
   # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
-  reference = "Tert_VE,VE Low",
+  reference = c("Tert_VE,VE Low", "entacapone,0", "Sex,Male"),
   # TSS is Total Sum Scaled, AKA relative abundance.
   normalization = 'TSS',
   # Arcsine transformation is recommended for relative abundance data.
@@ -326,7 +324,7 @@ out_combine = Maaslin2(
   # Optional: specify a reference group for your categorical variable(s). 
   # This will be the group that all other groups are compared to. 
   # Ex. if you have a variable called 'Treatment' with two groups 'Control' and 'Intervention', you would set reference = 'Treatment,Control' to assess Intervention relative to Control.
-  reference = "Tert_combine,Combine Low",
+  reference = c("Tert_combine,Combine Low", "entacapone,0", "Sex,Male"),
   # TSS is Total Sum Scaled, AKA relative abundance.
   normalization = 'TSS',
   # Arcsine transformation is recommended for relative abundance data.

@@ -9,7 +9,6 @@ output: html_document
 library(tidyverse)
 library(phyloseq)
 library(ggplot2)
-library(dplyr)
 library(vegan)
 library(broom)
 ```
@@ -234,7 +233,7 @@ stats_AC = pdata_AC %>% group_by(variable) %>% # running each metric concurrentl
                              data = temp) %>% 
         broom::tidy(conf.int = T) %>% 
         mutate(group1 = i[1], group2 = i[2],
-            .before = "estimate")
+               .before = "estimate")
       
       # add to temp_stats
       temp_stats = bind_rows(temp_stats, linear_regression) 
