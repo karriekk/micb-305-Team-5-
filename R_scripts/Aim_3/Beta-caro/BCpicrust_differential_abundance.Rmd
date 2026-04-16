@@ -10,7 +10,6 @@ library(tidyverse)
 library(phyloseq)
 library(ggpicrust2)
 library(Maaslin2)
-library(ggplot2)
 library(ggrepel)
 ```
 
