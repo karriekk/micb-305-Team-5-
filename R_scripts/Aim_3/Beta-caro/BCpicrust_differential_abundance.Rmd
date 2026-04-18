@@ -130,10 +130,19 @@ view(significant_pathways)
 # save for aim 4
 saveRDS(significant_pathways,'BC_significant_pathways.rds')
 
+# for plotting 
+significant_pathways_df = daa_results_log2fc_filtered %>% 
+  filter(p_adjust < 0.05)
+
+# manually filling in missing description
+significant_pathways_df$description[17] <- "Entner-Doudoroff pathway I"
+
+
+
 # Then use that in your plot function
 # Note that I had to increase the Padj cutoff to get enough to plot!
 sanity_peb = pathway_errorbar_fixed(abundance = path_filt, 
-                     daa_results_df = daa_results_log2fc_filtered, 
+                     daa_results_df = significant_pathways_df, 
                      Group = metadata_sub$Tert_BC, 
                      wrap_label = F, wraplength=60,
                      fc_cutoff = 0, order_by_log = F,

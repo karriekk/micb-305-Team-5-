@@ -160,7 +160,11 @@ signif_path = daa_results_log2fc_filtered %>%
 # Plotting all 37 significant pathways as 2 separate plots
 daa_part1 <- signif_path[1:18, ]
 
-daa_part2 <- signif_path[19:37, ]
+daa_part2 <- signif_path[19:37, ] # missing names for some
+daa_part2$description[10] <- "D-erythronate degradation II"
+daa_part2$description[11] <- "L-threonate degradation"
+daa_part2$description[12] <- "glycogen biosynthesis III (from α-maltose 1-phosphate)"
+daa_part2$description[13] <- "Entner-Doudoroff pathway I"
 
 peb_part1 = pathway_errorbar_fixed(abundance = path_filt,
                                    daa_results_df = daa_part1, 
