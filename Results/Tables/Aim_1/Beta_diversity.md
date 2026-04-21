@@ -1,4 +1,4 @@
-### Low vss High
+### Low vs. High
 
 | Dietary Antioxidant        | Jaccard | Bray-Curtis | Unweighted UniFrac | Weighted UniFrac |
 |----------------------------|---------|-------------|---------------------|------------------|
@@ -30,3 +30,5 @@
 | Vitamin C                      | 0.001***| 0.002**     | 0.017*              | ns               |
 | Vitamin E                      | 0.010** | 0.009**     | 0.014*              | ns               |
 | Combined Intake  | 0.002** | 0.003**     | 0.046*              | ns               |
+
+(ns =  p > 0.05, *p ≤ 0.05, **p ≤ 0.01, ***p ≤ 0.001 )
