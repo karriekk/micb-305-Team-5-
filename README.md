@@ -13,7 +13,7 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
 ## Project Aims with Links to the Corresponding R Scripts and Results
 
 #### Aim 0: QIIME2 + Metadata Filtering and Wrangling
-- [QIIME2](https://github.com/karriekk/micb-305-Team-5-/blob/main/terminal_code_record/terminal_code_record.Rmd)
+- [QIIME 2](https://github.com/karriekk/micb-305-Team-5-/blob/main/terminal_code_record/terminal_code_record.Rmd)
 
 - [Metadata filtering and wrangling](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_0/metadata_filtering_and_wrangling.Rmd)
 
