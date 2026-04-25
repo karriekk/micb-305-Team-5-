@@ -61,7 +61,12 @@ source('../ggpicrust2_errorbar_function_fixed.R')
 daa_annotated_results_df_filt = daa_annotated_results_df %>%
   filter(!is.na(p_adjust), !is.na(log2_fold_change))
 
-# Adjusted P-value = 17 hits
+# significant Adjusted P-value = 0 hits
+daa_annotated_results_df_filt %>% 
+  filter(p_adjust < 0.05) %>% 
+  nrow()
+
+# Adjusted P-value for plotting something = 17 hits
 daa_annotated_results_df_filt %>% 
   filter(p_adjust < 0.31) %>% 
   nrow()
@@ -88,19 +93,12 @@ peb = pathway_errorbar_fixed(abundance = path_filt,
                      p_value_bar = TRUE, 
                      x_lab = "description")
 
-library(patchwork)
-
-# Add tags A and B automatically
-peb_final <- peb + plot_annotation(tag_levels = 'A')
-
 # View the result
-peb_final
+peb
 
 # Save the final version with the tags
-ggsave("../../../Results/Figures/Aim_3/AC-picrust-final-with-labels.png", plot = peb_final, width = 12, height = 7, dpi = 300)
 
-
-ggsave("../../../Results/Figures/Aim_3/AC-picrust-sig-pathways.png",
+ggsave("../../../Results/Figures/Aim_3/Alpha-carotene/AC-picrust-sig-pathways.png",
        plot = peb, width = 18, height = 10)
 ```
 
@@ -141,21 +139,6 @@ view(readable_names)
 # Create the clustered heatmap with centered color at zero
 # install.packages("pheatmap")
 library('pheatmap')
-pheatmap(stats, 
-         clustering_distance_rows = "euclidean",  
-         clustering_distance_cols = "euclidean", 
-         clustering_method = "complete",          
-         color = color_palette, 
-         breaks = breaks,
-         border_color = "white",       # Clean white borders between cells
-         display_numbers = TRUE,       # Optional: shows the actual R values
-         number_color = "black",
-         fontsize_row = 12,            # Slightly larger for readability
-         fontsize_col = 12,
-         angle_col = 45,               # Tilt labels so they don't overlap
-         main = '',
-         filename = "../../../Results/Figures/Aim_3/MetaCyc-AC_Heatmap_Final.png",
-         height = 8, width = 10)       # Wider to accommodate long names
 
 # to try to minimize white space
 pheatmap(stats, 
@@ -174,7 +157,7 @@ pheatmap(stats,
          treeheight_col = 25, 
          legend = TRUE,               
          main = NA,                   # Use NA to properly suppress the title space
-         filename = "../../../Results/Figures/Aim_3/MetaCyc-AC_Heatmap_Final-new.png",
+         filename = "../../../Results/Figures/Aim_3/Alpha-carotene/MetaCyc-AC_Heatmap_Final-new.png",
          width = 8,                   # Increased slightly for your long pathway names
          height = 6)
 
@@ -183,7 +166,14 @@ See how similar your sample groups are
 
 ```{r PCA}
 # Generate pathway PCA plot
-pathway_pca(abundance = path_filt,
+pca = pathway_pca(abundance = path_filt,
             metadata = metadata_sub, 
             group = "Tert_AC")
+
+# save pca
+ggsave("../../../Results/Figures/Aim_3/Alpha-carotene/AC-pathway-pca.png", 
+       plot = pca, 
+       width = 8, 
+       height = 6, 
+       dpi = 300)
 ```
