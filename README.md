@@ -76,44 +76,44 @@ How is gut microbiota taxonomic and functional composition in Parkinson’s Dise
   
   - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_3%20(Figure%203%2C%20Figure%20S3%2C%20Figure%20S4)/Alpha-caro/ACpicrust_differential_abundance.Rmd)
  
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_3/Alpha-carotene)
+  - [Figures](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_3%20(Figure_3%2C%20Figure_S3%2C%20Figure_S4)/Alpha-carotene)
  
 - Beta-carotene
   
   - [R scripts](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_3%20(Figure%203%2C%20Figure%20S3%2C%20Figure%20S4)/Beta-caro/BCpicrust_differential_abundance.Rmd)
  
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_3/Beta-carotene)
+  - [Figures](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_3%20(Figure_3%2C%20Figure_S3%2C%20Figure_S4)/Beta-carotene)
  
 - Vitamin A
   
   - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_3%20(Figure%203%2C%20Figure%20S3%2C%20Figure%20S4)/Vitamin_A/VA_Picrust_differential_abundance.Rmd)
  
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_3/Vitamin_A)
+  - [Figures](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_3%20(Figure_3%2C%20Figure_S3%2C%20Figure_S4)/Vitamin_A)
  
 - Vitamin C
   
   - [R scripts](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/R_scripts/Aim_3%20(Figure%203%2C%20Figure%20S3%2C%20Figure%20S4)/Vitamin_C)
  
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_3/Vitamin_C)
+  - [Figures](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_3%20(Figure_3%2C%20Figure_S3%2C%20Figure_S4)/Vitamin_C)
  
 - Vitamin E
   
   - [R scripts](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/R_scripts/Aim_3%20(Figure%203%2C%20Figure%20S3%2C%20Figure%20S4)/Vitamin_E)
  
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_3/Vitamin_E)
+  - [Figures](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_3%20(Figure_3%2C%20Figure_S3%2C%20Figure_S4)/Vitamin_E)
  
 - Combined
   
   - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_3%20(Figure%203%2C%20Figure%20S3%2C%20Figure%20S4)/Combined_index/combined_picrust_differential_abundance.Rmd)
  
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_3/Combined)
+  - [Figures](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_3%20(Figure_3%2C%20Figure_S3%2C%20Figure_S4)/Combined)
 
 #### Aim 4: Link Everything to Cognitive Performance (MoCA) (Figure 2)
 - Indicator Taxon - Escherichia-Shigella
 
-  - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_4/Aim4_Indicator_Taxon(log-transformed_relative_abundance).Rmd)
+  - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_4%20(Figure%202%2C%20Figure%20S5)/Aim4_Indicator_Taxon(log-transformed_relative_abundance).Rmd)
  
-  - [Figure](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Figures/Aim_4/Indicator_taxon/Association%20Between%20Log-10%20Transformed%20Relative%20Abundance%20of%20Escherichia-Shigella%20and%20MoCA%20Score%20in%20PD%20Patients.png)
+  - [Figure](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/Results/Figures/Aim_4%20(Figure_2%2C%20Figure_S5)/Indicator_taxon/Association%20Between%20Log-10%20Transformed%20Rel_Abund%20of%20Escherichia-Shigella%20and%20MoCA%20Score%20in%20PD%20Patients.png)
 
 ## Weekly Meeting Agenda
 You can access all of our weekly meeting agendas [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/meeting_agenda), or click the hyperlinks below to open a specific agenda.
