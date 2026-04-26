@@ -14,10 +14,7 @@ library(Maaslin2)
 
 ## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
+Load files
 ```{r}
 metadata = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
 metadata_sub = metadata %>% filter(Tert_combine %in% c("Combine Low", "Combine High")) %>%
@@ -26,8 +23,6 @@ metadata_sub = metadata %>% filter(Tert_combine %in% c("Combine Low", "Combine H
 
 ggpicrust2 to run "Maaslin2", another common differential abundance tool, on your groups of interest and add pathway annotations
 ```{r}
-meta = readRDS('../../../Datasets/phyloseq_taxonomy.rds') %>% .@sam_data %>% data.frame() %>% 
-  rownames_to_column('sample_name')
 
 pathway_abundance = read.delim('../../../QIIME2_outputs/path_abun_unstrat.tsv',row.names = 1)
 
@@ -61,22 +56,24 @@ source('../ggpicrust2_errorbar_function_fixed.R')
 daa_annotated_results_df_filt = daa_annotated_results_df %>%
   filter(!is.na(p_adjust), !is.na(log2_fold_change))
 
-# Adjusted P-value = 17 hits
+# Adjusted P-value = 10 hits for plotting (not significant)
 daa_annotated_results_df_filt %>% 
   filter(p_adjust < 0.06) %>% 
   nrow()
 
-# Log2 Fold Change values = 8 hits (sufficient for plot)
+# Log2 Fold Change values = 15 hits (sufficient for plot)
 daa_annotated_results_df_filt %>% 
   filter(abs(log2_fold_change) >= 5e-3) %>% 
   nrow()
 
+# Log2 Fold change values + adjusted p value = 6 hits for plot
 daa_annotated_results_df_filt %>% filter(p_adjust< 0.06, abs(log2_fold_change) > 5e-3) %>% nrow()
 
 # Dataframe for plotting
 daa_strict <- daa_annotated_results_df_filt %>% 
   filter(p_adjust < 0.06, abs(log2_fold_change) > 5e-3)
 
+# plot
 peb = pathway_errorbar_fixed(abundance = path_filt, 
                      daa_results_df = daa_strict, 
                      Group = metadata_sub$Tert_combine, 
@@ -88,25 +85,18 @@ peb = pathway_errorbar_fixed(abundance = path_filt,
                      p_value_bar = TRUE, 
                      x_lab = "description")
 
-library(patchwork)
-
-# Add tags A and B automatically
-peb_final <- peb + plot_annotation(tag_levels = 'A')
-
-# View the result
-peb_final
-
-# Save the final version with the tags
-ggsave("../../../Results/Figures/Aim_3/combine-picrust-final-with-labels.png", plot = peb_final, width = 12, height = 7, dpi = 300)
-
-
-ggsave("../../../Results/Figures/Aim_3/combine-picrust-sig-pathways.png",
+# save
+ggsave("../../../Results/Figures/Aim_3/Combined/combine-picrust-pathways.png",
        plot = peb, width = 18, height = 10)
 ```
 
 Heatmap
 
 ```{r identical features}
+# heatmap library
+library('pheatmap')
+
+# working with same pathways as above
 sig_features = daa_annotated_results_df %>% 
   filter(p_adjust < 0.06, abs(log2_fold_change) > 5e-3) %>% 
   pull('feature') %>% unique()
@@ -129,7 +119,7 @@ breaks <- seq(-1, 1, length.out = 41)  # 40 colors + 1 for the endpoint
 # Lookup Names
 name_lookup <- daa_annotated_results_df %>%
   filter(feature %in% sig_features) %>%
-  select(feature, description) %>% # Adjust 'description' to your actual column name
+  select(feature, description) %>%
   distinct()
 
 readable_names <- name_lookup$description[match(rownames(stats), name_lookup$feature)]
@@ -138,26 +128,7 @@ colnames(stats) <- readable_names
 
 view(readable_names)
 
-# Create the clustered heatmap with centered color at zero
-# install.packages("pheatmap")
-library('pheatmap')
-pheatmap(stats, 
-         clustering_distance_rows = "euclidean",  
-         clustering_distance_cols = "euclidean", 
-         clustering_method = "complete",          
-         color = color_palette, 
-         breaks = breaks,
-         border_color = "white",       # Clean white borders between cells
-         display_numbers = TRUE,       # Optional: shows the actual R values
-         number_color = "black",
-         fontsize_row = 12,            # Slightly larger for readability
-         fontsize_col = 12,
-         angle_col = 45,               # Tilt labels so they don't overlap
-         main = '',
-         filename = "../../../Results/Figures/Aim_3/MetaCyc-combine_Heatmap_Final.png",
-         height = 8, width = 10)       # Wider to accommodate long names
-
-# to try to minimize white space
+# plot to try to minimize white space
 pheatmap(stats, 
          clustering_distance_rows = "euclidean",  
          clustering_distance_cols = "euclidean", 
@@ -173,17 +144,24 @@ pheatmap(stats,
          treeheight_row = 25,         
          treeheight_col = 25, 
          legend = TRUE,               
-         main = NA,                   # Use NA to properly suppress the title space
-         filename = "../../../Results/Figures/Aim_3/MetaCyc-combine_Heatmap_Final-new.png",
-         width = 8,                   # Increased slightly for your long pathway names
+         main = NA,                   
+         filename = "../../../Results/Figures/Aim_3/Combined/MetaCyc-combine_Heatmap_Final-new.png",
+         width = 8,                   
          height = 6)
 
 ```
-See how similar your sample groups are
 
+PCA plots
 ```{r PCA}
 # Generate pathway PCA plot
-pathway_pca(abundance = path_filt,
+pca = pathway_pca(abundance = path_filt,
             metadata = metadata_sub, 
             group = "Tert_combine")
+
+# save pca
+ggsave("../../../Results/Figures/Aim_3/Combined/AC-pathway-pca.png", 
+       plot = pca, 
+       width = 8, 
+       height = 6, 
+       dpi = 300)
 ```
