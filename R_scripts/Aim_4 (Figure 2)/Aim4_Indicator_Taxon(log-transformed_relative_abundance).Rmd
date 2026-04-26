@@ -82,11 +82,12 @@ sub = data.frame(
 )
 
 # Raw relative abundance histogram -- right skewed, not suitable for linear regression model
-hist(sub$rel_abund,
-     breaks = 30,
-     main = "Distribution of Relative Abundance",
-     xlab = "Relative Abundance",
-     ylab = "Frequency")
+relative_abundance_distribution = ggplot(sub, aes(x = rel_abund)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "black") +
+  labs(x = "Relative Abundance of Escherichia-Shigella", y = "Number of PD Patients") +
+  theme_classic(base_size = 18) +
+  theme(axis.title = element_text(face = "bold")) 
+relative_abundance_distribution
 
 # The lowest non-zero relative abundance is 0.0001518834
 
