@@ -13,8 +13,6 @@ This section starts the analysis by loading required bioinformatic and visualiza
 ```{r libraries, include=FALSE}
 # Core data manipulation and plotting
 library(tidyverse)
-library(phyloseq)
-library(ggrepel)
 library(stringr)
 
 # analysis specific tools
@@ -23,7 +21,6 @@ library(Maaslin2)
 
 # visualization-specific tools
 library(pheatmap)
-library(ggExtra)
 
 # Loading metadata and filter for specific AC comparison groups
 metadata = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)

@@ -13,8 +13,6 @@ This section starts the analysis by loading required bioinformatic and visualiza
 ```{r libraries, include=FALSE}
 # Core data manipulation and plotting
 library(tidyverse)
-library(phyloseq)
-library(ggrepel)
 library(stringr)
 
 # analysis specific tools
