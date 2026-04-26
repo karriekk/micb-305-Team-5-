@@ -5,10 +5,18 @@ Team 5 members: Carrie Sun, Coe McGrath, Cynthia Lin, Emily Ju, Yanting Xiong
 Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.28052
 
 ## Project Summary
+Parkinson's disease (PD) is an age-related neurodegenerative disorder characterized by both motor and non-motor symptoms. In addition to the well-characterization neuropathological and clinal features, growing evidence highlights the significance of the gut microbiome in modulating the nervous system through the gut-brain axis, and its potential role in PD pathophysiology.
 
+Diet plays a key role in modulating the gut microbiome. And dietary antioxidants have gained increasing attention for their potential neuroprotective effects, which may be explained by their ability to modulate the gut microbiome and reduce oxidative stress. 
+
+However, there is limited insight into how antioxidant-driven microbiome changes are correlated with shifts in cognitive performance within PD populations. Therefore, this study aimed to investigate the impact of dietary antioxidant intake, specifically vitamins A, C, E, alpha- and beta-carotene, and their synergistic effects, on the gut microbiome in association with the cognitive performance in PD patients.
+
+To achieve this, this study utilized a previously published dataset from Cirstea et al., which includes 16S rRNA gene sequencing data generated from fecal samples collected from 197 PD patients and 103 age-matched healthy controls between the ages of 40 and 85. Using this dataset, we focused exclusively on PD patients to investigate how varying levels of dietary antioxidant intake influence the taxonomic composition and predicted functional capacity of the gut microbiome, and how these changes are associated with cognitive performance assessed using the Montreal Cognitive Assessment (MoCA).
+
+Ultimately, this study aimed to identify potential dietary targets and optimal intake levels to modulate PD progression and mitigative cognitive decline. 
 
 ## Research Question
-
+How is gut microbiota taxonomic and functional composition in Parkinson’s Disease patients affected by dietary antioxidant intake, and how are these microbial features correlated with cognitive performance change assessed by Montreal Cognitive Assessment (MoCA)?
 
 ## Project Aims with Links to the Corresponding R Scripts and Results
 
@@ -17,8 +25,8 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
 
 - [Metadata filtering and wrangling](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_0/metadata_filtering_and_wrangling.Rmd)
 
-#### Aim 1: Diversity Analysis (Table 1, Fig S1)
-- Alpha diversity analysis (Fig S1)
+#### Aim 1: Diversity Analysis (Table 1, Figure S1)
+- Alpha diversity analysis (Figure S1)
 
   - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_1/Alpha_diversity/alpha_diversity_analysis.Rmd)
  
@@ -48,8 +56,8 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
  
   - [Table](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/Results/Tables/Aim_1/Beta_diversity.md)
   
-#### Aim 2: Taxonomy Analysis (Fig 1, Table S2)
-- Indicator species analysis (Fig1)
+#### Aim 2: Taxonomy Analysis (Figure 1, Table S1, Table S2)
+- Indicator species analysis (Figure 1, Table S2)
 
   - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_2/indicator_species_analysis/indicator_species_analysis(final_version).Rmd)
  
@@ -57,13 +65,13 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
 
   - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_2/Indicator_species)
 
-- Differential abundance analysis (Table S2)
+- Differential abundance analysis (Table S1)
 
   - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_2/Differential_abundance_analysis/differential_abundance_analysis_maaslin2.Rmd)
  
   - [Tables](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Tables/Aim_2/Differential_abundance_analysis)
 
-#### Aim 3: Functional Analysis (Fig 3)
+#### Aim 3: Functional Analysis (Figure 3, Figure S3, Figure S4)
 - Alpha-carotene
   
   - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_3/Alpha-caro/ACpicrust_differential_abundance.Rmd)
@@ -100,7 +108,7 @@ Link to the original dataset by Cirstea et al.:  https://doi.org/10.1002/mds.280
  
   - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_3/Combined)
 
-#### Aim 4: Link Everything to Cognitive Performance (MoCA) (Fig 2)
+#### Aim 4: Link Everything to Cognitive Performance (MoCA) (Figure 2)
 - Indicator Taxon - Escherichia-Shigella
 
   - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_4/Aim4_Indicator_Taxon(log-transformed_relative_abundance).Rmd)
