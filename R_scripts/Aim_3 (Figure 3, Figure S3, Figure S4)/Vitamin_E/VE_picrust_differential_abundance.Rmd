@@ -33,13 +33,14 @@ metadata_sub = metadata %>% filter(Tert_VE %in% c("VE Low", "VE High")) %>%
 ## Differential Abundance Analysis (Maaslin2)
 We perform the core statistical testing here, using Maaslin2 to find pathways that differ significantly while adjusting for potential confounders like Sex, Age, and entacapone use.
 ```{r}
-
+# Load predicted MetaCyc pathway abundances from QIIME2/PICRUst2 output
 pathway_abundance = read.delim('../../../QIIME2_outputs/path_abun_unstrat.tsv',row.names = 1)
 
-# Filter
+# Subset the abundance table to match the samples present in our filtered metadata
 path_filt = pathway_abundance %>% select(all_of(rownames(metadata_sub)))
 
-
+# Run Differential Abundance Analysis (DAA) using Maaslin2
+# Adjusting for Sex, Age, and Entacapone usage as fixed effects
 diff_abun = pathway_daa(abundance = path_filt,
                         metadata = metadata,
                         group = "Tert_VE",
@@ -50,18 +51,23 @@ diff_abun = pathway_daa(abundance = path_filt,
                         select = NULL,
                         reference = "VE Low")
 
+# Annotate pathway codes (MetaCyc IDs) with human-readable descriptions
 daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
                                               daa_results_df = diff_abun,
                                               ko_to_kegg = FALSE)
 
-# save
+# Cache the results to avoid re-running intensive computations
 saveRDS(daa_annotated_results_df,'daa_annotated_results_df.rds')
 
+# reading saved results
 readRDS('daa_annotated_results_df.rds')
 
 ```
-Plots
+
+## Visualizing Pathways (Error Bar Plots)
+These plots visualize the mean proportion of pathways in each group and their associated effect sizes. Note that pathways plotted here are insignificant and only presented as a representation of this group. Figures produced are not included in our final manuscript.
 ```{r}
+# Load custom formatting function for pathway plots
 source('../ggpicrust2_errorbar_function_fixed.R')
 
 # Filter out NA in p-values and log2 fold change columns
