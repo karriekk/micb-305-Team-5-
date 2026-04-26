@@ -28,7 +28,7 @@ How is gut microbiota taxonomic and functional composition in Parkinson’s Dise
 #### Aim 1: Diversity Analysis (Table 1, Figure S1)
 - Alpha diversity analysis (Figure S1)
 
-  - [R script]([https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_1%20(Table%201%2C%20Figure%20S1)/Alpha_diversity%20(Figure%20S1)/alpha_diversity_analysis_final.Rmd]）
+  - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_1%20(Table%201%2C%20Figure%20S1)/Alpha_diversity%20(Figure%20S1)/alpha_diversity_analysis_final.Rmd）
  
   - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Alpha_diversity/alpha_diversity_results_summary.md)
 
