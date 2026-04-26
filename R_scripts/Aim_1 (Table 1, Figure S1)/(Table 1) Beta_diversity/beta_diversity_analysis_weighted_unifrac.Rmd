@@ -1,0 +1,723 @@
+---
+title: "Beta Diversity Analysis using Weighted UniFrac"
+author: Coe McGrath
+output: html_document
+date: "2026-03-26"
+---
+
+## Library loading
+
+```{r libraries, include = FALSE}
+library(tidyverse)
+library(phyloseq)
+library(vegan)
+library(ape)
+```
+
+## Dataset loading and wrangling
+
+```{r load_data}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv('../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
+
+# Because we will be controlling for entacapone in downstream analyses and it contains NA values, they need to be removed from the filtered metadata
+parkinsons_metadata_filt_cat_entacapone_NA_removed = parkinsons_metadata_filt_cat %>% filter(!is.na(entacapone))
+# 10 PD individuals are removed after this filtering step because they do not have entacapone intakes recorded
+
+# Relevel the categorical variable in the metadata so that it appears in the order “low,” “medium,” and “high” in the plot, rather than the default alphabetical order
+vars = c("Tert_BC", "Tert_AC", "Tert_VA", "Tert_VC", "Tert_VE", "Tert_combine") # store the column names
+
+prefix = c("BC", "AC", "VA", "VC", "VE", "Combine") # stores the label prefixes used in the factor levels
+
+for (i in seq_along(vars)) {
+  parkinsons_metadata_filt_cat_entacapone_NA_removed[[vars[i]]] <- fct_relevel(
+    parkinsons_metadata_filt_cat_entacapone_NA_removed[[vars[i]]],
+    paste(prefix[i], "Low"),
+    paste(prefix[i], "Medium"),
+    paste(prefix[i], "High")
+  )
+}
+
+# Load in feature table exported from QIIME2
+counts = read.delim('../../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
+taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+
+# Load in phylogenetic tree exported from QIIME2
+tree = read_tree('../../../QIIME2_outputs/tree.nwk')
+```
+
+## Make a Phyloseq object
+
+```{r Create a Phyloseq object}
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon,
+           into = c("Domain", "Phylum", "Class", "Order", "Family",
+                    "Genus", "Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+counts_formatted = counts %>% as.matrix()
+
+ps = phyloseq(sample_data(parkinsons_metadata_filt_cat_entacapone_NA_removed),
+              otu_table(counts_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted),
+              phy_tree(tree))
+
+# Check if tip names match the ASV IDs
+all(taxa_names(ps) %in% tree$tip.label) # Returns TRUE
+```
+
+## Alpha rarefaction curve
+
+```{r alpha_rarefaction}
+# Alpha rarefaction curve
+rarecurve(t(data.frame(ps@otu_table)),
+          step = 1000)
+
+# Based on the alpha rarefaction curve and the PD-filtered-table.qzv results, a sampling depth of 6515 will be chosen because at this sampling depth, only 14 samples are excluded from the analysis and we have retained 1,192,428 (50.04%) features in 183 (92.89%) samples at this specified sampling depth.
+
+# Rarefy the data based on the rarefaction depth chosen
+set.seed(421)
+psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
+```
+
+## Calculate Weighted UniFrac Distances
+
+```{r calculate Weighted UniFrac Distances}
+ps_weighted_unifrac = phyloseq::distance(psrare, method = "wunifrac")
+
+# View(as.matrix(ps_weighted_unifrac)) # Every pairwise comparison included
+
+# MDS scaling
+set.seed(421)
+mds = metaMDS(ps_weighted_unifrac)
+
+# Extract data
+mds_data <- mds$points %>% 
+  as.data.frame() %>% 
+  merge(sample_data(psrare), by = "row.names", sort = F)
+head(mds_data)
+
+```
+
+### Beta carotene
+
+```{r beta_diversity_analysis_for_beta_carotene}
+# Plot it
+p_BC = mds_data %>% 
+  ggplot(aes(MDS1, MDS2, color = Tert_BC)) +
+  geom_point() +
+  stat_ellipse() +
+  theme_classic(base_size = 18) +
+  labs(color = "Beta-carotene Intake Categorization") +
+  scale_color_manual(
+    values = c("BC Low" = "steelblue", "BC Medium" = "goldenrod2", "BC High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
+p_BC
+
+parkinsons_metadata = sample_data(psrare) %>% data.frame()
+
+# PERMANOVA test
+# Single variable
+set.seed(421)
+stats_univar_BC = adonis2(ps_weighted_unifrac ~ Tert_BC, data = parkinsons_metadata)
+
+# Factor in confounding variables
+set.seed(421)
+stats_multivar_BC = adonis2(ps_weighted_unifrac ~ Tert_BC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+
+# Combine into a table
+stats_BC = bind_rows("Univariate" = stats_univar_BC %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     "Multivariate" = stats_multivar_BC %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     .id = "Model") # first column is Model, either Uni or Multi
+
+stats_BC = stats_BC %>% rename(Pval = `Pr(>F)`) %>% 
+  filter(!is.na(Pval)) # remove irrelevant lines
+
+```
+
+
+#### "BC Low" vs. "BC High"
+
+```{r}
+# List samples that belong to the categories of interest (low and high)
+to_compare_BC_LH = c("BC Low", "BC High")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_BC_LH = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_LH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_BC_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_BC_LH, samples_to_keep_BC_LH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_BC_LH = adonis2(ps_weighted_unifrac_sub_BC_LH ~ Tert_BC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_LH))
+stats_multivar_BC_LH # p-value is 0.082
+
+```
+
+#### "BC Low" vs. "BC Medium"
+
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_BC_LM = c("BC Low", "BC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_BC_LM = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_BC_LM = as.matrix(ps_weighted_unifrac)[samples_to_keep_BC_LM, samples_to_keep_BC_LM] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_BC_LM = adonis2(ps_weighted_unifrac_sub_BC_LM ~ Tert_BC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_LM))
+stats_multivar_BC_LM # p-value is 0.521
+
+```
+
+#### "BC Medium" vs. "BC High"
+
+```{r}
+# List samples that belong to the categories of interest (medium and high)
+to_compare_BC_MH = c("BC High", "BC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_BC_MH = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_BC_MH = as.matrix(ps_weighted_unifrac)[samples_to_keep_BC_MH, samples_to_keep_BC_MH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_BC_MH = adonis2(ps_weighted_unifrac_sub_BC_MH ~ Tert_BC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_BC %in% to_compare_BC_MH))
+stats_multivar_BC_MH # p-value is 0.416
+
+```
+
+
+### Alpha carotene
+
+```{r beta_diversity_analysis_for_alpha_carotene}
+# Plot it
+p_AC = mds_data %>% 
+  ggplot(aes(MDS1, MDS2, color = Tert_AC)) +
+  geom_point() +
+  stat_ellipse() +
+  theme_classic(base_size = 18) +
+  labs(color = "Alpha-carotene Intake Categorization") +
+  scale_color_manual(
+    values = c("AC Low" = "steelblue", "AC Medium" = "goldenrod2", "AC High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
+p_AC
+
+# PERMANOVA test
+# Single variable
+set.seed(421)
+stats_univar_AC = adonis2(ps_weighted_unifrac ~ Tert_AC, data = parkinsons_metadata)
+
+# Factor in confounding variables
+set.seed(421)
+stats_multivar_AC = adonis2(ps_weighted_unifrac ~ Tert_AC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+
+# Combine into a table
+stats_AC = bind_rows("Univariate" = stats_univar_AC %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     "Multivariate" = stats_multivar_AC %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     .id = "Model") # first column is Model, either Uni or Multi
+
+stats_AC = stats_AC %>% rename(Pval = `Pr(>F)`) %>% 
+  filter(!is.na(Pval)) # remove irrelevant lines
+
+```
+
+#### "AC Low" vs. "AC High"
+
+```{r}
+# List samples that belong to the categories of interest (low and high)
+to_compare_AC_LH = c("AC Low", "AC High")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_AC_LH = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_AC_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_AC_LH, samples_to_keep_AC_LH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_AC_LH = adonis2(ps_weighted_unifrac_sub_AC_LH ~ Tert_AC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LH))
+stats_multivar_AC_LH # p-value is 0.299
+
+```
+
+#### "AC Low" vs. "AC Medium"
+
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_AC_LM = c("AC Low", "AC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_AC_LM = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_AC_LM = as.matrix(ps_weighted_unifrac)[samples_to_keep_AC_LM, samples_to_keep_AC_LM] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_AC_LM = adonis2(ps_weighted_unifrac_sub_AC_LM ~ Tert_AC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_LM))
+stats_multivar_AC_LM # p-value is 0.177
+
+```
+
+#### "AC Medium" vs. "AC High"
+
+```{r}
+# List samples that belong to the categories of interest (medium and high)
+to_compare_AC_MH = c("AC High", "AC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_AC_MH = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_AC_MH = as.matrix(ps_weighted_unifrac)[samples_to_keep_AC_MH, samples_to_keep_AC_MH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_AC_MH = adonis2(ps_weighted_unifrac_sub_AC_MH ~ Tert_AC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_AC %in% to_compare_AC_MH))
+stats_multivar_AC_MH # p-value is 0.321
+```
+
+### Vitamin C
+
+```{r beta_diversity_analysis_for_vitamin_c}
+# Plot it
+p_VC = mds_data %>% 
+  ggplot(aes(MDS1, MDS2, color = Tert_VC)) +
+  geom_point() +
+  stat_ellipse() +
+  theme_classic(base_size = 18) +
+  labs(color = "Vitamin C Intake Categorization") +
+  scale_color_manual(
+    values = c("VC Low" = "steelblue", "VC Medium" = "goldenrod2", "VC High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
+p_VC
+
+# PERMANOVA test
+# Single variable
+set.seed(421)
+stats_univar_VC = adonis2(ps_weighted_unifrac ~ Tert_VC, data = parkinsons_metadata)
+
+# Factor in confounding variables
+set.seed(421)
+stats_multivar_VC = adonis2(ps_weighted_unifrac ~ Tert_VC + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+
+# Combine into a table
+stats_VC = bind_rows("Univariate" = stats_univar_VC %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     "Multivariate" = stats_multivar_VC %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     .id = "Model") # first column is Model, either Uni or Multi
+
+stats_VC = stats_VC %>% rename(Pval = `Pr(>F)`) %>% 
+  filter(!is.na(Pval)) # remove irrelevant lines
+
+```
+
+#### "VC Low" vs. "VC High"
+
+```{r}
+# List samples that belong to the categories of interest (low and high)
+to_compare_VC_LH = c("VC Low", "VC High")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VC_LH = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VC_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VC_LH, samples_to_keep_VC_LH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VC_LH = adonis2(ps_weighted_unifrac_sub_VC_LH ~ Tert_VC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LH))
+stats_multivar_VC_LH # p-value is 0.455
+
+```
+
+#### "VC Low" vs. "VC Medium"
+
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_VC_LM = c("VC Low", "VC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VC_LM = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VC_LM = as.matrix(ps_weighted_unifrac)[samples_to_keep_VC_LM, samples_to_keep_VC_LM] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VC_LM = adonis2(ps_weighted_unifrac_sub_VC_LM ~ Tert_VC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_LM))
+stats_multivar_VC_LM # p-value is 0.694
+
+```
+
+#### "VC Medium" vs. "VC High"
+
+```{r}
+# List samples that belong to the categories of interest (medium and high)
+to_compare_VC_MH = c("VC High", "VC Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VC_MH = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VC_MH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VC_MH, samples_to_keep_VC_MH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VC_MH = adonis2(ps_weighted_unifrac_sub_VC_MH ~ Tert_VC + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VC %in% to_compare_VC_MH))
+stats_multivar_VC_MH # p-value is 0.184
+
+```
+
+### Vitamin A
+
+```{r beta_diversity_analysis_for_vitamin_a}
+# Plot it
+p_VA = mds_data %>% 
+  ggplot(aes(MDS1, MDS2, color = Tert_VA)) +
+  geom_point() +
+  stat_ellipse() +
+  theme_classic(base_size = 18) +
+  labs(color = "Vitamin A Intake Categorization") +
+  scale_color_manual(
+    values = c("VA Low" = "steelblue", "VA Medium" = "goldenrod2", "VA High" = "indianred3", title = "Beta Diversity Analysis on Varying Levels of Vitamin A Intake"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
+p_VA
+
+# PERMANOVA test
+# Single variable
+set.seed(421)
+stats_univar_VA = adonis2(ps_weighted_unifrac ~ Tert_VA, data = parkinsons_metadata)
+
+# Factor in confounding variables
+set.seed(421)
+stats_multivar_VA = adonis2(ps_weighted_unifrac ~ Tert_VA + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+
+# Combine into a table
+stats_VA = bind_rows("Univariate" = stats_univar_VA %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     "Multivariate" = stats_multivar_VA %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     .id = "Model") # first column is Model, either Uni or Multi
+
+stats_VA = stats_VA %>% rename(Pval = `Pr(>F)`) %>% 
+  filter(!is.na(Pval)) # remove irrelevant lines
+
+```
+
+#### "VA Low" vs. "VA High"
+
+```{r}
+# List samples that belong to the categories of interest (low and high)
+to_compare_VA_LH = c("VA Low", "VA High")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VA_LH = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_LH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VA_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VA_LH, samples_to_keep_VA_LH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VA_LH = adonis2(ps_weighted_unifrac_sub_VA_LH ~ Tert_VA + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_LH)) 
+stats_multivar_VA_LH # p-value is 0.275
+
+```
+
+#### "VA Low" vs. "VA Medium"
+
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_VA_LM = c("VA Low", "VA Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VA_LM = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VA_LM = as.matrix(ps_weighted_unifrac)[samples_to_keep_VA_LM, samples_to_keep_VA_LM] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VA_LM = adonis2(ps_weighted_unifrac_sub_VA_LM ~ Tert_VA + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_LM)) 
+stats_multivar_VA_LM # p-value is 0.421
+
+```
+
+#### "VA Medium" vs. "VA High"
+
+```{r}
+# List samples that belong to the categories of interest (medium and high)
+to_compare_VA_MH = c("VA High", "VA Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_VA_MH = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VA_MH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VA_MH, samples_to_keep_VA_MH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VA_MH = adonis2(ps_weighted_unifrac_sub_VA_MH ~ Tert_VA + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VA %in% to_compare_VA_MH)) 
+stats_multivar_VA_MH # p-value is 0.539
+
+```
+
+### Vitamin E
+
+```{r beta_diversity_analysis_for_vitamin_e}
+# Plot it
+p_VE = mds_data %>% 
+  ggplot(aes(MDS1, MDS2, color = Tert_VE)) +
+  geom_point() +
+  stat_ellipse() +
+  theme_classic(base_size = 18) +
+  labs(color = "Vitamin E Intake Categorization") +
+  scale_color_manual(
+    values = c("VE Low" = "steelblue", "VE Medium" = "goldenrod2", "VE High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
+p_VE
+
+# PERMANOVA test
+# Single variable
+set.seed(421)
+stats_univar_VE = adonis2(ps_weighted_unifrac ~ Tert_VE, data = parkinsons_metadata)
+
+# Factor in confounding variables
+set.seed(421)
+stats_multivar_VE = adonis2(ps_weighted_unifrac ~ Tert_VE + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+
+# Combine into a table
+stats_VE = bind_rows("Univariate" = stats_univar_VE %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     "Multivariate" = stats_multivar_VE %>% as.data.frame() %>% 
+                       rownames_to_column("Variable"),
+                     .id = "Model") # first column is Model, either Uni or Multi
+
+stats_VE = stats_VE %>% rename(Pval = `Pr(>F)`) %>% 
+  filter(!is.na(Pval)) # remove irrelevant lines
+
+```
+
+#### "VE Low" vs "VE High"
+
+```{r}
+# List samples that belong to the categories of interest (low and high)
+to_compare_VE_LH = c("VE Low", "VE High")
+
+# List samples that belong to these categories of interest
+samples_to_keep_VE_LH = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VE_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VE_LH, samples_to_keep_VE_LH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VE_LH = adonis2(ps_weighted_unifrac_sub_VE_LH ~ Tert_VE + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LH))
+stats_multivar_VE_LH # p-value is 0.204
+
+```
+
+#### "VE Low" vs "VE Medium"
+
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_VE_LM = c("VE Low", "VE Medium")
+
+# List samples that belong to these categories of interest
+samples_to_keep_VE_LM = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VE_LM = as.matrix(ps_weighted_unifrac)[samples_to_keep_VE_LM, samples_to_keep_VE_LM] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VE_LM = adonis2(ps_weighted_unifrac_sub_VE_LM ~ Tert_VE + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_LM))
+stats_multivar_VE_LM # p-value is 0.235
+
+```
+
+#### "VE Medium" vs "VE High"
+
+```{r}
+# List samples that belong to the categories of interest (medium and high)
+to_compare_VE_MH = c("VE High", "VE Medium")
+
+# List samples that belong to these categories of interest
+samples_to_keep_VE_MH = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_VE_MH = as.matrix(ps_weighted_unifrac)[samples_to_keep_VE_MH, samples_to_keep_VE_MH] %>%
+  as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_VE_MH = adonis2(ps_weighted_unifrac_sub_VE_MH ~ Tert_VE + Age + entacapone + Sex,
+                               data = parkinsons_metadata %>% filter(Tert_VE %in% to_compare_VE_MH))
+stats_multivar_VE_MH # p-value is 0.478
+
+```
+
+
+### Five dietary antioxidants combined together
+
+```{r beta_diversity_analysis_for_combined_dietary_antioxidants}
+# Plot it
+p_combine = mds_data %>% 
+  ggplot(aes(MDS1, MDS2, color = Tert_combine)) +
+  geom_point() +
+  stat_ellipse() + 
+  theme_classic(base_size = 18) +
+  labs(color = "Categorization of Combined Dietary Antioxidant Intake") +
+   scale_color_manual(
+    values = c("Combine Low" = "steelblue", "Combine Medium" = "goldenrod2", "Combine High" = "indianred3"),
+    labels = c("Low intake", "Medium intake", "High intake")
+  )
+p_combine
+
+# PERMANOVA test
+# Single variable
+set.seed(421)
+stats_univar_combine = adonis2(ps_weighted_unifrac ~ Tert_combine, data = parkinsons_metadata)
+
+# Factor in confounding variables
+set.seed(421)
+stats_multivar_combine = adonis2(ps_weighted_unifrac ~ Tert_combine + Age + Sex + entacapone, data = parkinsons_metadata, by = "margin")
+
+# Combine into a table
+stats_combine = bind_rows("Univariate" = stats_univar_combine %>% as.data.frame() %>% 
+                            rownames_to_column("Variable"),
+                          "Multivariate" = stats_multivar_combine %>% as.data.frame() %>%
+                            rownames_to_column("Variable"),
+                          .id = "Model") # first column is Model, either Uni or Multi
+
+stats_combine = stats_combine %>% rename(Pval = `Pr(>F)`) %>% 
+  filter(!is.na(Pval)) # remove irrelevant lines
+
+```
+
+#### "Combine Low" vs. "Combine High"
+
+```{r}
+# List samples that belong to the categories of interest (low and high)
+to_compare_combine_LH = c("Combine Low", "Combine High")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_combine_LH = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_LH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_combine_LH = as.matrix(ps_weighted_unifrac)[samples_to_keep_combine_LH, samples_to_keep_combine_LH] %>% as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_combine_LH = adonis2(ps_weighted_unifrac_sub_combine_LH ~ Tert_combine + Age + entacapone + Sex,
+                                    data = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_LH))
+stats_multivar_combine_LH # p-value is 0.32
+
+```
+
+#### "Combine Low" vs. "Combine Medium"
+
+```{r}
+# List samples that belong to the categories of interest (low and medium)
+to_compare_combine_LM = c("Combine Low", "Combine Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_combine_LM = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_LM) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_combine_LM = as.matrix(ps_weighted_unifrac)[samples_to_keep_combine_LM, samples_to_keep_combine_LM] %>% as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_combine_LM = adonis2(ps_weighted_unifrac_sub_combine_LM ~ Tert_combine + Age + entacapone + Sex,
+                                    data = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_LM))
+stats_multivar_combine_LM # p-value is 0.542
+
+```
+
+#### "Combine Medium" vs. "Combine High"
+
+```{r}
+# List samples that belong to the categories of interest (medium and high)
+to_compare_combine_MH = c("Combine High", "Combine Medium")
+
+# List samples that belong to these categories of interest 
+samples_to_keep_combine_MH = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_MH) %>%
+  rownames()
+
+# Subset the distance matrix to only include those two categories of interest
+ps_weighted_unifrac_sub_combine_MH = as.matrix(ps_weighted_unifrac)[samples_to_keep_combine_MH, samples_to_keep_combine_MH] %>% as.dist()
+
+# Run a PERMANOVA test again and account for the real confounding variables
+set.seed(421)
+stats_multivar_combine_MH = adonis2(ps_weighted_unifrac_sub_combine_MH ~ Tert_combine + Age + entacapone + Sex,
+                                    data = parkinsons_metadata %>% filter(Tert_combine %in% to_compare_combine_MH))
+stats_multivar_combine_MH # p-value is 0.183
+
+```

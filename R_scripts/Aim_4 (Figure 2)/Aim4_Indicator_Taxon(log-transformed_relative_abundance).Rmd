@@ -1,0 +1,144 @@
+---
+title: "Aim 4 - Indicator Taxon and MoCA Score"
+author: Carrie Sun
+output: html_document
+date: "2026-03-20"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load Library
+
+```{r}
+library(tidyverse)
+library(phyloseq)
+```
+
+# Load dataset
+
+```{r Load datasets}
+# Load in the filtered and wrangled Parkinson's metadata
+parkinsons_metadata_filt_cat = read.csv("../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# Load in feature table exported from QIIME2
+counts = read.delim('../../QIIME2_outputs/feature-table.txt', skip = 1, row.names = 1)
+
+# Load in taxonomy table exported from QIIME2
+taxonomy = read.delim('../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
+
+```
+
+# Create a Phyloseq Object
+
+```{r phyloseq_object}
+# Counts
+counts_formatted = counts %>% as.matrix()
+
+# Taxonomy
+taxonomy_formatted = taxonomy %>% 
+  separate(col = Taxon, 
+           into = c("Domain", "Phylum", "Class", "Order",
+                    "Family", "Genus", "Species"),
+           sep = ";", fill = "right") %>% 
+  select(-Confidence) %>% 
+  as.matrix()
+
+ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
+              otu_table(counts_formatted, taxa_are_rows = T),
+              tax_table(taxonomy_formatted))
+
+```
+
+
+```{r Load the indicator taxa}
+# Extract the indicator taxa obtained from Aim 2 
+taxa_id <- c("4c8288bfbd76958c0c094d87b97650f8") # Corresponds to Escherichia-Shigella
+
+# Aggregate ASVs to higher taxonomic level (genus level in this case)
+ps_genus = tax_glom(ps, "Genus")
+
+# Convert phyloseq to relative abundance
+ps_relab = transform_sample_counts(ps_genus, function(x) x / sum(x))
+
+# Extract the phyloseq otu_table
+otu = as.data.frame(otu_table(ps_relab))
+
+# Make samples = rows
+if (taxa_are_rows(ps_relab)) {
+  otu = t(otu)
+}
+
+otu = as.data.frame(otu)   
+
+# Keep only the taxon of interest
+#drop= false will ensure keep the extracted column as dataframe
+sub = otu[, taxa_id, drop = FALSE]
+
+sub = data.frame(
+  SampleID = rownames(otu),
+  rel_abund = otu[, taxa_id]
+)
+
+# Raw relative abundance histogram -- right skewed, not suitable for linear regression model
+hist(sub$rel_abund,
+     breaks = 30,
+     main = "Distribution of Relative Abundance",
+     xlab = "Relative Abundance",
+     ylab = "Frequency")
+
+# The lowest non-zero relative abundance is 0.0001518834
+
+# Log transform relative abundance
+sub$log_rel_abund = log10(sub$rel_abund + 0.0001518834/2)
+
+hist(sub$log_rel_abund,
+     breaks = 30,
+     main = "Distribution of Log10 Relative Abundance",
+     xlab = "log10(Relative Abundance + 0.0001518834/2)",
+     ylab = "Frequency")
+```
+
+
+```{r Add to Metadata}
+meta <- data.frame(sample_data(ps_relab))
+
+meta$SampleID <- rownames(meta)
+
+meta2 <- merge(meta, sub, by = "SampleID")
+```
+
+# Linear Regression Model
+
+```{r Predict the MoCA based on the indicator taxa}
+
+model <- lm(moca_total ~ log_rel_abund + Age + Sex + entacapone, data = meta2)
+
+summary(model)
+
+# For log10-transformed relative abundance, estimate = -0.03384; p = 0.8769
+
+# Age seems to be the predictor of MoCA score.
+
+```
+# Linear Regression Plot
+
+```{r Generate Plot for Aim 4}
+library(ggplot2)
+
+linear_regression_plot = ggplot(meta2, aes(x = log_rel_abund, y = moca_total)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_smooth(method = "lm", se = TRUE) +
+  labs(x = "Log-10 Relative Abundance of Escherichia-Shigella",
+       y = "MoCA Score of PD Patients") +
+  theme_classic(base_size = 18) +
+  theme(axis.title = element_text(face = "bold")) 
+linear_regression_plot
+
+# Export the plot
+ggsave("../../Results/Figures/Aim_4/Indicator_taxon/Association Between Log-10 Transformed Relative Abundance of Escherichia-Shigella and MoCA Score in PD Patients.png", plot = linear_regression_plot, width = 10, height = 7, dpi = 300)
+
+```
+
+
