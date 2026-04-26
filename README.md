@@ -59,17 +59,17 @@ How is gut microbiota taxonomic and functional composition in Parkinson’s Dise
 #### Aim 2: Taxonomy Analysis (Figure 1, Table S1, Table S2)
 - Indicator species analysis (Figure 1, Table S2)
 
-  - [R script](https://github.com/karriekk/micb-305-Team-5-/blob/main/R_scripts/Aim_2/indicator_species_analysis/indicator_species_analysis(final_version).Rmd)
+  - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_2%20(Figure%201%2C%20Table%20S1%2C%20Table%20S2)/indicator_species_analysis%20(Figure%201%2C%20Table%20S2)/indicator_species_analysis_final.Rmd)
  
-  - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_2/Indicator_species_analysis_results_summary.md)
+  - [Summary of results](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/Results/Summary_of_results/Aim_2/Indicator_species_analysis_results_summary.md)
 
-  - [Figures](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_2/Indicator_species)
+  - [Figures](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_2_Indicator_Species%20(Figure_1%2C%20Table_S2)/Indicator_species)
 
 - Differential abundance analysis (Table S1)
 
-  - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_2/Differential_abundance_analysis/differential_abundance_analysis_maaslin2.Rmd)
+  - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_2%20(Figure%201%2C%20Table%20S1%2C%20Table%20S2)/Differential_abundance_analysis%20(Table%20S1)/differential_abundance_analysis_maaslin2.Rmd)
  
-  - [Tables](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Tables/Aim_2/Differential_abundance_analysis)
+  - [Tables](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Tables/Aim_2_Differential_abundance_analysis%20(Table_S1))
 
 #### Aim 3: Functional Analysis (Figure 3, Figure S3, Figure S4)
 - Alpha-carotene
