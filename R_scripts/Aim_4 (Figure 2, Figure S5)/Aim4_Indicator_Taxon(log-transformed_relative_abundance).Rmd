@@ -123,6 +123,7 @@ summary(model)
 # Age seems to be the predictor of MoCA score.
 
 ```
+
 # Linear Regression Plot
 
 ```{r Generate Plot for Aim 4}
