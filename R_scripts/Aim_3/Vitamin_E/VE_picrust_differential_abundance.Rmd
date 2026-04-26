@@ -1,34 +1,37 @@
 ---
-title: "VE_picrust_differential_abundance"
-<<<<<<< HEAD
+title: "Vitamin A Picrust differential abundance"
 author: "Emily"
-=======
-author: "Cynthia"
->>>>>>> 08ab66811463d8e04b6d8dbf6cfb974602bc21dc
 date: "2026-03-17"
 output: html_document
 ---
-  
+
+# Introductions
+For aim 3 we wanted to identify the functional pathways of significance. This script is designed to identify and visualize functional differences in the gut microbiome between individuals with Low vs. High Vitamin A(VA) intake within a Parkinson’s Disease cohort. It utilizes PICRUst2 pathway predictions and applies Maaslin2 for robust differential abundance testing. Pathway plot, Heatmap plot, and PCA plot is also included here. Note that because the results indicated differences in VA groups were insignificant therefore manual log2fold change checks and volcano plots were not produced. Figures produced here are not included in final manuscript.
+
+## Environment Setup and Data Loading
+This section starts the analysis by loading required bioinformatic and visualization libraries and preparing the metadata. 
 ```{r libraries, include=FALSE}
+# Core data manipulation and plotting
 library(tidyverse)
-library(phyloseq)
+library(stringr)
+
+# analysis specific tools
 library(ggpicrust2)
 library(Maaslin2)
+
+# visualization-specific tools
 library(pheatmap)
-library(patchwork)
-```
 
-## R Markdown
-
-Loading Files
-```{r}
+# Loading metadata and filter for specific VA comparison groups
 metadata = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# focusing only on low vs high VA tertiles and drop unused factor levels
 metadata_sub = metadata %>% filter(Tert_VE %in% c("VE Low", "VE High")) %>%
   mutate(Tert_VE = fct_drop(as.factor(Tert_VE)))
-
 ```
 
-ggpicrust2 to run "Maaslin2", another common differential abundance tool, on your groups of interest and add pathway annotations
+## Differential Abundance Analysis (Maaslin2)
+We perform the core statistical testing here, using Maaslin2 to find pathways that differ significantly while adjusting for potential confounders like Sex, Age, and entacapone use.
 ```{r}
 
 pathway_abundance = read.delim('../../../QIIME2_outputs/path_abun_unstrat.tsv',row.names = 1)
