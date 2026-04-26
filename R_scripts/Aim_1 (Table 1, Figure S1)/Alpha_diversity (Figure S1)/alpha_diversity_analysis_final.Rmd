@@ -110,7 +110,7 @@ p_BC_formatted = pdata_BC %>% ggplot(aes(Tert_BC,
 p_BC_formatted
 
 # Export the boxplots
-ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Four_metrics_in_one_plot/Alpha diversity analysis of beta-carotene.png", plot = p_BC_formatted, width = 9, height = 10, dpi = 300)
+ggsave("../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Four_metrics_in_one_plot/Alpha diversity analysis of beta-carotene.png", plot = p_BC_formatted, width = 9, height = 10, dpi = 600)
 
 comparisons_BC = list(c("BC High", "BC Low"),
                       c("BC High", "BC Medium"),
@@ -213,7 +213,7 @@ p_AC_formatted = pdata_AC %>% ggplot(aes(Tert_AC,
 p_AC_formatted
 
 # Export the boxplots
-ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Four_metrics_in_one_plot/Alpha diversity analysis of alpha-carotene.png", plot = p_AC_formatted, width = 9, height = 10, dpi = 300)
+ggsave("../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Four_metrics_in_one_plot/Alpha diversity analysis of alpha-carotene.png", plot = p_AC_formatted, width = 9, height = 10, dpi = 600)
 
 
 comparisons_AC = list(c("AC High", "AC Low"),
@@ -317,7 +317,7 @@ p_VC_formatted = pdata_VC %>% ggplot(aes(Tert_VC,
 p_VC_formatted
 
 # Export the boxplots
-ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Four_metrics_in_one_plot/Alpha diversity analysis of vitamin C.png", plot = p_VC_formatted, width = 9, height = 10, dpi = 300)
+ggsave("../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Four_metrics_in_one_plot/Alpha diversity analysis of vitamin C.png", plot = p_VC_formatted, width = 9, height = 10, dpi = 600)
 
 
 comparisons_VC = list(c("VC High", "VC Low"),
@@ -421,7 +421,7 @@ p_VA_formatted = pdata_VA %>% ggplot(aes(Tert_VA,
 p_VA_formatted
 
 # Export the boxplots
-ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Four_metrics_in_one_plot/Alpha diversity analysis of vitamin A.png", plot = p_VA_formatted, width = 9, height = 10, dpi = 300)
+ggsave("../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Four_metrics_in_one_plot/Alpha diversity analysis of vitamin A.png", plot = p_VA_formatted, width = 9, height = 10, dpi = 600)
 
 
 comparisons_VA = list(c("VA High", "VA Low"),
@@ -525,7 +525,7 @@ p_VE_formatted = pdata_VE %>% ggplot(aes(Tert_VE,
 p_VE_formatted
 
 # Export the boxplots
-ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Four_metrics_in_one_plot/Alpha diversity analysis of vitamin E.png", plot = p_VE_formatted, width = 9, height = 10, dpi = 300)
+ggsave("../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Four_metrics_in_one_plot/Alpha diversity analysis of vitamin E.png", plot = p_VE_formatted, width = 9, height = 10, dpi = 600)
 
 
 comparisons_VE = list(c("VE High", "VE Low"),
@@ -629,7 +629,7 @@ p_combine_formatted = pdata_combine %>% ggplot(aes(Tert_combine,
 p_combine_formatted
 
 # Export the boxplots
-ggsave("../../../Results/Figures/Aim_1/Alpha_diversity/Four_metrics_in_one_plot/Alpha diversity analysis of combined.png", plot = p_combine_formatted, width = 9, height = 10, dpi = 300)
+ggsave("../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Four_metrics_in_one_plot/Alpha diversity analysis of combined.png", plot = p_combine_formatted, width = 9, height = 10, dpi = 600)
 
 
 comparisons_combine = list(c("Combine High", "Combine Low"),

@@ -10,6 +10,7 @@ date: "2026-03-14"
 ```{r library loading}
 library(tidyverse)
 library(phyloseq)
+library(Maaslin2)
 ```
 
 ## Dataset loading
@@ -116,7 +117,7 @@ statistical_table_BC = statistical_table_BC %>% relocate(Genus, .after = feature
 # Remove the arbitrary X at the front of the feature ID
 statistical_table_BC = statistical_table_BC %>% mutate(feature = substring(feature, 2))
 
-writexl::write_xlsx(statistical_table_BC,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Beta_carotene - Maaslin2 Results.xlsx')
+writexl::write_xlsx(statistical_table_BC,'../../../Results/Tables/Aim_2_Differential_abundance_analysis (Table_S1)/Beta_carotene - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_BC = statistical_table_BC %>% 
@@ -163,7 +164,7 @@ statistical_table_AC = statistical_table_AC %>% relocate(Genus, .after = feature
 # Remove the arbitrary X at the front of the feature ID
 statistical_table_AC = statistical_table_AC %>% mutate(feature = substring(feature, 2))
 
-writexl::write_xlsx(statistical_table_AC,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Alpha_carotene - Maaslin2 Results.xlsx')
+writexl::write_xlsx(statistical_table_AC,'../../../Results/Tables/Aim_2_Differential_abundance_analysis (Table_S1)/Alpha_carotene - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_AC = statistical_table_AC %>% 
@@ -210,7 +211,7 @@ statistical_table_VA = statistical_table_VA %>% relocate(Genus, .after = feature
 # Remove the arbitrary X at the front of the feature ID
 statistical_table_VA = statistical_table_VA %>% mutate(feature = substring(feature, 2))
 
-writexl::write_xlsx(statistical_table_VA,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_A - Maaslin2 Results.xlsx')
+writexl::write_xlsx(statistical_table_VA,'../../../Results/Tables/Aim_2_Differential_abundance_analysis (Table_S1)/Vitamin_A - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_VA = statistical_table_VA %>% 
@@ -256,7 +257,7 @@ statistical_table_VC = statistical_table_VC %>% relocate(Genus, .after = feature
 # Remove the arbitrary X at the front of the feature ID
 statistical_table_VC = statistical_table_VC %>% mutate(feature = substring(feature, 2))
 
-writexl::write_xlsx(statistical_table_VC,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_C - Maaslin2 Results.xlsx')
+writexl::write_xlsx(statistical_table_VC,'../../../Results/Tables/Aim_2_Differential_abundance_analysis (Table_S1)/Vitamin_C - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_VC = statistical_table_VC %>% 
@@ -302,7 +303,7 @@ statistical_table_VE = statistical_table_VE %>% relocate(Genus, .after = feature
 # Remove the arbitrary X at the front of the feature ID
 statistical_table_VE = statistical_table_VE %>% mutate(feature = substring(feature, 2))
 
-writexl::write_xlsx(statistical_table_VE,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Vitamin_E - Maaslin2 Results.xlsx')
+writexl::write_xlsx(statistical_table_VE,'../../../Results/Tables/Aim_2_Differential_abundance_analysis (Table_S1)/Vitamin_E - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_VE = statistical_table_VE %>% 
@@ -348,7 +349,7 @@ statistical_table_combine = statistical_table_combine %>% relocate(Genus, .after
 # Remove the arbitrary X at the front of the feature ID
 statistical_table_combine = statistical_table_combine %>% mutate(feature = substring(feature, 2))
 
-writexl::write_xlsx(statistical_table_combine,'../../../Results/Tables/Aim_2/Differential_abundance_analysis/Combined - Maaslin2 Results.xlsx')
+writexl::write_xlsx(statistical_table_combine,'../../../Results/Tables/Aim_2_Differential_abundance_analysis (Table_S1)/Combined - Maaslin2 Results.xlsx')
 
 # Filter stats to only include taxa that are differentially abundant between the low and high intake groups
 taxa_to_plot_combine = statistical_table_combine %>% 

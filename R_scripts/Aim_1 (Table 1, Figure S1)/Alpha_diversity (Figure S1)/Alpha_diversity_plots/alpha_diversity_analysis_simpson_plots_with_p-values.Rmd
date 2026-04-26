@@ -121,7 +121,7 @@ p_BC_formatted = pdata_BC %>% ggplot(aes(Tert_BC,
 p_BC_formatted
 
 # Export the plot
-ggsave("../../../../Results/Figures/Aim_1/Alpha_diversity/Simpson/With_p-values/Simpson_Beta-carotene.png", plot = p_BC_formatted, width = 10, height = 9, dpi = 300)
+ggsave("../../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Simpson/With_p-values/Simpson_Beta-carotene.png", plot = p_BC_formatted, width = 10, height = 9, dpi = 600)
 ```
 
 ### Alpha carotene
@@ -180,7 +180,7 @@ p_AC_formatted = pdata_AC %>% ggplot(aes(Tert_AC,
 p_AC_formatted
 
 # Export the plot
-ggsave("../../../../Results/Figures/Aim_1/Alpha_diversity/Simpson/With_p-values/Simpson_Alpha-carotene.png", plot = p_AC_formatted, width = 10, height = 9, dpi = 300)
+ggsave("../../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Simpson/With_p-values/Simpson_Alpha-carotene.png", plot = p_AC_formatted, width = 10, height = 9, dpi = 600)
 ```
 
 ### Vitamin C
@@ -239,7 +239,7 @@ p_VC_formatted = pdata_VC %>% ggplot(aes(Tert_VC,
 p_VC_formatted
 
 # Export the plot
-ggsave("../../../../Results/Figures/Aim_1/Alpha_diversity/Simpson/With_p-values/Simpson_Vitamin_C.png", plot = p_VC_formatted, width = 10, height = 9, dpi = 300)
+ggsave("../../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Simpson/With_p-values/Simpson_Vitamin_C.png", plot = p_VC_formatted, width = 10, height = 9, dpi = 600)
 ```
 
 ### Vitamin A
@@ -298,7 +298,7 @@ p_VA_formatted = pdata_VA %>% ggplot(aes(Tert_VA,
 p_VA_formatted
 
 # Export the plot
-ggsave("../../../../Results/Figures/Aim_1/Alpha_diversity/Simpson/With_p-values/Simpson_Vitamin_A.png", plot = p_VA_formatted, width = 10, height = 9, dpi = 300)
+ggsave("../../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Simpson/With_p-values/Simpson_Vitamin_A.png", plot = p_VA_formatted, width = 10, height = 9, dpi = 600)
 ```
 
 ### Vitamin E
@@ -357,7 +357,7 @@ p_VE_formatted = pdata_VE %>% ggplot(aes(Tert_VE,
 p_VE_formatted
 
 # Export the plot
-ggsave("../../../../Results/Figures/Aim_1/Alpha_diversity/Simpson/With_p-values/Simpson_Vitamin_E.png", plot = p_VE_formatted, width = 10, height = 9, dpi = 300)
+ggsave("../../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Simpson/With_p-values/Simpson_Vitamin_E.png", plot = p_VE_formatted, width = 10, height = 9, dpi = 600)
 
 ```
 
@@ -417,6 +417,6 @@ p_combine_formatted = pdata_combine %>% ggplot(aes(Tert_combine,
 p_combine_formatted
 
 # Export the plot
-ggsave("../../../../Results/Figures/Aim_1/Alpha_diversity/Simpson/With_p-values/Simpson_Combined.png", plot = p_combine_formatted, width = 12, height = 10, dpi = 300)
+ggsave("../../../../Results/Figures/Aim_1_Alpha_Diversity (Figure_S1)/Alpha_diversity (Figure_S1)/Simpson/With_p-values/Simpson_Combined.png", plot = p_combine_formatted, width = 12, height = 10, dpi = 600)
 
 ```
