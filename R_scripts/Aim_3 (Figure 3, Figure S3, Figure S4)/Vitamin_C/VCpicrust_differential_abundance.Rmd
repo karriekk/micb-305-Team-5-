@@ -169,10 +169,10 @@ peb_part2 = pathway_errorbar_fixed(abundance = path_filt,
                                    x_lab = "description")
 
 # Save plots
-ggsave("../../../Results/Figures/Aim_3/Vitamin_C/VC-picrust-part1.png",
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_C/VC-picrust-part1.png",
        plot = peb_part1, width = 18, height = 12)
 
-ggsave("../../../Results/Figures/Aim_3/Vitamin_C/VC-picrust-part2.png",
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_C/VC-picrust-part2.png",
        plot = peb_part2, width = 18, height = 12)
 
 ```
@@ -201,7 +201,7 @@ peb10 = pathway_errorbar_fixed(abundance = path_filt,
                      x_lab = "description")
 
 # save
-ggsave("../../../Results/Figures/Aim_3/Vitamin_C/VC-picrust-sig-pathways10.png",
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_C/VC-picrust-sig-pathways10.png",
        plot = peb10, width = 18, height = 15, dpi = 300)
 ```
 
@@ -271,7 +271,7 @@ pheatmap(stats,
          treeheight_col = 25, 
          legend = TRUE,               
          main = NA,                   # Use NA to properly suppress the title space
-         filename = "../../../Results/Figures/Aim_3/Vitamin_C/MetaCyc-VC_Heatmap_Final-new.png",
+         filename = "../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_C/MetaCyc-VC_Heatmap_Final-new.png",
          width = 35,                   
          height = 33)
 
@@ -299,7 +299,7 @@ final_plot = ggMarginal(pca_plot,
                         alpha = 0.3)
 
 # Save the final object
-ggsave("../../../Results/Figures/Aim_3/Vitamin_C/VC-pathway-pca.png", 
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_C/VC-pathway-pca.png", 
        plot = final_plot, 
        width = 8, 
        height = 6, 
@@ -345,7 +345,7 @@ volcano_plot <- ggplot(plot_data, aes(x = log2fc, y = -log10(p_adjust), color = 
   )
 
 # Save
-ggsave("../../../Results/Figures/Aim_3/Vitamin_C/VC-volcano-plot.png", 
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_C/VC-volcano-plot.png", 
        plot = volcano_plot, width = 12, height = 10, dpi = 300)
 ```
 

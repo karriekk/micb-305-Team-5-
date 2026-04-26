@@ -6,7 +6,7 @@ output: html_document
 ---
 
 # Introductions
-For aim 3 we wanted to identify the functional pathways of significance. This script is designed to identify and visualize functional differences in the gut microbiome between individuals with Low vs. High Vitamin A(VA) intake within a Parkinson’s Disease cohort. It utilizes PICRUst2 pathway predictions and applies Maaslin2 for robust differential abundance testing. Pathway plot, Heatmap plot, and PCA plot is also included here. Note that because the results indicated differences in VA groups were insignificant therefore manual log2fold change checks and volcano plots were not produced. Figures produced here are not included in final manuscript.
+For aim 3 we wanted to identify the functional pathways of significance. This script is designed to identify and visualize functional differences in the gut microbiome between individuals with Low vs. High Vitamin E(VE) intake within a Parkinson’s Disease cohort. It utilizes PICRUst2 pathway predictions and applies Maaslin2 for robust differential abundance testing. Pathway plot, Heatmap plot, and PCA plot is also included here. Note that because the results indicated differences in VE groups were insignificant therefore manual log2fold change checks and volcano plots were not produced. Figures produced here are not included in final manuscript.
 
 ## Environment Setup and Data Loading
 This section starts the analysis by loading required bioinformatic and visualization libraries and preparing the metadata. 
@@ -22,10 +22,10 @@ library(Maaslin2)
 # visualization-specific tools
 library(pheatmap)
 
-# Loading metadata and filter for specific VA comparison groups
+# Loading metadata and filter for specific VE comparison groups
 metadata = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
 
-# focusing only on low vs high VA tertiles and drop unused factor levels
+# focusing only on low vs high VE tertiles and drop unused factor levels
 metadata_sub = metadata %>% filter(Tert_VE %in% c("VE Low", "VE High")) %>%
   mutate(Tert_VE = fct_drop(as.factor(Tert_VE)))
 ```
@@ -108,16 +108,13 @@ peb <- pathway_errorbar_fixed(abundance = path_filt,
                               x_lab = "description")
 
 # save plot
-ggsave("../../../Results/Figures/Aim_3/Vitamin_E/VE-picrust-pathways.png",
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_E/VE-picrust-pathways.png",
        plot = peb, width = 18, height = 10)
 ```
 
-Heatmap
-
+## Correlation Heatmap
+This heatmap explores how the significant pathways correlate with one another across samples, revealing functional modules. This was not used directly in our manuscript, only when characterizing initial trends observed at beginning of analysis. Note that pathways plotted here are insignificant and only presented as a representation of this group.
 ```{r identical features}
-# Heat map library
-library('pheatmap')
-
 # working with same set of pathways above
 sig_features <- daa_annotated_results_df %>% 
   filter(!is.na(p_adjust), !is.na(log2_fold_change)) %>%
@@ -125,15 +122,15 @@ sig_features <- daa_annotated_results_df %>%
   pull(feature) %>% 
   unique()
 
+# Normalize counts to relative abundance (Total Sum Scaling) to ensure 
+# correlations are based on biological proportions rather than sequencing depth
 path_relab = path_filt %>% 
   apply(2,function(x) x/sum(x)) %>% as.data.frame()
   colSums(path_relab) # Should be all 1
 
-colSums(path_relab) # Should be all 1
-
-
-stats = path_relab %>% t() %>%  # switch rows and columns
-  as.data.frame() %>% # Lets us use select()
+# Calculate Pearson correlation between significant pathways
+stats = path_relab %>% t() %>% 
+  as.data.frame() %>% 
   select(all_of(sig_features)) %>% 
   cor(method = 'pearson') #Pearson tests between every feature pair
 
@@ -146,7 +143,7 @@ breaks <- seq(-1, 1, length.out = 41)  # 40 colors + 1 for the endpoint
 # Lookup Names
 name_lookup <- daa_annotated_results_df %>%
   filter(feature %in% sig_features) %>%
-  select(feature, description) %>% # Adjust 'description' to your actual column name
+  select(feature, description) %>% 
   distinct()
 
 readable_names <- name_lookup$description[match(rownames(stats), name_lookup$feature)]
@@ -155,6 +152,7 @@ colnames(stats) <- readable_names
 
 view(readable_names)
 
+# Plotting to try to minimize white space
 pheatmap(stats, 
          clustering_distance_rows = "euclidean",  
          clustering_distance_cols = "euclidean", 
@@ -171,14 +169,14 @@ pheatmap(stats,
          treeheight_col = 25, 
          legend = TRUE,               
          main = NA,                   
-         filename = "../../../Results/Figures/Aim_3/Vitamin_E/MetaCyc-VE_Heatmap_Final-new.png",
+         filename = "../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_E/MetaCyc-VE_Heatmap_Final-new.png",
          width = 8,                   
          height = 6)
 
 ```
 
-PCA plot
-
+## PCA Visualization
+This final section provides a global overview of sample similarity (PCA). Note that pathways plotted here are insignificant and only presented as a representation of this group. Figures produced are not included in our final manuscript.
 ```{r PCA}
 # Generate pathway PCA plot
 pca = pathway_pca(abundance = path_filt,
@@ -186,7 +184,7 @@ pca = pathway_pca(abundance = path_filt,
             group = "Tert_VE")
 
 # save
-ggsave("../../../Results/Figures/Aim_3/Vitamin_E/VE-pathway-pca.png", 
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Vitamin_E/VE-pathway-pca.png", 
        plot = pca, 
        width = 8, 
        height = 6, 

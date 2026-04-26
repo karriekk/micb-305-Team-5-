@@ -106,7 +106,7 @@ peb = pathway_errorbar_fixed(abundance = path_filt,
                      x_lab = "description")
 
 # Save
-ggsave("../../../Results/Figures/Aim_3/Alpha-carotene/AC-picrust-pathways.png",
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Alpha-carotene/AC-picrust-pathways.png",
        plot = peb, width = 18, height = 10)
 ```
 
@@ -166,13 +166,13 @@ pheatmap(stats,
          treeheight_col = 25, 
          legend = TRUE,               
          main = NA,                   # Use NA to properly suppress the title space
-         filename = "../../../Results/Figures/Aim_3/Alpha-carotene/MetaCyc-AC_Heatmap_Final-new.png",
+         filename = "../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Alpha-carotene/MetaCyc-AC_Heatmap_Final-new.png",
          width = 8,                   
          height = 6)
 
 ```
 
-## PCA and Volcano Visualization
+## PCA Visualization
 This final section provides a global overview of sample similarity (PCA). Note that pathways plotted here are insignificant and only presented as a representation of this group. Figures produced are not included in our final manuscript.
 ```{r PCA}
 # Generate pathway PCA plot
@@ -181,7 +181,7 @@ pca = pathway_pca(abundance = path_filt,
             group = "Tert_AC")
 
 # save pca
-ggsave("../../../Results/Figures/Aim_3/Alpha-carotene/AC-pathway-pca.png", 
+ggsave("../../../Results/Figures/Aim_3 (Figure_3, Figure_S3, Figure_S4)/Alpha-carotene/AC-pathway-pca.png", 
        plot = pca, 
        width = 8, 
        height = 6, 
