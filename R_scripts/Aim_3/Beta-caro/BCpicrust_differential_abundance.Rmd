@@ -11,7 +11,7 @@ For aim 3 we wanted to identify the functional pathways of significance. This sc
 ## Environment Setup and Data Loading
 This section starts the analysis by loading required bioinformatic and visualization libraries and preparing the metadata.
 ```{r libraries, include=FALSE}
-# Core data manupulation and plotting
+# Core data manipulation and plotting
 library(tidyverse)
 library(phyloseq)
 library(ggrepel)
@@ -52,7 +52,7 @@ diff_abun = pathway_daa(abundance = path_filt,
                    select = NULL,
                    reference = "BC Low")
 
-# Annotate pathway codes (e.g., MetaCyc IDs) with human-readable descriptions
+# Annotate pathway codes (MetaCyc IDs) with human-readable descriptions
 daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
                                               daa_results_df = diff_abun,
                                               ko_to_kegg = FALSE)
@@ -194,11 +194,11 @@ sig_features = daa_results_log2fc_filtered %>%
 # correlations are based on biological proportions rather than sequencing depth
 path_relab = path_filt %>% 
   apply(2,function(x) x/sum(x)) %>% as.data.frame()
-colSums(path_relab) # Should be all 1
+colSums(path_relab) 
 
 # Calculate Pearson correlation between significant pathways
-stats = path_relab %>% t() %>%  # switch rows and columns
-  as.data.frame() %>% # Lets us use select()
+stats = path_relab %>% t() %>%  
+  as.data.frame() %>% 
   select(all_of(sig_features)) %>% 
   cor(method = 'pearson') #Pearson tests between every feature pair
 

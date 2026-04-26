@@ -11,7 +11,7 @@ For aim 3 we wanted to identify the functional pathways of significance. This sc
 ## Environment Setup and Data Loading
 This section starts the analysis by loading required bioinformatic and visualization libraries and preparing the metadata.
 ```{r libraries, include=FALSE}
-# Core data manupulation and plotting
+# Core data manipulation and plotting
 library(tidyverse)
 library(phyloseq)
 library(ggrepel)
@@ -219,7 +219,7 @@ sig_features = signif_path %>%
 # correlations are based on biological proportions rather than sequencing depth
 path_relab = path_filt %>% 
   apply(2,function(x) x/sum(x)) %>% as.data.frame()
-colSums(path_relab) # Should be all 1
+colSums(path_relab)
 
 # Calculate Pearson correlation between significant pathways
 stats = path_relab %>% t() %>%  

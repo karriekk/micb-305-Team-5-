@@ -1,34 +1,49 @@
 ---
-title: "Picrust_differential_abundance"
+title: "Alpha-Carotene Picrust differential abundance"
 author: "Cynthia"
 date: "2026-03-14"
 output: html_document
 ---
 
+# Introductions
+For aim 3 we wanted to identify the functional pathways of significance. This script is designed to identify and visualize functional differences in the gut microbiome between individuals with Low vs. High Alpha-Carotene(AC) intake within a Parkinson’s Disease cohort. It utilizes PICRUst2 pathway predictions and applies Maaslin2 for robust differential abundance testing. Pathway plot, Heatmap plot, and PCA plot is also included here. Note that because the results indicated differences in Alpha-carotene groups were insignificant therefore manual log2fold change checks and volcano plots were not produced. Figures produced here are not included in final manuscript.
+
+## Environment Setup and Data Loading
+This section starts the analysis by loading required bioinformatic and visualization libraries and preparing the metadata.
 ```{r libraries, include=FALSE}
+# Core data manipulation and plotting
 library(tidyverse)
 library(phyloseq)
+library(ggrepel)
+library(stringr)
+
+# analysis specific tools
 library(ggpicrust2)
 library(Maaslin2)
-```
 
-## R Markdown
+# visualization-specific tools
+library(pheatmap)
+library(ggExtra)
 
-Loading Files
-```{r}
+# Loading metadata and filter for specific AC comparison groups
 metadata = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
+
+# focusing only on low vs high AC tertiles and drop unused factor levels
 metadata_sub = metadata %>% filter(Tert_AC %in% c("AC Low", "AC High")) %>%
   mutate(Tert_AC = fct_drop(as.factor(Tert_AC)))
 ```
 
-ggpicrust2 to run "Maaslin2", another common differential abundance tool, on your groups of interest and add pathway annotations
+## Differential Abundance Analysis (Maaslin2)
+We perform the core statistical testing here, using Maaslin2 to find pathways that differ significantly while adjusting for potential confounders like Sex, Age, and entacapone use.
 ```{r}
+# Load predicted MetaCyc pathway abundances from QIIME2/PICRUst2 output
 pathway_abundance = read.delim('../../../QIIME2_outputs/path_abun_unstrat.tsv',row.names = 1)
 
-# Filter
+# Subset the abundance table to match the samples present in our filtered metadata
 path_filt = pathway_abundance %>% select(all_of(rownames(metadata_sub)))
 
-
+# Run Differential Abundance Analysis (DAA) using Maaslin2
+# Adjusting for Sex, Age, and Entacapone usage as fixed effects
 diff_abun = pathway_daa(abundance = path_filt,
                    metadata = metadata,
                    group = "Tert_AC",
@@ -37,18 +52,22 @@ diff_abun = pathway_daa(abundance = path_filt,
                    select = NULL,
                    reference = "AC Low")
 
+# Annotate pathway codes (MetaCyc IDs) with human-readable descriptions
 daa_annotated_results_df = pathway_annotation(pathway = "MetaCyc",
                                               daa_results_df = diff_abun,
                                               ko_to_kegg = FALSE)
  
-# save
+# Cache the results to avoid re-running intensive computations
 saveRDS(daa_annotated_results_df,'daa_annotated_results_df.rds')
 
+# reading saved results
 readRDS('daa_annotated_results_df.rds')
 
 ```
-Pathway Plots
+## Visualizing Pathways (Error Bar Plots)
+These plots visualize the mean proportion of pathways in each group and their associated effect sizes. Note that pathways plotted here are insignificant and only presented as a representation of this group. Figures produced are not included in our final manuscript.
 ```{r}
+# Load custom formatting function for pathway plots
 source('../ggpicrust2_errorbar_function_fixed.R')
 
 # Filter out NA in p-values and log2 fold change columns
@@ -77,6 +96,7 @@ daa_annotated_results_df_filt %>% filter(p_adjust< 0.31, abs(log2_fold_change) >
 daa_strict <- daa_annotated_results_df_filt %>% 
   filter(p_adjust < 0.31, abs(log2_fold_change) > 4e-3)
 
+# plotting
 peb = pathway_errorbar_fixed(abundance = path_filt, 
                      daa_results_df = daa_strict, 
                      Group = metadata_sub$Tert_AC, 
@@ -93,23 +113,23 @@ ggsave("../../../Results/Figures/Aim_3/Alpha-carotene/AC-picrust-pathways.png",
        plot = peb, width = 18, height = 10)
 ```
 
-Heatmap
-
+## Correlation Heatmap
+This heatmap explores how the significant pathways correlate with one another across samples, revealing functional modules. This was not used directly in our manuscript, only when characterizing initial trends observed at beginning of analysis. Note that pathways plotted here are insignificant and only presented as a representation of this group.
 ```{r identical features}
-# heatmap library
-library('pheatmap')
-
 # workign with same pathways as above
 sig_features = daa_annotated_results_df %>% 
   filter(p_adjust < 0.31, abs(log2_fold_change) > 4e-3) %>% 
   pull('feature') %>% unique()
 
+# Normalize counts to relative abundance (Total Sum Scaling) to ensure 
+# correlations are based on biological proportions rather than sequencing depth
 path_relab = path_filt %>% 
   apply(2,function(x) x/sum(x)) %>% as.data.frame()
-colSums(path_relab) # Should be all 1
+colSums(path_relab) 
 
-stats = path_relab %>% t() %>%  # switch rows and columns
-  as.data.frame() %>% # Lets us use select()
+# Calculate Pearson correlation between significant pathways
+stats = path_relab %>% t() %>%  
+  as.data.frame() %>% 
   select(all_of(sig_features)) %>% 
   cor(method = 'pearson') #Pearson tests between every feature pair
 
@@ -122,14 +142,12 @@ breaks <- seq(-1, 1, length.out = 41)  # 40 colors + 1 for the endpoint
 # Lookup Names
 name_lookup <- daa_annotated_results_df %>%
   filter(feature %in% sig_features) %>%
-  select(feature, description) %>% # Adjust 'description' to your actual column name
+  select(feature, description) %>% 
   distinct()
 
 readable_names <- name_lookup$description[match(rownames(stats), name_lookup$feature)]
 rownames(stats) <- readable_names
 colnames(stats) <- readable_names
-
-view(readable_names)
 
 # manually adding NA descriptions
 readable_names[6] <- "phenol degradation"
@@ -152,12 +170,13 @@ pheatmap(stats,
          legend = TRUE,               
          main = NA,                   # Use NA to properly suppress the title space
          filename = "../../../Results/Figures/Aim_3/Alpha-carotene/MetaCyc-AC_Heatmap_Final-new.png",
-         width = 8,                   # Increased slightly for your long pathway names
+         width = 8,                   
          height = 6)
 
 ```
 
-PCA plots
+## PCA and Volcano Visualization
+This final section provides a global overview of sample similarity (PCA). Note that pathways plotted here are insignificant and only presented as a representation of this group. Figures produced are not included in our final manuscript.
 ```{r PCA}
 # Generate pathway PCA plot
 pca = pathway_pca(abundance = path_filt,
