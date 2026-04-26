@@ -30,17 +30,17 @@ How is gut microbiota taxonomic and functional composition in Parkinson’s Dise
 
   - [R script](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/R_scripts/Aim_1%20(Table%201%2C%20Figure%20S1)/Alpha_diversity%20(Figure%20S1)/alpha_diversity_analysis_final.Rmd)
  
-  - [Summary of results](https://github.com/karriekk/micb-305-Team-5-/blob/main/Results/Summary_of_results/Aim_1/Alpha_diversity/alpha_diversity_results_summary.md)
+  - [Summary of results](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/Results/Summary_of_results/Aim_1/Alpha_diversity/alpha_diversity_results_summary.md)
 
   - Figures
  
-    - [Simpson](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Simpson)
+    - [Simpson](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_1_Alpha_Diversity%20(Figure_S1)/Alpha_diversity%20(Figure_S1)/Simpson)
    
-    - [Shannon](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Shannon)
+    - [Shannon](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_1_Alpha_Diversity%20(Figure_S1)/Alpha_diversity%20(Figure_S1)/Shannon)
    
-    - [Chao1](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Chao1)
+    - [Chao1](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_1_Alpha_Diversity%20(Figure_S1)/Alpha_diversity%20(Figure_S1)/Chao1)
    
-    - [Observed](https://github.com/karriekk/micb-305-Team-5-/tree/main/Results/Figures/Aim_1/Alpha_diversity/Observed)
+    - [Observed](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/tree/main/Results/Figures/Aim_1_Alpha_Diversity%20(Figure_S1)/Alpha_diversity%20(Figure_S1)/Observed)
  
 - Beta diversity analysis (Table 1)
 
