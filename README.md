@@ -119,7 +119,7 @@ How is gut microbiota taxonomic and functional composition in Parkinson’s Dise
 You can access all of our weekly meeting agendas [here](https://github.com/karriekk/micb-305-Team-5-/tree/main/meeting_agenda), or click the hyperlinks below to open a specific agenda.
 
 #### April
-- [Apr 15]([https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/meeting_agenda/Apr%2015%20Agenda.md](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/meeting_agenda/Apr%2015%20Extra%20Meeting%20Agenda.md))
+- [Apr 15](https://github.com/karriekk/micb-305-Effects-of-Antioxidant-intake-on-Parkinson-s-Disease-Patients/blob/main/meeting_agenda/Apr%2015%20Extra%20Meeting%20Agenda.md)
 
 - [Apr 7](https://github.com/karriekk/micb-305-Team-5-/blob/main/meeting_agenda/Apr%207%20Agenda.md)
 
