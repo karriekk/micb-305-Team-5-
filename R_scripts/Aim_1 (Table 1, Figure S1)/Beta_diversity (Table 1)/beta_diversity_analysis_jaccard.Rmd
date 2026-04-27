@@ -5,8 +5,11 @@ output: html_document
 date: "2026-03-15"
 ---
 
-## Library loading
+## Introduction
+This R Markdown script performs a Beta Diversity Analysis using Jaccard distances to evaluate how dietary antioxidant intake (Beta-carotene, Alpha-carotene, Vitamins A, C, and E) relates to the gut microbiome composition in Parkinson’s Disease patients. Unlike UniFrac, Jaccard distance is non-phylogenetic and focuses strictly on community membership (presence/absence of taxa), allowing us to see if diet is associated with the gain or loss of specific microbial species.
 
+## Library loading
+This section prepares the environment with tools for data manipulation, microbiome analysis, and ecological statistics.
 ```{r libraries, include = FALSE}
 library(tidyverse)
 library(phyloseq)
@@ -14,7 +17,7 @@ library(vegan)
 ```
 
 ## Dataset loading and wrangling
-
+This section cleans the metadata and prepares the raw data files for integration.
 ```{r load_data}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv('../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
@@ -45,7 +48,7 @@ taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
 ## Make a Phyloseq object
-
+This chunk formats the raw inputs into a single, unified object to ensure samples and ASVs are correctly matched.
 ```{r Create a Phyloseq object}
 taxonomy_formatted = taxonomy %>% 
   separate(col = Taxon,
@@ -63,7 +66,7 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat_entacapone_NA_removed),
 ```
 
 ## Alpha rarefaction curve
-
+We normalize the sequencing depth to ensure that differences in diversity are biological and not a result of uneven sequencing effort.
 ```{r alpha_rarefaction}
 # Alpha rarefaction curve
 rarecurve(t(data.frame(ps@otu_table)),
@@ -79,7 +82,7 @@ psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
 ## Beta Diversity Analysis
 
 ### Pre-processing
-
+Jaccard distance requires binary data. This section transforms the counts and generates the distance matrix.
 ```{r calculate Jaccard distances}
 # Convert to binary data
 psrare_binary <- transform_sample_counts(psrare, function(x) ifelse(x > 0, 1, 0))
@@ -103,8 +106,10 @@ mds_data = mds$points %>% as.data.frame() %>%
 head(mds_data)
 ```
 
+### Antioxidant-Specific Analysis
+The logic below is applied to all antioxidants (BC, AC, VC, VA, VE, and Combined).
 ### Beta carotene
-
+This chunk generates the ordination plot and runs the global PERMANOVA test.
 ```{r beta_diversity_analysis_for_beta_carotene}
 # Plot it
 p_BC = mds_data %>% 
@@ -141,6 +146,10 @@ stats_BC = stats_BC %>% rename(Pval = `Pr(>F)`) %>%
   filter(!is.na(Pval)) # remove irrelevant lines
 
 ```
+
+
+### Pairwise Comparisons 
+Specifically testing for differences between two intake groups.
 
 #### "BC Low" vs. "BC High"
 

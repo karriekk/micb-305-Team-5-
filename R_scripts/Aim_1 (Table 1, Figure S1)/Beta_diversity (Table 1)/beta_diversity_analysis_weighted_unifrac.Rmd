@@ -5,8 +5,11 @@ output: html_document
 date: "2026-03-26"
 ---
 
-## Library loading
+## Introduction
+This R Markdown script performs a Beta Diversity Analysis to evaluate the impact of various dietary antioxidants (Beta-carotene, Alpha-carotene, Vitamins A, C, and E) on the gut microbiome composition of Parkinson’s Disease patients. It uses Weighted UniFrac distances to account for both relative abundance and phylogenetic relationships, followed by NMDS visualization and PERMANOVA statistical testing to identify significant microbial shifts while controlling for clinical confounders.
 
+## Library loading
+This section prepares the environment with tools for data manipulation, microbiome analysis, and ecological statistics.
 ```{r libraries, include = FALSE}
 library(tidyverse)
 library(phyloseq)
@@ -15,7 +18,7 @@ library(ape)
 ```
 
 ## Dataset loading and wrangling
-
+The purpose of this section is to clean the metadata and synchronize the feature table, taxonomy, and phylogenetic tree.
 ```{r load_data}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv('../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
@@ -49,7 +52,7 @@ tree = read_tree('../../../QIIME2_outputs/tree.nwk')
 ```
 
 ## Make a Phyloseq object
-
+This chunk merges all data sources into a single object for streamlined analysis.
 ```{r Create a Phyloseq object}
 taxonomy_formatted = taxonomy %>% 
   separate(col = Taxon,
@@ -71,7 +74,7 @@ all(taxa_names(ps) %in% tree$tip.label) # Returns TRUE
 ```
 
 ## Alpha rarefaction curve
-
+Normalizing sequencing depth to ensure unbiased diversity comparisons.
 ```{r alpha_rarefaction}
 # Alpha rarefaction curve
 rarecurve(t(data.frame(ps@otu_table)),
@@ -85,7 +88,7 @@ psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
 ```
 
 ## Calculate Weighted UniFrac Distances
-
+Generating the distance matrix and ordinations to visualize community clustering.
 ```{r calculate Weighted UniFrac Distances}
 ps_weighted_unifrac = phyloseq::distance(psrare, method = "wunifrac")
 
@@ -102,9 +105,10 @@ mds_data <- mds$points %>%
 head(mds_data)
 
 ```
-
+## Antioxidant-Specific Analyses
+Note: The following logic is repeated for all nutrients in the script.
 ### Beta carotene
-
+Visualizing clusters and testing statistical significance for Beta-carotene intake.
 ```{r beta_diversity_analysis_for_beta_carotene}
 # Plot it
 p_BC = mds_data %>% 
@@ -143,8 +147,10 @@ stats_BC = stats_BC %>% rename(Pval = `Pr(>F)`) %>%
 ```
 
 
-#### "BC Low" vs. "BC High"
+### Pairwise Comparisons 
+Specifically testing for differences between two intake groups.
 
+#### "BC Low" vs. "BC High"
 ```{r}
 # List samples that belong to the categories of interest (low and high)
 to_compare_BC_LH = c("BC Low", "BC High")

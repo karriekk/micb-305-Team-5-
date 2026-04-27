@@ -5,8 +5,11 @@ output: html_document
 date: "2026-03-15"
 ---
 
-## Library loading
+## Introduction
+This R Markdown script performs a Beta Diversity Analysis using Bray-Curtis dissimilarity to evaluate how dietary antioxidant intake (Beta-carotene, Alpha-carotene, Vitamins A, C, and E) influences the gut microbiome composition in Parkinson’s Disease patients. Unlike Jaccard, Bray-Curtis is abundance-weighted, meaning it accounts for both the presence of taxa and their relative counts, offering a view of how "blooms" or shifts in dominant bacteria correlate with diet.
 
+## Library loading
+This section prepares the environment with tools for data manipulation, microbiome analysis, and ecological statistics.
 ```{r libraries, include = FALSE}
 library(tidyverse)
 library(phyloseq)
@@ -14,7 +17,7 @@ library(vegan)
 ```
 
 ## Dataset loading and wrangling
-
+This section imports raw data and prepares the metadata for statistical modeling and visualization.
 ```{r load_data}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv('../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv', row.names = 1)
@@ -45,7 +48,7 @@ taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
 ## Make a Phyloseq object
-
+This chunk integrates the count table, taxonomy, and metadata into a unified object for streamlined processing.
 ```{r Create a Phyloseq object}
 taxonomy_formatted = taxonomy %>% 
   separate(col = Taxon,
@@ -63,7 +66,7 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat_entacapone_NA_removed),
 ```
 
 ## Alpha rarefaction curve
-
+This section visualizes sequencing depth and normalizes the data to ensure samples are comparable.
 ```{r alpha_rarefaction}
 # Alpha rarefaction curve
 rarecurve(t(data.frame(ps@otu_table)),
@@ -79,7 +82,7 @@ psrare = ps %>% rarefy_even_depth(sample.size = 6515, rngseed = 421)
 ## Beta Diversity Analysis
 
 ### Pre-processing
-
+This chunk calculates the Bray-Curtis distance matrix and performs dimensionality reduction for visualization.
 ```{r calculate beta-curtis distances}
 ps_bray = phyloseq::distance(psrare, method = "bray")
 # View(as.matrix(ps_bray)) # Every pairwise comparison included
@@ -94,6 +97,8 @@ mds_data = mds$points %>% as.data.frame() %>%
 head(mds_data)
 ```
 
+### Antioxidant-Specific Analysis
+The logic below is applied to all antioxidants (BC, AC, VC, VA, VE, and Combined).
 ### Beta carotene
 
 ```{r beta_diversity_analysis_for_beta_carotene}
@@ -132,6 +137,9 @@ stats_BC = stats_BC %>% rename(Pval = `Pr(>F)`) %>%
   filter(!is.na(Pval)) # remove irrelevant lines
 
 ```
+
+### Pairwise Comparisons 
+Specifically testing for differences between two intake groups.
 
 #### "BC Low" vs. "BC High"
 
