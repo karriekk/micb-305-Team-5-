@@ -4,10 +4,11 @@ author: Yanting Xiong
 output: html_document
 date: "2026-03-20"
 ---
-When plotting, a stat cutoff of greater than and equal to 0.35 is used, therefore indicator taxa with a stat value of below 0.35 will not be plotted.
+## Introduction
+This R Markdown script visualizes the distribution of bacterial taxa identified through Indicator Species Analysis (ISA) across different dietary antioxidant intake tertiles in a Parkinson’s Disease cohort. It generates $log_{10}$-transformed relative abundance boxplots to illustrate how specific genera act as biological markers for high or low nutrient intake levels. Note: When plotting, a stat cutoff of greater than and equal to 0.35 is used, therefore indicator taxa with a stat value of below 0.35 will not be plotted.
 
 ## Library loading
-
+This section initializes the analysis environment with packages for data science, microbiome manipulation, and statistical visualization.
 ```{r library_loading}
 library(tidyverse)
 library(phyloseq)
@@ -18,7 +19,7 @@ library(ggplot2)
 ```
 
 ## Dataset loading
-
+This section imports metadata and QIIME2 outputs, ensuring that nutrient intake categories are logically ordered for plotting.
 ```{r dataset_loading}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
@@ -45,7 +46,7 @@ taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
 ## Create a Phyloseq Object
-
+This chunk merges the separate taxonomy, count, and metadata files into a unified object for synchronized filtering.
 ```{r phyloseq_object}
 # Taxonomy
 taxonomy_formatted = taxonomy %>% 
@@ -67,7 +68,7 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
 ```
 
 ## Preprocessing
-
+This section simplifies the community data by aggregating to the genus level and converting raw counts to proportions.
 ```{r preprocessing}
 # Aggregate ASVs to higher taxonomic level (genus level in this case)
 ps_genus = tax_glom(ps, "Genus")
@@ -82,6 +83,9 @@ otu_table = data.frame(otu_table(ps_relab))
 feature_id_extract = rownames(otu_table)
 
 ```
+
+## Indicator Species
+Visualizing significant genera associated with the highest and lowest antioxidant intake levels. Note: The script follows this same structured logic—Filtering -> Data Melting -> $log_{10}$ Transformation with Pseudo-counts -> Publication Plotting
 
 ## Beta Carotene
 

@@ -5,8 +5,11 @@ output: html_document
 date: "2026-03-20"
 ---
 
-## Library loading
+## Introduction
+This R Markdown script performs an Indicator Species Analysis (ISA) to identify specific bacterial genera that are significantly associated with either High or Low intake levels of various dietary antioxidants in Parkinson's Disease patients. By comparing these extreme groups, the analysis identifies potential "biomarker" taxa that thrive or diminish in response to specific nutrient environments.
 
+## Library loading
+This section initializes the analysis environment with packages for microbiome data management and ecological association testing.
 ```{r library_loading}
 library(tidyverse)
 library(phyloseq)
@@ -14,7 +17,7 @@ library(indicspecies)
 ```
 
 ## Dataset loading
-
+The purpose of this section is to import raw data and create filtered metadata subsets that focus strictly on the comparison between the Low (Tertile 1) and High (Tertile 3) intake groups.
 ```{r dataset_loading}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
@@ -46,7 +49,7 @@ taxonomy = read.delim('../../../QIIME2_outputs/taxonomy.tsv', row.names = 1)
 ```
 
 ## Create a Phyloseq Object
-
+This chunk integrates counts, taxonomy, and the filtered metadata into unified objects for each nutrient comparison path.
 ```{r phyloseq_object}
 # Taxonomy
 taxonomy_formatted = taxonomy %>% 
@@ -88,7 +91,7 @@ ps_combine = phyloseq(sample_data(parkinsons_metadata_filt_cat_combine_LH_only),
 ```
 
 ## Preprocessing
-
+This section simplifies the data by aggregating it to the genus level, converting it to relative abundance, and removing very rare taxa to reduce statistical noise.
 ```{r preprocessing}
 # Aggregate ASVs to higher taxonomic level (genus level in this case)
 ps_genus_AC = tax_glom(ps_AC,"Genus")
@@ -142,6 +145,9 @@ otu_table_VE = data.frame(otu_table(ps_filt_VE))
 
 otu_table_combine = data.frame(otu_table(ps_filt_combine))
 ```
+
+## Indicator Analysis
+This section performs the Multi-level Pattern Analysis for each nutrient. The multipatt function identifies which taxa are uniquely associated with specific intake groups.
 
 ## Alpha Carotene
 

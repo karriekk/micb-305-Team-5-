@@ -5,8 +5,11 @@ output: html_document
 date: "2026-03-14"
 ---
 
-## Library loading
+## Introduction
+This script performs Differential Abundance Analysis using MaAsLin2 to identify microbial genera associated with varying levels of dietary antioxidant intake in Parkinson’s Disease patients. It utilizes a multivariate linear model to determine significant shifts in taxonomic composition while controlling for potential clinical confounders like Age, Sex, and Entacapone usage.
 
+## Library loading
+Initialize the analysis environment with packages for microbiome data management and statistical modeling.
 ```{r library loading}
 library(tidyverse)
 library(phyloseq)
@@ -14,7 +17,7 @@ library(Maaslin2)
 ```
 
 ## Dataset loading
-
+Import raw data and standardize Feature IDs to prevent downstream processing errors.
 ```{r dataset loading}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv("../../../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
@@ -46,7 +49,7 @@ taxonomy_modified = read.csv("Modified_tables/modified_taxonomy_table.csv", row.
 ```
 
 ## Make a Phyloseq object
-
+Synchronize taxonomy, counts, and metadata into a single unified object.
 ```{r phyloseq object}
 # Taxonomy
 taxonomy_formatted = taxonomy_modified %>% 
@@ -67,12 +70,15 @@ ps = phyloseq(sample_data(parkinsons_metadata_filt_cat),
 ```
 
 ## Preprocessing
-
+Collapse ASVs into their respective genera to increase statistical power and biological interpretability.
 ```{r pre-processing}
 # Aggregate ASVs to the Genus level
 ps_genus = tax_glom(ps, "Genus")
 
 ```
+
+## Differential Abundance
+Run the MaAsLin2 model for each antioxidant group and map technical IDs back to readable genus names.
 
 ## Beta Carotene
 
