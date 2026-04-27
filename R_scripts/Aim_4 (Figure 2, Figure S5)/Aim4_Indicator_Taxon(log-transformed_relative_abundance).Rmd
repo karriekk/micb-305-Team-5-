@@ -94,7 +94,9 @@ relative_abundance_distribution = ggplot(sub, aes(x = rel_abund)) +
   labs(x = "Relative Abundance of Escherichia-Shigella", y = "Number of PD Patients") +
   theme_classic(base_size = 18) +
   theme(axis.title = element_text(face = "bold")) 
-relative_abundance_distribution
+
+# export image Fig. S5
+ggsave("../../Results/Figures/Aim_4 (Figure_2, Figure_S5)/Indicator_taxon/Relative_abundance_distribution.png", plot = relative_abundance_distribution, width = 10, height = 7, dpi = 300)
 
 # The lowest non-zero relative abundance is 0.0001518834
 
