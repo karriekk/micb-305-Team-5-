@@ -5,9 +5,11 @@ output: html_document
 date: "2026-04-10"
 ---
 
-# This R script is created to generate some additional plots that might be used in the manuscript
+# Introduction
+This script produces supplementary visualizations for the final manuscript, specifically focusing on the distribution of clinical cognitive scores (MoCA) within the Parkinson’s Disease cohort to characterize the study population's cognitive health.
 
 # Library loading
+Initialize the environment with essential tools for data manipulation and visualization.
 ```{r library_loading}
 library(tidyverse)
 library(ggplot2)
@@ -15,6 +17,7 @@ library(ggplot2)
 ```
 
 # Dataset loading
+Import processed clinical metadata and calculate the prevalence of cognitive impairment.
 ```{r dataset_loading}
 # Load in the filtered and wrangled Parkinson's metadata
 parkinsons_metadata_filt_cat = read.csv("../Datasets/Metadata/parkinsons_metadata_filt_cat.csv", row.names = 1)
@@ -26,6 +29,7 @@ parkinsons_metadata_filt_cat_moca_low = parkinsons_metadata_filt_cat %>%
 ```
 
 # Visualize the distribution of MoCA Score using Histogram
+Generate a histogram to visualize the spread of total MoCA scores across the cohort.
 ```{r MoCA_score_visualization}
 moca_histogram = ggplot(parkinsons_metadata_filt_cat, aes(x = moca_total)) +
   geom_histogram(bins = 25, fill = "steelblue", color = "black") +
