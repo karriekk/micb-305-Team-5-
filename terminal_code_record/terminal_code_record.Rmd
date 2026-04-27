@@ -3,7 +3,7 @@ title: "Termina Code Record"
 output: html_document
 date: "2026-03-13"
 ---
-
+## Introduction
 This R markdown is created to record all the codes that were used to run analysis in QIIME2 and PICRUSt2.
 
 ## QIIME2
